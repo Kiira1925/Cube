@@ -38,6 +38,12 @@ public:
     void Initialize()override;
     void Update(float elapsedTime)override;
     void Render(float elapsedTime)override;
+
+    static SceneTitle* getInstance()
+    {
+        static SceneTitle instance;
+        return &instance;
+    }
 };
 
 class SceneGame : public Scene
@@ -47,6 +53,7 @@ private:
 
 private:
     int timer;
+    bool pause_flg;
 
 public:
     DirectX::XMMATRIX view;
@@ -61,6 +68,11 @@ public:
     void Update(float elapsedTime)override;
     void Render(float elapsedTime)override;
 
+    static SceneGame* getInstance()
+    {
+        static SceneGame instance;
+        return &instance;
+    }
 };
 
 
@@ -75,7 +87,7 @@ public:
 class SceneManager
 {
 private:
-    std::unique_ptr<Scene> currentScene;
+    Scene* currentScene;
 private:
     SceneManager() {}
     ~SceneManager() {}

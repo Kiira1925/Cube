@@ -24,7 +24,7 @@ void SceneTitle::Update(float elapsedTime)
 
     if (GetAsyncKeyState('V') & 1)
     {
-        SceneManager::Instance().ChangeScene(new SceneGame());
+        SceneManager::Instance().ChangeScene(SceneGame::getInstance());
         return;
     }
 }

@@ -6,6 +6,7 @@
 
 #include "camera.h"
 #include "player.h"
+#include "pause.h"
 
 #include <memory>
 
@@ -35,19 +36,20 @@ void SceneGame::Initialize()
     sky.scale = VECTOR3(30.0f, 30.0f, 30.0f);
 
     player.Initialize(new GeometricCube(pFramework->getDevice()));
-    
-} 
+    pPause->Initialize();
+
+}
 
 void SceneGame::Update(float elapsedTime)
 {
+    if (pPause->Update())return;
     player.Move();
     camera.Updata();
     if (GetAsyncKeyState('V') & 1)
     {
-        SceneManager::Instance().ChangeScene(new SceneTitle());
+        SceneManager::Instance().ChangeScene(SceneTitle::getInstance());
         return;
     }
-
 }
 
 void SceneGame::Render(float elapsedTime)
@@ -71,5 +73,6 @@ void SceneGame::Render(float elapsedTime)
     field.Render(view, projection, lightDirection,wireframe);
     player.Render(view, projection, lightDirection, wireframe);
     sky.Render(view, projection, lightDirection, wireframe);
+    pPause->Draw();
 }
 

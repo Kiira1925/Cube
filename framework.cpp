@@ -109,7 +109,11 @@ bool framework::initialize()
 
         text = std::make_unique<Sprite>(p_device.Get(), L"./fonts/font0.png");
 
-        SceneManager::Instance().ChangeScene(new SceneTitle());
+        sprites[0] = std::make_unique<Sprite>(pFramework->getDevice(), L"./Data/Menu/BB.png");
+        sprites[1] = std::make_unique<Sprite>(pFramework->getDevice(), L"./Data/Menu/Pause.png");
+        sprites[2] = std::make_unique<Sprite>(pFramework->getDevice(), L"./Data/Menu/Aicon.png");
+
+        SceneManager::Instance().ChangeScene(SceneTitle::getInstance());
 
         if (FAILED(hr))		return false;
 

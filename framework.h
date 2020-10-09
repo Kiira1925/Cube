@@ -22,8 +22,8 @@
 
 #define SAFE_DELETE(x) if((x)){delete (x);(x)=NULL;}
 
-const LONG SCREEN_WIDTH = 1280;
-const LONG SCREEN_HEIGHT = 720;
+const LONG SCREEN_WIDTH = 1920;
+const LONG SCREEN_HEIGHT = 1080;
 
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
@@ -46,7 +46,6 @@ private:
 
 	static framework* instance;
 
-	std::unique_ptr<Sprite>		sprites[1024];
 	std::unique_ptr<Sprite>		text;
 	std::unique_ptr<Sprite>		particle;
 	std::unique_ptr<GeometricPrimitive> cube;
@@ -56,6 +55,7 @@ private:
 	
 
 public:
+	std::unique_ptr<Sprite>		sprites[1024];
 	const HWND hwnd;
 
 	static framework* getInstance()

@@ -171,6 +171,7 @@
     <ClCompile Include="framework.cpp" />
     <ClCompile Include="mesh.cpp" />
     <ClCompile Include="myMesh.cpp" />
+    <ClCompile Include="pause.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="scene.cpp" />
     <ClCompile Include="sceneManager.cpp" />
@@ -202,6 +203,7 @@
     <ClInclude Include="mesh.h" />
     <ClInclude Include="misc.h" />
     <ClInclude Include="myMesh.h" />
+    <ClInclude Include="pause.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="scene.h" />
     <ClInclude Include="shader.h" />

@@ -18,7 +18,7 @@ void SceneManager::Render()
 
 void SceneManager::ChangeScene(Scene *newScene)
 {
-    currentScene.reset(newScene);
+    currentScene = newScene;
 
     currentScene->Initialize();
 }
