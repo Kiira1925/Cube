@@ -112,6 +112,9 @@
     <ClCompile Include="scene.cpp">
       <Filter>Sources\scene</Filter>
     </ClCompile>
+    <ClCompile Include="debug.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -187,6 +190,9 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="ground_blocks.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="debug.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>

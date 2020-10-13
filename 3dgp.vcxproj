@@ -158,6 +158,7 @@
     <ClCompile Include="blender.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="collision.cpp" />
+    <ClCompile Include="debug.cpp" />
     <ClCompile Include="gameScene.cpp" />
     <ClCompile Include="geometric_primitive.cpp" />
     <ClCompile Include="ground_blocks.cpp" />
@@ -187,6 +188,7 @@
     <ClInclude Include="blender.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="collision.h" />
+    <ClInclude Include="debug.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="geometric_primitive.h" />
     <ClInclude Include="ground_blocks.h" />
@@ -228,6 +230,10 @@
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(Filename).cso</ObjectFileOutput>
       <AssemblerOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">AssemblyCode</AssemblerOutput>
       <AssemblerOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(Filename).cod</AssemblerOutputFile>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">4.0_level_9_3</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.0_level_9_3</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0_level_9_3</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0_level_9_3</ShaderModel>
     </FxCompile>
     <FxCompile Include="geometric_primitive_vs.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>

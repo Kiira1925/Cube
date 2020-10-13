@@ -2,6 +2,7 @@
 #include <windows.h>
 #include <sstream>
 #include <DirectXMath.h>
+#include <wrl.h>
 #include <d3d11.h>
 
 class Sprite
@@ -37,6 +38,12 @@ public:
         float w, float h,
         float r = 1, float g = 1, float b = 1, float a = 1);
 
+    float Sprite::textoutD(ID3D11DeviceContext* p_deviceContext,
+        std::string s,
+        float x, float y,
+        float w, float h,
+        float r = 1, float g = 1, float b = 1, float a = 1);
+
 
     Sprite(ID3D11Device * , const wchar_t* /*Texture file name*/);
     ~Sprite()
@@ -61,3 +68,54 @@ public:
     };
 
 };
+//
+//class SpriteBatch
+//{
+//private:
+//    Microsoft::WRL::ComPtr<ID3D11VertexShader> vtShader;
+//    Microsoft::WRL::ComPtr<ID3D11PixelShader> pixelShader;
+//    Microsoft::WRL::ComPtr<ID3D11InputLayout> inputLayout;
+//    Microsoft::WRL::ComPtr<ID3D11Buffer> buffer;
+//    Microsoft::WRL::ComPtr<ID3D11RasterizerState> rasterizerState;
+//
+//    Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> shaderResourceView;
+//    D3D11_TEXTURE2D_DESC        tex2dDesc;
+//    Microsoft::WRL::ComPtr<ID3D11SamplerState> samplerState;
+//    Microsoft::WRL::ComPtr<ID3D11DepthStencilState> depthStencilState;
+//
+//    size_t MAX_INSTANCES;
+//
+//    struct instance
+//    {
+//        DirectX::XMFLOAT4X4 ndcTransform;
+//        XMFLOAT4 texcoordTransform;
+//        XMFLOAT4 color;
+//    };
+//
+//public:
+//    struct vertex
+//    {
+//        XMFLOAT3 position;
+//        XMFLOAT2 texcoord;
+//    };
+//
+//    SpriteBatch(ID3D11Device*, const wchar_t*,size_t);
+//    ~SpriteBatch();
+//
+//    void begin(ID3D11DeviceContext*);
+//    void render(float, float, float, float,
+//        float, float, float, float,
+//        float, float, float,
+//        float, float, float, float);
+//
+//    float textout(std::string, float, float,
+//        float, float, float, float, float, float);
+//    void end(ID3D11DeviceContext*);
+//
+//private:
+//    D3D11_VIEWPORT viewport;
+//    UINT instanceCount = 0;
+//    instance* instances = nullptr;
+//
+//};
+

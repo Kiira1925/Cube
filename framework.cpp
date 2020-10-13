@@ -1,5 +1,6 @@
 #include "framework.h"
 #include "sprite.h"
+#include "debug.h"
 #include "blender.h"
 #include "scene.h"
 
@@ -107,7 +108,8 @@ bool framework::initialize()
         //ImGui_ImplDX11_Init(p_device.Get(), p_deviceContext.Get());
         
 
-        text = std::make_unique<Sprite>(p_device.Get(), L"./fonts/font0.png");
+        // text = std::make_unique<Sprite>(p_device.Get(), L"./fonts/font0.png");
+        debug = std::make_unique<Debug>(p_device.Get(), L"./fonts/font0.png");
 
         SceneManager::Instance().ChangeScene(new SceneTitle());
 
@@ -229,9 +231,10 @@ void framework::render(float elapsed_time/*Elapsed seconds from last frame*/)
     std::string s = std::to_string(min);
     // çáê¨
     s = "BenchMark:" + s;
-
+    debug->setString("BenchMark:%d", min);
     blender::Set(blender::BS_ADD);
-    text->textout(p_deviceContext.Get(), s, 10, 10, 24, 32);
+    // text->textout(p_deviceContext.Get(), s, 10, 10, 24, 32);
+    debug->display(p_deviceContext.Get(), 0.0f, 0.0f, 0.0f, 10.0f, 10.0f);
 
     ///////////////////////////////////////////////////
     //		ï`âÊèIóπ
