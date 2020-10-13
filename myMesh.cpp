@@ -84,7 +84,6 @@ DirectX::XMMATRIX MyMesh::GetWorldMatrix()
 
 	//	‰Šú‰»
 	world = DirectX::XMMatrixIdentity();
-
 	//	Šg‘åEk¬
 	Scale = DirectX::XMMatrixScaling(scale.x, scale.y, scale.z);
 

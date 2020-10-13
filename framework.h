@@ -12,6 +12,7 @@
 #include "geometric_primitive.h"
 #include "mesh.h"
 
+#include "debug.h"
 #include "misc.h"
 #include "high_resolution_timer.h"
 #include "sound.h"
@@ -47,6 +48,8 @@ private:
 	static framework* instance;
 
 	std::unique_ptr<Sprite>		text;
+	//std::unique_ptr<Sprite>		sprites[1024];
+	// std::unique_ptr<Sprite>		text;
 	std::unique_ptr<Sprite>		particle;
 	std::unique_ptr<GeometricPrimitive> cube;
 	std::unique_ptr<GeometricPrimitive> sphere;
@@ -62,6 +65,7 @@ public:
 
 
 	const HWND hwnd;
+	std::unique_ptr<Debug> debug;
 
 	static framework* getInstance()
 	{

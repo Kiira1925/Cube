@@ -129,6 +129,9 @@ void Camera::Updata()
 		break;
 	}
 
+	framework::getInstance()->debug->setString("Camera.target.x:%2.f", target.x);
+	framework::getInstance()->debug->setString("Camera.target.y:%2.f", target.y);
+	framework::getInstance()->debug->setString("Camera.target.z:%2.f", target.z);
 	push_beforeflg = push_afterflg;
 	// state = (state +1) % CAMERA_ACT::MaximumCameraManagementNumber; スイッチの切り替え
 
@@ -150,7 +153,7 @@ TODO:06 「監視カメラ」の実装
 //	監視カメラ関数
 void Camera::SLCamera()
 {
-	pos = FLOAT3(0.0f, 20.0f, -15.0f);
+	pos = FLOAT3(0.0f, 0.0f, -15.0f);
 	// target = player.pos;
 	target = FLOAT3(0.0f, 0.0f, 0.0f);
 }
