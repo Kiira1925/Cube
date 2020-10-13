@@ -44,7 +44,7 @@ void MyMesh::Release()
 	bLoad = false;
 }
 
-void MyMesh::Render(const DirectX::XMMATRIX& view, const DirectX::XMMATRIX& projection, const DirectX::XMFLOAT4& light_dir ,bool wireframe ,size_t animation)
+void MyMesh::Render(const DirectX::XMMATRIX& view, const DirectX::XMMATRIX& projection, const DirectX::XMFLOAT4& light_dir ,bool wireframe)
 {
 	if (primitive)
 	{

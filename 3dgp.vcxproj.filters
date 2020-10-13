@@ -189,6 +189,9 @@
     <ClInclude Include="ground_blocks.h">
       <Filter>Headers</Filter>
     </ClInclude>
+    <ClInclude Include="map_data.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="geometric_primitive.hlsli">
