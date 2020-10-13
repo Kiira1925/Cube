@@ -62,15 +62,11 @@ public:
     float angle = 0;
 
 public:
-    SceneGame();
+    SceneGame() {}
     ~SceneGame(){}
     void Initialize()override;
     void Update(float elapsedTime)override;
     void Render(float elapsedTime)override;
-
-    std::unique_ptr<SoundManager>					soundManager;
-    std::unique_ptr<SoundSource>					soundSE;
-    std::unique_ptr<SoundSource>					soundBGM;
 
     static SceneGame* getInstance()
     {

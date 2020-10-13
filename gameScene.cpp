@@ -15,7 +15,8 @@ MyMesh sky;
 Camera camera;
 Player  player;
 
-SceneGame::SceneGame()
+
+void SceneGame::Initialize()
 {
     //pFramework->getDevice();
 // “Š‰e•ÏŠ·s—ñ
@@ -37,12 +38,6 @@ SceneGame::SceneGame()
 
     player.Initialize(new GeometricCube(pFramework->getDevice()));
     pPause->Initialize();
-
-}
-
-void SceneGame::Initialize()
-{
-
 }
 
 void SceneGame::Update(float elapsedTime)
