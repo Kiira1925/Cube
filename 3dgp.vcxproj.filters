@@ -1,80 +1,100 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Shaders">
-      <UniqueIdentifier>{a629d3af-e715-4986-89a0-f6494058df2f}</UniqueIdentifier>
-      <Extensions>hlsl;hlsli</Extensions>
-    </Filter>
-    <Filter Include="Sources">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Headers">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
-    <Filter Include="Resources">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="Shaders\geometric">
-      <UniqueIdentifier>{794ec819-89ed-4ef6-a8b3-6a1319058d71}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Shaders\sprite">
-      <UniqueIdentifier>{d6fb7837-8c15-4692-aa23-7b08a966dc1a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Shaders\static">
-      <UniqueIdentifier>{f688816a-f1d2-4b07-b1e5-017695295e2d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="imGui">
-      <UniqueIdentifier>{6b9d67ad-77de-4ae6-81b4-1a5fb53a9aee}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Shaders\static_not_light">
-      <UniqueIdentifier>{a57ee8c1-9a31-4fcf-a7cf-03dcecbb57d5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Sources\scene">
-      <UniqueIdentifier>{9708df6b-d78c-4463-b968-fce35d8d098c}</UniqueIdentifier>
-    </Filter>
+    <FxCompile Include="geometric_primitive_vs.hlsl">
+      <Filter>Header</Filter>
+    </FxCompile>
+    <FxCompile Include="sprite_ps.hlsl">
+      <Filter>Shader\sprite</Filter>
+    </FxCompile>
+    <FxCompile Include="sprite_vs.hlsl">
+      <Filter>Shader\sprite</Filter>
+    </FxCompile>
+    <FxCompile Include="geometric_primitive_ps.hlsl">
+      <Filter>Shader\geometric</Filter>
+    </FxCompile>
+    <FxCompile Include="static_mesh_vs.hlsl">
+      <Filter>Shader\static</Filter>
+    </FxCompile>
+    <FxCompile Include="static_mesh_ps.hlsl">
+      <Filter>Shader\static</Filter>
+    </FxCompile>
+    <FxCompile Include="not_light_vs.hlsl">
+      <Filter>Shader\static_not_light</Filter>
+    </FxCompile>
+    <FxCompile Include="not_light_ps.hlsl">
+      <Filter>Shader\static_not_light</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="framework.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="sprite.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="geometric_primitive.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="mesh.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="texture.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="shader.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="myMesh.cpp">
-      <Filter>Sources</Filter>
+    <ClCompile Include="blender.cpp">
+      <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="camera.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="player.cpp">
-      <Filter>Sources</Filter>
+      <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="collision.cpp">
-      <Filter>Sources</Filter>
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="debug.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="framework.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="geometric_primitive.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="ground_blocks.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Logger.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="mesh.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="myMesh.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="pause.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="player.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="shader.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="sprite.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="stage.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="texture.cpp">
+      <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="vector.cpp">
-      <Filter>Sources</Filter>
+      <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="blender.cpp">
-      <Filter>Sources</Filter>
+    <ClCompile Include="scene.cpp">
+      <Filter>Source\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="sceneManager.cpp">
+      <Filter>Source\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="sceneTitle.cpp">
+      <Filter>Source\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="gameScene.cpp">
+      <Filter>Source\Scene</Filter>
     </ClCompile>
     <ClCompile Include="imGui\imgui.cpp">
       <Filter>imGui</Filter>
@@ -94,80 +114,73 @@
     <ClCompile Include="imGui\imgui_widgets.cpp">
       <Filter>imGui</Filter>
     </ClCompile>
-    <ClCompile Include="sceneManager.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="sceneTitle.cpp">
-      <Filter>Sources\scene</Filter>
-    </ClCompile>
-    <ClCompile Include="gameScene.cpp">
-      <Filter>Sources\scene</Filter>
-    </ClCompile>
-    <ClCompile Include="stage.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="ground_blocks.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="scene.cpp">
-      <Filter>Sources\scene</Filter>
-    </ClCompile>
-    <ClCompile Include="pause.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Sound.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Logger.cpp">
-    <ClCompile Include="debug.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="framework.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="high_resolution_timer.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="misc.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="sprite.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="blender.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="geometric_primitive.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="mesh.h">
-      <Filter>Headers</Filter>
+    <ClInclude Include="vector.h">
+      <Filter>Header</Filter>
     </ClInclude>
     <ClInclude Include="texture.h">
-      <Filter>Headers</Filter>
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="stage.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="sprite.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound.h">
+      <Filter>Header</Filter>
     </ClInclude>
     <ClInclude Include="shader.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="scene.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="myMesh.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="camera.h">
-      <Filter>Headers</Filter>
+      <Filter>Header</Filter>
     </ClInclude>
     <ClInclude Include="player.h">
-      <Filter>Headers</Filter>
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="pause.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="myMesh.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="misc.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="mesh.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="map_data.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Logger.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="ground_blocks.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="high_resolution_timer.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="framework.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="debug.h">
+      <Filter>Header</Filter>
     </ClInclude>
     <ClInclude Include="collision.h">
-      <Filter>Headers</Filter>
+      <Filter>Header</Filter>
     </ClInclude>
-    <ClInclude Include="vector.h">
-      <Filter>Headers</Filter>
+    <ClInclude Include="camera.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="blender.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="scene.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="geometric_primitive.h">
+      <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="imGui\imconfig.h">
       <Filter>imGui</Filter>
@@ -193,61 +206,48 @@
     <ClInclude Include="imGui\imstb_truetype.h">
       <Filter>imGui</Filter>
     </ClInclude>
-    <ClInclude Include="stage.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="ground_blocks.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="pause.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Sound.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Logger.h">
-    <ClInclude Include="debug.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="geometric_primitive.hlsli">
-      <Filter>Shaders\geometric</Filter>
-    </None>
     <None Include="sprite.hlsli">
-      <Filter>Shaders\sprite</Filter>
+      <Filter>Shader\sprite</Filter>
+    </None>
+    <None Include="geometric_primitive.hlsli">
+      <Filter>Shader\geometric</Filter>
     </None>
     <None Include="static_mesh.hlsli">
-      <Filter>Shaders\static</Filter>
+      <Filter>Shader\static</Filter>
     </None>
     <None Include="not_light.hlsli">
-      <Filter>Shaders\static_not_light</Filter>
+      <Filter>Shader\static_not_light</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="geometric_primitive_ps.hlsl">
-      <Filter>Shaders\geometric</Filter>
-    </FxCompile>
-    <FxCompile Include="geometric_primitive_vs.hlsl">
-      <Filter>Shaders\geometric</Filter>
-    </FxCompile>
-    <FxCompile Include="sprite_ps.hlsl">
-      <Filter>Shaders\sprite</Filter>
-    </FxCompile>
-    <FxCompile Include="sprite_vs.hlsl">
-      <Filter>Shaders\sprite</Filter>
-    </FxCompile>
-    <FxCompile Include="static_mesh_ps.hlsl">
-      <Filter>Shaders\static</Filter>
-    </FxCompile>
-    <FxCompile Include="static_mesh_vs.hlsl">
-      <Filter>Shaders\static</Filter>
-    </FxCompile>
-    <FxCompile Include="not_light_ps.hlsl">
-      <Filter>Shaders\static_not_light</Filter>
-    </FxCompile>
-    <FxCompile Include="not_light_vs.hlsl">
-      <Filter>Shaders\static_not_light</Filter>
-    </FxCompile>
+    <Filter Include="Source">
+      <UniqueIdentifier>{37df3d61-db10-4dd2-956b-757f2f8bc539}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header">
+      <UniqueIdentifier>{d39c74fc-afd8-4058-bf09-b5a9be21a400}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader">
+      <UniqueIdentifier>{07209701-63c2-4a12-8138-e1aacf6f498c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Scene">
+      <UniqueIdentifier>{20fa59fd-245e-4779-98a9-e43f51476036}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\sprite">
+      <UniqueIdentifier>{82ffbefe-2645-42b9-9c16-c2608f30931f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\geometric">
+      <UniqueIdentifier>{28bd3e6c-e7f7-4f47-b5ba-63784ecdc978}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\static">
+      <UniqueIdentifier>{4f726981-5700-469f-a078-285327b99136}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\static_not_light">
+      <UniqueIdentifier>{e24f5e01-0683-474c-9fcb-299392792f6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="imGui">
+      <UniqueIdentifier>{b3543d77-8c7b-4ed0-ade9-cbc2aa7e8d27}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

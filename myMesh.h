@@ -33,7 +33,7 @@ public:
     void    SetPrimitive(GeometricPrimitive* _primitive);
     void    SetMesh(MyMesh& org);
     void    Release();
-    void    Render(const DirectX::XMMATRIX& view, const DirectX::XMMATRIX& projection, const DirectX::XMFLOAT4& light_dir,bool wireframe , size_t animation = 0);
+    void    Render(const DirectX::XMMATRIX& view, const DirectX::XMMATRIX& projection, const DirectX::XMFLOAT4& light_dir,bool wireframe);
 
     DirectX::XMMATRIX GetWorldMatrix();
 };
