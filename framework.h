@@ -14,7 +14,7 @@
 
 #include "misc.h"
 #include "high_resolution_timer.h"
-
+#include "sound.h"
 
 #include "./imGui/imgui.h"
 #include "./imGui/imgui_impl_dx11.h"
@@ -55,7 +55,12 @@ private:
 	
 
 public:
-	std::unique_ptr<Sprite>		sprites[1024];
+	std::unique_ptr<Sprite>							sprites[1024];
+	std::unique_ptr<SoundManager>					soundManager;
+	std::unique_ptr<SoundSource>					soundSE;
+	std::unique_ptr<SoundSource>					soundBGM;
+
+
 	const HWND hwnd;
 
 	static framework* getInstance()

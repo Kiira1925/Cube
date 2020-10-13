@@ -167,6 +167,7 @@
     <ClCompile Include="imGui\imgui_impl_dx11.cpp" />
     <ClCompile Include="imGui\imgui_impl_win32.cpp" />
     <ClCompile Include="imGui\imgui_widgets.cpp" />
+    <ClCompile Include="Logger.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="framework.cpp" />
     <ClCompile Include="mesh.cpp" />
@@ -177,6 +178,7 @@
     <ClCompile Include="sceneManager.cpp" />
     <ClCompile Include="sceneTitle.cpp" />
     <ClCompile Include="shader.cpp" />
+    <ClCompile Include="Sound.cpp" />
     <ClCompile Include="sprite.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClCompile>
@@ -200,6 +202,7 @@
     <ClInclude Include="imGui\imstb_rectpack.h" />
     <ClInclude Include="imGui\imstb_textedit.h" />
     <ClInclude Include="imGui\imstb_truetype.h" />
+    <ClInclude Include="Logger.h" />
     <ClInclude Include="mesh.h" />
     <ClInclude Include="misc.h" />
     <ClInclude Include="myMesh.h" />
@@ -207,6 +210,7 @@
     <ClInclude Include="player.h" />
     <ClInclude Include="scene.h" />
     <ClInclude Include="shader.h" />
+    <ClInclude Include="Sound.h" />
     <ClInclude Include="sprite.h" />
     <ClInclude Include="stage.h" />
     <ClInclude Include="texture.h" />

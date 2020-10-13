@@ -11,6 +11,8 @@ bool framework::initialize()
 {
     HRESULT hr = S_OK;  // おそらく初期化するかの判定
 
+    soundManager = std::make_unique<SoundManager>(pFramework->hwnd);
+
     RECT rc; // モデルオブジェクトの生成をしている
     GetClientRect(hwnd, &rc);   // 生成するための情報をいれている？
     UINT width = rc.right - rc.left;
@@ -109,9 +111,13 @@ bool framework::initialize()
 
         text = std::make_unique<Sprite>(p_device.Get(), L"./fonts/font0.png");
 
+        // ソース読み込み
         sprites[0] = std::make_unique<Sprite>(pFramework->getDevice(), L"./Data/Menu/BB.png");
         sprites[1] = std::make_unique<Sprite>(pFramework->getDevice(), L"./Data/Menu/Pause.png");
         sprites[2] = std::make_unique<Sprite>(pFramework->getDevice(), L"./Data/Menu/Aicon.png");
+
+        soundBGM = soundManager->CreateSoundSource("Data/Sounds/BGM.wav");
+        soundBGM->Play(true);
 
         SceneManager::Instance().ChangeScene(SceneTitle::getInstance());
 

@@ -15,10 +15,10 @@ MyMesh sky;
 Camera camera;
 Player  player;
 
-void SceneGame::Initialize()
+SceneGame::SceneGame()
 {
     //pFramework->getDevice();
-    // 投影変換行列
+// 投影変換行列
     projection = camera.GetProjectionMatrix();
 
     // 光源(平行光)
@@ -37,6 +37,11 @@ void SceneGame::Initialize()
 
     player.Initialize(new GeometricCube(pFramework->getDevice()));
     pPause->Initialize();
+
+}
+
+void SceneGame::Initialize()
+{
 
 }
 
@@ -70,7 +75,7 @@ void SceneGame::Render(float elapsedTime)
     // ビュー変換行列
     view = camera.GetViewMatrix();
 
-    field.Render(view, projection, lightDirection,wireframe);
+    //field.Render(view, projection, lightDirection,wireframe);
     player.Render(view, projection, lightDirection, wireframe);
     sky.Render(view, projection, lightDirection, wireframe);
     pPause->Draw();

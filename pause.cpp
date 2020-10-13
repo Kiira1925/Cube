@@ -5,6 +5,7 @@ void PauseMenu::Initialize()
 {
 	//sprites[0] = std::make_unique<Sprite>(pFramework->getDevice(), L"./Data/Menu/eli.jpg");
 	pause_flg = false;
+	cursor = CONTINUE;
 }
 
 bool PauseMenu::Update()
