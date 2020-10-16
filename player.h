@@ -33,6 +33,12 @@ public:
     void Move();
     void Release();
     void Render(const DirectX::XMMATRIX& view, const DirectX::XMMATRIX& projection, const DirectX::XMFLOAT4& lightDir, bool wireframe);
+
+public:
+    void SetPos(FLOAT3 pos) { this->pos = pos; }
+
+public:
     DirectX::XMMATRIX GetWorldMatrix();
+    FLOAT3 GetPos() { return (FLOAT3)pos; }
 
 };
