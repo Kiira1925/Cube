@@ -153,7 +153,7 @@ TODO:06 「監視カメラ」の実装
 //	監視カメラ関数
 void Camera::SLCamera()
 {
-	pos = FLOAT3(0.0f, 0.0f, -15.0f);
+	pos = FLOAT3(0.0f, 10.0f, -15.0f);
 	// target = player.pos;
 	target = FLOAT3(0.0f, 0.0f, 0.0f);
 }

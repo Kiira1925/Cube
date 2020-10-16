@@ -559,7 +559,7 @@ Static_mesh::Static_mesh(ID3D11Device* device, const wchar_t* objfile, const cha
     ZeroMemory(&rsDesc, sizeof(rsDesc));
     rsDesc.FillMode = D3D11_FILL_WIREFRAME;
     rsDesc.CullMode = D3D11_CULL_BACK;
-    rsDesc.FrontCounterClockwise = FALSE;
+    rsDesc.FrontCounterClockwise = TRUE;
     rsDesc.DepthClipEnable = TRUE;
     rsDesc.AntialiasedLineEnable = FALSE;
     device->CreateRasterizerState(&rsDesc, p_rasterizerState[1].GetAddressOf());
@@ -570,7 +570,7 @@ Static_mesh::Static_mesh(ID3D11Device* device, const wchar_t* objfile, const cha
     ZeroMemory(&rsDesc, sizeof(rsDesc));
     rsDesc.FillMode = D3D11_FILL_SOLID;
     rsDesc.CullMode = D3D11_CULL_BACK;
-    rsDesc.FrontCounterClockwise = FALSE;
+    rsDesc.FrontCounterClockwise = TRUE;
     rsDesc.DepthClipEnable = TRUE;
     device->CreateRasterizerState(&rsDesc, p_rasterizerState[0].GetAddressOf());
 

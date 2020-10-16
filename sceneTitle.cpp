@@ -14,7 +14,7 @@ void SceneTitle::Initialize()
     // ŒõŒ¹(•½sŒõ)
     lightDirection = DirectX::XMFLOAT4(1, 10, 2, 0);
 
-    player1.Initialize(new GeometricCube(pFramework->getDevice()));
+    player1.Initialize(L"./Data/cube/cube_setM.obj", "not_light");
 }
 
 void SceneTitle::Update(float elapsedTime)

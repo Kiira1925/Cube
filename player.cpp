@@ -4,10 +4,10 @@
 #include "framework.h"
 #include "blender.h"
 const float upS = 0.5f;
-void Player::Initialize(GeometricPrimitive* _primitive)
+void Player::Initialize(const wchar_t* objfilename, const char* shaderfilename)
 {
 	obj.Initialize();
-	obj.SetPrimitive(_primitive);
+	obj.staticLoad(objfilename, shaderfilename);
 
 	speed.y = upS;
 	axis.x = 0.0f;

@@ -14,7 +14,6 @@
 #include <memory>
 
 
-MyMesh field;
 MyMesh sky;
 Camera camera;
 Player  player;
@@ -32,18 +31,12 @@ void SceneGame::Initialize()
     // ŒõŒ¹(•½sŒõ)
     lightDirection = DirectX::XMFLOAT4(10, 10, 10, 1.0f);
 
-    // ‰¼’n–Ê
-    field.Initialize();
-    field.SetPrimitive(new GeometricCube(device));
-    field.pos = VECTOR3(40.0f, 0.0f, 40.0f);
-    field.color = VECTOR4(1.0f, 0.0f, 0.0f, 1.0f);
-    field.scale = VECTOR3(10.0f, 10.0f, 10.0f);
-
     sky.Initialize();
     sky.staticLoad(L"./Data/Sky/sky.obj", "not_light");
     sky.scale = VECTOR3(30.0f, 30.0f, 30.0f);
 
-    player.Initialize(new GeometricCube(pFramework->getDevice()));
+    // player.Initialize(L"./Data/cube/cube_setM.obj", "not_light");
+    player.Initialize(L"./Data/Bison/Bison.obj", "not_light");
    // player.Initialize(new GeometricCube(device));
     std::shared_ptr<GeometricPrimitive> cube = std::make_shared<GeometricCube>(device);
     block.SetStageNum(00);
@@ -87,7 +80,6 @@ void SceneGame::Render(float elapsedTime)
     //field.Render(view, projection, lightDirection,wireframe);
     player.Render(view, projection, lightDirection, wireframe);
     sky.Render(view, projection, lightDirection, wireframe);
-    field.Render(view, projection, lightDirection, wireframe);
     player.Render(view, projection, lightDirection, wireframe);
     sky.Render(view, projection, lightDirection, wireframe);
 

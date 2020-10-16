@@ -8,7 +8,7 @@
 class Player
 {
 private:
-    std::unique_ptr<Sprite>		text;
+    
 public:
     MyMesh              obj;
     VECTOR3   pos;
@@ -28,7 +28,7 @@ public:
     FLOAT moveAngle = {};
     int timer = 0;
 
-    void Initialize(GeometricPrimitive* _primitive);
+    void Initialize(const wchar_t* objfilename, const char* shaderfilename);
 
     void Move();
     void Release();
