@@ -8,58 +8,68 @@
 #include "player.h"
 #include "pause.h"
 
-#include "ground_blocks.h"
-#include "map_data.h"
+#include "hover.h"
 
 #include <memory>
 
 
-MyMesh field;
 MyMesh sky;
-Camera camera;
-Player  player;
-GroundBlockManager block;
-
 
 void SceneGame::Initialize()
 {
-    //pFramework->getDevice();
-// 投影変換行列
     ID3D11Device* device = pFramework->getDevice();
-    // 投影変換行列
-    projection = camera.GetProjectionMatrix();
 
     // 光源(平行光)
-    lightDirection = DirectX::XMFLOAT4(10, 10, 10, 1.0f);
+    lightDirection = DirectX::XMFLOAT4(0, -1, 0, 0);
 
-    // 仮地面
-    field.Initialize();
-    field.SetPrimitive(new GeometricCube(device));
-    field.pos = VECTOR3(40.0f, 0.0f, 40.0f);
-    field.color = VECTOR4(1.0f, 0.0f, 0.0f, 1.0f);
-    field.scale = VECTOR3(10.0f, 10.0f, 10.0f);
+    // カメラの設定
+    camera = std::make_unique<MainCamera>();
+    // ビュー設定
+    camera->SetEye(DirectX::XMFLOAT3(0.0f, 10.0f, -30.0f));
+    camera->SetFocus(DirectX::XMFLOAT3(25,1,25));
+    camera->SetUp(DirectX::XMFLOAT3(0.0f, 1.0f, 0.0f));
+    camera->SetMode(camera->MODE_FIX);
+
+    //　プロジェクションの設定
+    camera->SetPerspective(DirectX::XMConvertToRadians(45), pFramework->GetScreenWidth() / pFramework->GetScreenHeight(), 0.1f, 1000.0f);
 
     sky.Initialize();
     sky.staticLoad(L"./Data/Sky/sky.obj", "not_light");
     sky.scale = VECTOR3(30.0f, 30.0f, 30.0f);
 
-    player.Initialize(new GeometricCube(pFramework->getDevice()));
-   // player.Initialize(new GeometricCube(device));
+    player = std::make_unique<Player>();
+    player->Initialize(new GeometricCube(pFramework->getDevice()));
     std::shared_ptr<GeometricPrimitive> cube = std::make_shared<GeometricCube>(device);
-    block.SetStageNum(00);
-    block.Initialize();
-    block.SetPrimitive(cube);
+
+    blocks = std::make_unique<GroundBlockManager>();
+    blocks->SetStageNum(2);
+    blocks->Initialize();
+    blocks->SetPrimitive(cube);
+
+
     pPause->Initialize();
 } 
 
 void SceneGame::Update(float elapsedTime)
 {
     if (pPause->Update())return;
-    player.Move();
-    camera.Updata();
+    player->Move();
+    camera->Updata(elapsedTime);
+    blocks->Update();
+
+    for (int i = 0; i < blocks->GetMea(); i++)
+    {
+        if (hover(player->GetPos(), blocks->GetBlockPos(i)))
+        {
+            blocks->SetBlockHover(i, true);
+        }
+        else blocks->SetBlockHover(i, false);
+    }
+
     if (GetAsyncKeyState('V') & 1)
     {
         SceneManager::Instance().ChangeScene(SceneTitle::getInstance());
+        blocks->Relese();
         return;
     }
 }
@@ -71,27 +81,14 @@ void SceneGame::Render(float elapsedTime)
     ID3D11DeviceContext* context = pFramework->getDeviceContext();
 
     static bool wireframe = false;
-    if (GetAsyncKeyState(' ') & 1)
-    {
-        wireframe = !wireframe;
-    }
-    static int anime = 0;
-    if (GetAsyncKeyState('X') & 1)
-    {
-        anime += 1;
-        if (anime > 2) anime = 0;
-    }
-    // ビュー変換行列
-    view = camera.GetViewMatrix();
 
-    //field.Render(view, projection, lightDirection,wireframe);
-    player.Render(view, projection, lightDirection, wireframe);
-    sky.Render(view, projection, lightDirection, wireframe);
-    field.Render(view, projection, lightDirection, wireframe);
-    player.Render(view, projection, lightDirection, wireframe);
+    DirectX::XMMATRIX view = DirectX::XMLoadFloat4x4(&camera->GetView());
+    DirectX::XMMATRIX projection = DirectX::XMLoadFloat4x4(&camera->GetProjection());
+
+    player->Render(view, projection, lightDirection, wireframe);
     sky.Render(view, projection, lightDirection, wireframe);
 
-    block.Render(context, view, projection, lightDirection, wireframe);
+    blocks->Render(context, view, projection, lightDirection, wireframe);
     pPause->Draw();
 }
 
