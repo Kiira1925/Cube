@@ -179,6 +179,7 @@
     <ClCompile Include="sceneManager.cpp" />
     <ClCompile Include="sceneTitle.cpp" />
     <ClCompile Include="shader.cpp" />
+    <ClCompile Include="SkinndeCube.cpp" />
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="sprite.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
@@ -213,6 +214,7 @@
     <ClInclude Include="player.h" />
     <ClInclude Include="scene.h" />
     <ClInclude Include="shader.h" />
+    <ClInclude Include="SkinndeCube.h" />
     <ClInclude Include="Sound.h" />
     <ClInclude Include="sprite.h" />
     <ClInclude Include="stage.h" />

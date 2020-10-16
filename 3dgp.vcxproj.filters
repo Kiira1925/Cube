@@ -1,9 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <FxCompile Include="geometric_primitive_vs.hlsl">
-      <Filter>Header</Filter>
-    </FxCompile>
     <FxCompile Include="sprite_ps.hlsl">
       <Filter>Shader\sprite</Filter>
     </FxCompile>
@@ -24,6 +21,9 @@
     </FxCompile>
     <FxCompile Include="not_light_ps.hlsl">
       <Filter>Shader\static_not_light</Filter>
+    </FxCompile>
+    <FxCompile Include="geometric_primitive_vs.hlsl">
+      <Filter>Shader\geometric</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
@@ -114,6 +114,9 @@
     <ClCompile Include="imGui\imgui_widgets.cpp">
       <Filter>imGui</Filter>
     </ClCompile>
+    <ClCompile Include="SkinndeCube.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vector.h">
@@ -179,9 +182,6 @@
     <ClInclude Include="scene.h">
       <Filter>Header</Filter>
     </ClInclude>
-    <ClInclude Include="geometric_primitive.h">
-      <Filter>Source</Filter>
-    </ClInclude>
     <ClInclude Include="imGui\imconfig.h">
       <Filter>imGui</Filter>
     </ClInclude>
@@ -205,6 +205,12 @@
     </ClInclude>
     <ClInclude Include="imGui\imstb_truetype.h">
       <Filter>imGui</Filter>
+    </ClInclude>
+    <ClInclude Include="SkinndeCube.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="geometric_primitive.h">
+      <Filter>Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
