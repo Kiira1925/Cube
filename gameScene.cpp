@@ -49,7 +49,7 @@ void SceneGame::Initialize()
     sky.scale = VECTOR3(30.0f, 30.0f, 30.0f);
 
     //” 
-    cube_texture[0] = L"./Data/1.jpg";
+    cube_texture[0] = L"./Data/Floor/FloorS.png";
     cube_texture[1] = L"./Data/Floor/Floor0.png";
     cube_texture[2] = L"./Data/Floor/Floor1.png";
     cube_texture[3] = L"./Data/Floor/Floor2.png";
@@ -117,7 +117,7 @@ void SceneGame::Render(float elapsedTime)
 
     //	‰ñ“]
     Rx = DirectX::XMMatrixRotationX(0);				//	X²‚ğŠî€‚Æ‚µ‚½‰ñ“]s—ñ
-    Ry = DirectX::XMMatrixRotationY(0);				//	Y²‚ğŠî€‚Æ‚µ‚½‰ñ“]s—ñ
+    Ry = DirectX::XMMatrixRotationY(XMConvertToRadians(-45));				//	Y²‚ğŠî€‚Æ‚µ‚½‰ñ“]s—ñ
     Rz = DirectX::XMMatrixRotationZ(0);				//	Z²‚ğŠî€‚Æ‚µ‚½‰ñ“]s—ñ
     Rotation = Rz * Ry * Rx;
 
