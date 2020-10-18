@@ -11,6 +11,7 @@
 #include "sprite.h"
 #include "geometric_primitive.h"
 #include "mesh.h"
+#include "skinned_mesh.h"
 
 #include "debug.h"
 #include "misc.h"

@@ -24,6 +24,7 @@ void SceneGame::Initialize()
 
     // ŒõŒ¹(•½sŒõ)
     lightDirection = DirectX::XMFLOAT4(0, -1, 0, 0);
+    lightBG = DirectX::XMFLOAT4(0, 1, -1, 0);
 
     // ƒJƒƒ‰‚Ìİ’è
     camera = std::make_unique<MainCamera>();
@@ -37,8 +38,8 @@ void SceneGame::Initialize()
     camera->SetPerspective(DirectX::XMConvertToRadians(45), pFramework->GetScreenWidth() / pFramework->GetScreenHeight(), 0.1f, 1000.0f);
 
     sky.Initialize();
-    sky.staticLoad(L"./Data/Sky/sky.obj", "not_light");
-    sky.scale = VECTOR3(30.0f, 30.0f, 30.0f);
+    sky.skinnedLoad("./Data/cube/cube_0.fbx",true);
+    sky.scale = VECTOR3(50.0f, 50.0f, 50.0f);
 
     //” 
     cube_texture[0] = L"./Data/Floor/FloorS.png";
@@ -48,14 +49,21 @@ void SceneGame::Initialize()
     cube_texture[4] = L"./Data/Floor/Floor3.png";
     cube_texture[5] = L"./Data/Floor/FloorG.png";
 
+    //scube = new SkinndeCube(device, cube_texture, 5);
+
+   // player.Initialize(new GeometricCube(pFramework->getDevice()));
+   // player.Initialize(new GeometricCube(device));
+    player = std::make_unique<Player>();
+    player->Initialize("./Data/cube/cube_setM.fbx");
+
     std::shared_ptr<SkinndeCube> cube = std::make_shared<SkinndeCube>(device, cube_texture, 6);
     blocks = std::make_unique<GroundBlockManager>();
     blocks->SetStageNum(SceneManager::Instance().GetStageNum());
     blocks->Initialize();
     blocks->SetPrimitive(cube);
 
-    player = std::make_unique<Player>();
-    player->Initialize(new GeometricCube(pFramework->getDevice()));
+    //player = std::make_unique<Player>();
+    //player->Initialize(new GeometricCube(pFramework->getDevice()));
     SetPosflg = true;
     clearTimer = 0;
 
@@ -104,6 +112,12 @@ void SceneGame::Render(float elapsedTime)
     DirectX::XMMATRIX projection = DirectX::XMLoadFloat4x4(&camera->GetProjection());
 
     blocks->Render(context, view, projection);
+    player->Render(view, projection, lightDirection, wireframe, elapsedTime);
+    sky.Render(view, projection, lightBG, wireframe, elapsedTime);
+
+    framework::getInstance()->debug->setString("sky.Pos.x:%f", sky.pos.x);
+    framework::getInstance()->debug->setString("sky.Pos.y:%f", sky.pos.y);
+    framework::getInstance()->debug->setString("sky.Pos.z:%f", sky.pos.z);
 
     if (SetPosflg)
     {
@@ -119,8 +133,8 @@ void SceneGame::Render(float elapsedTime)
         }
     }
 
-    player->Render(view, projection, lightDirection, wireframe);
-    sky.Render(view, projection, lightDirection, wireframe);
+    //player->Render(view, projection, lightDirection, wireframe);
+    //sky.Render(view, projection, lightDirection, wireframe);
 
     pPause->Draw();
 }

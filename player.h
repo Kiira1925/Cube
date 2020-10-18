@@ -8,7 +8,7 @@
 class Player
 {
 private:
-    std::unique_ptr<Sprite>		text;
+    
 public:
     MyMesh              obj;
     VECTOR3   pos;
@@ -28,11 +28,12 @@ public:
     FLOAT moveAngle = {};
     int timer = 0;
 
-    void Initialize(GeometricPrimitive* _primitive);
+    // void Initialize(GeometricPrimitive* _primitive);
+    void Initialize(const char* fileName);
 
     void Move();
     void Release();
-    void Render(const DirectX::XMMATRIX& view, const DirectX::XMMATRIX& projection, const DirectX::XMFLOAT4& lightDir, bool wireframe);
+    void Render(const DirectX::XMMATRIX& view, const DirectX::XMMATRIX& projection, const DirectX::XMFLOAT4& lightDir, bool wireframe,float elapsedTime);
 
 public:
     void SetPos(FLOAT3 pos) { this->pos = pos; }

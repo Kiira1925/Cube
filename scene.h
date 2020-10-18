@@ -101,6 +101,7 @@ private:
 
 public:
     DirectX::XMFLOAT4 lightDirection;
+    DirectX::XMFLOAT4 lightBG;
     float angle = 0;
 
 public:

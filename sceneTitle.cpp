@@ -30,7 +30,7 @@ void SceneTitle::Initialize()
 
     // プレイヤー
     player = std::make_unique<Player>();
-    player->Initialize(new GeometricCube(pFramework->getDevice()));
+    player->Initialize("./Data/cube/cube_setM.fbx");
     player->SetPos(FLOAT3(2.0f, 0.0f, 0.0f));
 
     // ビュー設定
@@ -76,9 +76,10 @@ void SceneTitle::Render(float elapsedTime)
     DirectX::XMMATRIX view = DirectX::XMLoadFloat4x4(&camera1->GetView());
     DirectX::XMMATRIX projection = DirectX::XMLoadFloat4x4(&camera1->GetProjection());
 
-    player->Render(view, projection, lightDirection, false);
+    //player->Render(view, projection, lightDirection, false);
     block->Render(context, view, projection);
-
+    player->Render(view, projection, lightDirection, false, elapsedTime);
+    //block->Render(context, view, projection, lightDirection, false);
 }
 
 void SceneTitle::Finalize()
