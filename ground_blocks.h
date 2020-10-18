@@ -58,11 +58,12 @@ public: // 各ブロックの処理関数
 public: // Set関数
     void SetType(int type) { this->type = type; if (type > 0 && type < 4)this->count = type; }
     void SetBlockPosXZ(int x, int z) { this->pos.x = x, this->pos.z = z; }
-    void   SetHover(bool flg) { oldhover = hoverflg, hoverflg = flg; }
+    void SetHover(bool flg) { oldhover = hoverflg, hoverflg = flg; }
 
 public:
    FLOAT3 GetPosition() { return pos; }
    int    GetType() { return type; }
+   int    GetCount() { return count; }
 };
 
 // 地面ブロック管理
@@ -102,6 +103,9 @@ public:
     int  GetMea() { return mea; }
     FLOAT3 GetBlockPos(int num) { return obj[num]->GetPosition(); }
     std::shared_ptr<GroundBlock> GetBlockObj(int num) { return obj[num]; }
+    int GetCount(int num) { return obj[num]->GetCount(); }
+    bool checkBlockExist();
+    
 
     static GroundBlockManager* getInstance()
     {

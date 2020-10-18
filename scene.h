@@ -97,6 +97,8 @@ private:
     bool pause_flg;
     bool SetPosflg;
 
+    int clearTimer;
+
 public:
     DirectX::XMFLOAT4 lightDirection;
     float angle = 0;
@@ -110,6 +112,7 @@ public:
     void Finalize()override;
 
     void Reload(int stage_num);
+    bool clearFlg();
 
     static SceneGame* getInstance()
     {

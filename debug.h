@@ -17,5 +17,4 @@ public:
 	void Debug::setString(const char* format, ...);
 
 	void display(ID3D11DeviceContext*, float r = (1), float g = (1), float b = (1), float sx = (1), float sy = (1));
-
 };

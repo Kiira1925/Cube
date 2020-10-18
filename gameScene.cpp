@@ -57,12 +57,16 @@ void SceneGame::Initialize()
     player = std::make_unique<Player>();
     player->Initialize(new GeometricCube(pFramework->getDevice()));
     SetPosflg = true;
+    clearTimer = 0;
 
     pPause->Initialize();
 } 
 
 void SceneGame::Update(float elapsedTime)
 {
+    if (clearTimer > 120) 
+    { Reload(2); clearTimer = 0; }
+    if (clearFlg()) { clearTimer++; return; }
     if (pPause->Update())return;
     player->Move();
     camera->Updata(elapsedTime);
@@ -83,6 +87,8 @@ void SceneGame::Update(float elapsedTime)
         //blocks->Relese();
         return;
     }
+
+    //if (clearFlg()) { Reload(SceneManager::Instance().GetStageNum() + 1); }
 }
 
 void SceneGame::Render(float elapsedTime)
@@ -129,12 +135,35 @@ void SceneGame::Reload(int stage_num)
     ID3D11Device* device = pFramework->getDevice();
     std::shared_ptr<SkinndeCube> cube = std::make_shared<SkinndeCube>(device, cube_texture, 6);
 
+    blocks->Relese();
+
     blocks = std::make_unique<GroundBlockManager>();
     blocks->SetStageNum(SceneManager::Instance().GetStageNum());
     blocks->Initialize();
     blocks->SetPrimitive(cube);
 
-    SetPosflg = true;
+    for (int i = 0; i < blocks->GetMea(); i++)
+    {
+        if (blocks->GetBlockObj(i)->GetType() == Block::S_block)
+        {
+            player->SetPos(blocks->GetBlockPos(i).x, 0.0f, blocks->GetBlockPos(i).z);
+            SetPosflg = false;
+            break;
+        }
+        else player->SetPos(0.0f, 0.0f, 0.0f);
+    }
 
     pPause->Initialize();
+}
+
+bool SceneGame::clearFlg()
+{
+    if (!blocks->checkBlockExist())
+    {
+        if (player->speed.x == 0 && player->speed.z == 0)
+        {
+            return true;
+        }
+    }
+    return false;
 }

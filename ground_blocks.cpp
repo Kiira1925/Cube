@@ -4,6 +4,7 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include "debug.h"
 
 GroundBlock::GroundBlock(std::shared_ptr<SkinndeCube>& primitive)
 {
@@ -285,4 +286,18 @@ bool GroundBlockManager::GetCsvSize(std::string path, uint32_t* mapX, uint32_t* 
 
     return true;
 
+}
+
+bool GroundBlockManager::checkBlockExist()
+{
+    for (int count = 0; count < mea; count++)
+    {
+        framework::getInstance()->debug->setString("obj.count:%d", obj[count]->GetCount());
+    }
+    for (int count = 0; count < mea; count++)
+    {
+        //framework::getInstance()->debug->setString("obj.count:%f", obj[count]->GetCount());
+        if (obj[count]->GetType() < 4 && obj[count]->GetCount() > 0) return true;
+    }
+    return false;
 }

@@ -40,5 +40,4 @@ public:
 public:
     DirectX::XMMATRIX GetWorldMatrix();
     FLOAT3 GetPos() { return (FLOAT3)pos; }
-
 };
