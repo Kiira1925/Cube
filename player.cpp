@@ -4,10 +4,29 @@
 #include "framework.h"
 #include "blender.h"
 const float upS = 0.5f;
-void Player::Initialize(const wchar_t* objfilename, const char* shaderfilename)
+const float second = 60;
+//void Player::Initialize(GeometricPrimitive* _primitive)
+//{
+//	obj.Initialize();
+//	obj.SetPrimitive(_primitive);
+//
+//	speed.y = upS;
+//	axis.x = 0.0f;
+//	axis.y = 1.0f;
+//	axis.z = 0.0f;
+//	axis.w = 1.0f;
+//	orientation.x = axis.x * sinf(0 / 2);
+//	orientation.y = axis.y * sinf(0 / 2);
+//	orientation.z = axis.z * sinf(0 / 2);
+//	orientation.w = cosf(0 / 2);
+//	scale = obj.scale;
+//	color = obj.color;
+//}
+
+void Player::Initialize(const char* fileName)
 {
 	obj.Initialize();
-	obj.staticLoad(objfilename, shaderfilename);
+	obj.skinnedLoad(fileName);
 
 	speed.y = upS;
 	axis.x = 0.0f;
@@ -21,7 +40,6 @@ void Player::Initialize(const wchar_t* objfilename, const char* shaderfilename)
 	scale = obj.scale;
 	color = obj.color;
 }
-
 
 void Player::Move()
 {
@@ -88,9 +106,9 @@ void Player::Move()
 	if (speed.x != 0 || speed.z != 0)
 	{
 
-		pos.x += speed.x / 60;
-		pos.y += speed.y / 60;
-		pos.z += speed.z / 60;
+		pos.x += speed.x / second;
+		pos.y += speed.y / second;
+		pos.z += speed.z / second;
 		timer++;
 		speed.y -= 0.01;
 		if (timer == 30)
@@ -99,6 +117,7 @@ void Player::Move()
 		}
 		if (timer >= 60)
 		{
+			pos.y = 0;
 			axis.x = 0.0f;
 			axis.y = 1.0f;
 			axis.z = 0.0f;
@@ -116,7 +135,7 @@ void Player::Release()
 	obj.Release();
 }
 
-void Player::Render(const DirectX::XMMATRIX& view, const DirectX::XMMATRIX& projection, const DirectX::XMFLOAT4& lightDir, bool wireframe)
+void Player::Render(const DirectX::XMMATRIX& view, const DirectX::XMMATRIX& projection, const DirectX::XMFLOAT4& lightDir, bool wireframe,float elapsedTime)
 {
 	obj.pos = this->pos;
 
@@ -147,6 +166,21 @@ void Player::Render(const DirectX::XMMATRIX& view, const DirectX::XMMATRIX& proj
 		DirectX::XMStoreFloat4x4(&world, worldMatrix);
 
 		obj.staticObj->render(pFramework->getDeviceContext(), worldViewProjection, world, lightDir, color, wireframe);
+
+	}
+
+	if (obj.skinnedobj)
+	{
+		// ƒ[ƒ‹ƒh•ÏŠ·
+		DirectX::XMMATRIX worldMatrix = GetWorldMatrix();
+
+		// Matrix‚©‚çFloat4x4‚Ö
+		DirectX::XMFLOAT4X4 worldViewProjection;
+		DirectX::XMFLOAT4X4 world;
+		DirectX::XMStoreFloat4x4(&worldViewProjection, worldMatrix * view * projection);
+		DirectX::XMStoreFloat4x4(&world, worldMatrix);
+
+		obj.skinnedobj->render(pFramework->getDeviceContext(), worldViewProjection, world, lightDir, color, wireframe, elapsedTime);
 
 	}
 

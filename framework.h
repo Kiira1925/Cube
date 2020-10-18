@@ -11,6 +11,7 @@
 #include "sprite.h"
 #include "geometric_primitive.h"
 #include "mesh.h"
+#include "skinned_mesh.h"
 
 #include "debug.h"
 #include "misc.h"
@@ -86,6 +87,8 @@ public:
 
 	ID3D11Device* getDevice() { return p_device.Get(); }
 	ID3D11DeviceContext* getDeviceContext() { return p_deviceContext.Get(); }
+	FLOAT GetScreenWidth() { return (FLOAT)SCREEN_WIDTH; }
+	FLOAT GetScreenHeight() { return (FLOAT)SCREEN_HEIGHT; }
 	float getElapsedTime() { return timer.time_interval(); }
 
 	int run()

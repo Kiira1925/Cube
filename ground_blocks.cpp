@@ -1,46 +1,32 @@
 #include "ground_blocks.h"
+#include "scene.h"
 #include <fstream>
 #include <iostream>
 #include <sstream>
 
-int map_data[15][20] =
-{
-    /*     00  01  02  03  04  05  06  07  08  09  10  11  12  13  14  15  16  17  18  19   */
-    /*00*/{ 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64  },
-    /*01*/{ 64,  0,  0,  0,  0, 67, 68,  0,  0, 128, 0,  0,  0,  0,  0,  0,  0,  0,  0, 64  },
-    /*02*/{ 64,128,128,  0,  0, 67, 68,  0,  0, 128, 0, 128,128,128,128, 0, 128,128,128,64  },
-    /*03*/{ 64,  0,128,  0,  0, 65, 66,  0,  0, 128, 0,  0,  0,  0,  0,  0,  0,  0,  0, 64  },
-    /*04*/{ 64,  0,128,  0,  0,  0,  0,  0,  0, 128, 0,  0, 128,128,128,128,128,128, 0, 64  },
-    /*05*/{ 64,  0,128,  0,  0,  0,  0,  0,  0,  0,  0,  0, 128, 0,  0, 128, 0,  0,  0, 64  },
-    /*06*/{ 64,  0,128,  0, 128,128,128,128, 0,  0,  0,  0, 128, 0,  0, 128, 0, 128, 0, 64  },
-    /*07*/{ 64,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 128, 0, 128,128, 0, 128, 0, 64  },
-    /*08*/{ 64,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 128, 0,  0,  0,  0, 128, 0, 64  },
-    /*09*/{ 64,  0,128,128,128,128,  0,  0,  0, 65, 66,  0, 128, 0,128,128,128,128,  0, 64  },
-    /*10*/{ 64,  0,128,  0,  0,  0,  0,  0,  0, 67, 68,  0,  0,  0,  0,  0,  0,  0,  0, 64  },
-    /*11*/{ 64,  0,128,  0,128,  0,128,128,  0, 67, 68,  0,  0,128,  0,  0,  0,  0,  0, 64  },
-    /*12*/{ 64,  0,128,  0,128,  0,128,  0,  0, 67, 68,  0,128,128,  0, 65, 66,  0,  0, 64  },
-    /*13*/{ 64,  0,  0,  0,  0,  0,128,  0,  0, 67, 68,  0,  0,  0,  0, 67, 68,  0,  0,  0, },
-    /*14*/{ 64, 64, 64, 64, 64, 64, 64, 64,  0, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64  },
-};
-
-int map_data2[5][5] =
-{
-    /*     00  01  02  03  04  05  06  07  08  09  10  11  12  13  14  15  16  17  18  19   */
-    /*00*/{ 64, 64, 64, 64, 64, },
-    /*01*/{ 64,  1,  1,  1,  1, },
-    /*02*/{ 64,128,128,  1,  1, },
-    /*03*/{ 64,  1,128,  1,  1, },
-    /*04*/{ 64,  1,128,  1,  1, },
- 
-};
-
 GroundBlock::GroundBlock(std::shared_ptr<GeometricPrimitive>& primitive)
 {
     count = 0;
-    type = Block::D_block;
+    type = Block::I_block;
     pos = { 0.0,-1.0f,0.0f };
 
     obj = primitive;
+}
+
+void GroundBlock::Update()
+{
+    switch (type)
+    {
+    case Block::D_block_1:
+    case Block::D_block_2:
+    case Block::D_block_3:
+        DestroyBlock();
+        break;
+    case Block::C_block:
+        SelectBlock();
+        break;
+    }
+
 }
 
 void GroundBlock::Render(ID3D11DeviceContext* context, const DirectX::XMFLOAT4X4& wvp, const DirectX::XMFLOAT4X4& world, const DirectX::XMFLOAT4& light_dir, const DirectX::XMFLOAT4& materialColor, bool wireframe)
@@ -48,6 +34,34 @@ void GroundBlock::Render(ID3D11DeviceContext* context, const DirectX::XMFLOAT4X4
     obj->render(context,wvp,world,light_dir,materialColor,wireframe);
 }
 
+void GroundBlock::DestroyBlock()
+{
+    if (oldhover == true && hoverflg == false)
+    {
+        leaveflg = true;
+    }
+    if (leaveflg) { count--,leaveflg = false; }
+
+    if (count <= 0)
+    {
+        pos.y -= 1.0f;
+    }
+}
+
+void GroundBlock::SelectBlock()
+{
+    if (hoverflg)
+    {
+        SceneManager::Instance().ChangeScene(SceneGame::getInstance());
+    }
+}
+
+
+//*********************************************************
+//
+// ブロック管理
+//
+//*********************************************************
 void GroundBlockManager::Initialize(int y, int x, std::shared_ptr<GeometricPrimitive>& primitive)
 {
     static int count; // このカウント数分objを生成する
@@ -106,6 +120,7 @@ void GroundBlockManager::Initialize()
 
     // オブジェクト数を取得
     mea = mapX * mapY;
+
 }
 
 void GroundBlockManager::SetPrimitive(std::shared_ptr<GeometricPrimitive> primitive)
@@ -114,32 +129,53 @@ void GroundBlockManager::SetPrimitive(std::shared_ptr<GeometricPrimitive> primit
     {
         obj[i] = std::make_unique<GroundBlock>(primitive);
     }
+
+    // マップからブロックの種類を取得
+    int count = 0;
+    for (int y = 0; y < mapY; y++)
+    {
+        for (int x = 0; x < mapX; x++)
+        {
+            obj[count]->SetType(mapData[y][x]);
+            count++;
+        }
+    }
 }
 
 void GroundBlockManager::Update()
 {
+    for (int count = 0 ; count < mea ;count++)
+    {
+        obj[count]->Update();
+    }
 }
 
 void GroundBlockManager::Render(ID3D11DeviceContext* context, const DirectX::XMMATRIX& view, const DirectX::XMMATRIX& projection, const DirectX::XMFLOAT4& light_dir, bool wireframe)
 {
-    static int count = 0;
+    int count = 0;
     for (int y = 0; y < mapY; y++) {
         for (int x = 0; x < mapX; x++) {
-            if (mapData[y][x] < 1) continue;
+            if (mapData[y][x] < 0) continue;
             DirectX::XMMATRIX W, S, R, T;
             DirectX::XMFLOAT4X4 wvp;
             DirectX::XMFLOAT4X4 world;
 
+            int posx = x * 1.0f, posz = y * 1.0f;
+
             S = DirectX::XMMatrixScaling(1.0f, 1.0f, 1.0f);
             R = DirectX::XMMatrixRotationRollPitchYaw(0, 0, 0);
-            T = DirectX::XMMatrixTranslation(x * 1.0f, 0, y * 1.0f);
+            T = DirectX::XMMatrixTranslation(posx, obj[count]->GetPosition().y,posz );
             W = S * R * T;
+
+            obj[count]->SetBlockPosXZ(posx, posz);
+
             // ★MATRIX -> FLOAT4X4
             DirectX::XMStoreFloat4x4(&world, W);
             DirectX::XMStoreFloat4x4(&wvp, W * view * projection);
             DirectX::XMFLOAT4 material_color = { 0.0f,0.6f,0.5f,1.0f };
 
             obj[count]->Render(context,wvp, world, light_dir, material_color, wireframe);
+            count++;
         }
     }
 }

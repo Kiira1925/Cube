@@ -8,8 +8,10 @@
 enum Block
 {
     N_block = -1, // ブロックを置かない場所
-    D_block,    // 破壊可能ブロック
-    I_block,    // 破壊不可ブロック
+    I_block,      // 破壊不可ブロック
+    D_block_1,    // 破壊可能ブロック
+    D_block_2,    // 破壊可能ブロック
+    D_block_3,    // 破壊可能ブロック
     C_block,    // セレクトブロック
     S_block,    // スタートブロック
 };
@@ -21,17 +23,30 @@ private:
     int count; // 落ちるまでのカウント
     int type;
     FLOAT3 pos;
-
+    bool hoverflg;
+    bool oldhover;
+    bool leaveflg;
 
     std::shared_ptr<GeometricPrimitive> obj;
 
 public:
     GroundBlock(std::shared_ptr<GeometricPrimitive>& primitive);
     ~GroundBlock() {}
-    //void Update();
+    void Update();
     void Render(ID3D11DeviceContext* context, const DirectX::XMFLOAT4X4& wvp, const DirectX::XMFLOAT4X4& world, const DirectX::XMFLOAT4& light_dir, const DirectX::XMFLOAT4& materialColor, bool wireframe);
 
-    bool StartFlg(int type) {} // スタートブロックにいるか
+public: // 各ブロックの処理関数
+    void DestroyBlock();
+    void SelectBlock();
+
+public: // Set関数
+    void SetType(int type) { this->type = type , this->count = type; }
+    void SetBlockPosXZ(int x, int z) { this->pos.x = x, this->pos.z = z; }
+    void   SetHover(bool flg) { oldhover = hoverflg, hoverflg = flg; }
+
+public:
+   FLOAT3 GetPosition() { return pos; }
+
 };
 
 // 地面ブロック管理
@@ -39,7 +54,7 @@ public:
 class GroundBlockManager
 {
 private:
-    static const int objMaX = 100;
+    static const int objMaX = 1000;
     std::shared_ptr<GroundBlock> obj[objMaX];
 
     // マップデータ取得
@@ -62,4 +77,21 @@ public:
     void SetStageNum(int stage) { stageNum = stage; }
     bool LoadMapData(const char* fileName, char** map);
     bool GetCsvSize(std::string path, uint32_t* mapX, uint32_t* mapY);
+public:
+    void SetBlockHover(int num, bool flg) { obj[num]->SetHover(flg); }
+
+public:
+    int  GetMapX() { return mapX; }
+    int  GetMapY() { return mapY; }
+    int  GetMea() { return mea; }
+    FLOAT3 GetBlockPos(int num) { return obj[num]->GetPosition(); }
+
+    static GroundBlockManager* getInstance()
+    {
+        static GroundBlockManager instance;
+        return &instance;
+    }
+
 };
+
+#define GBManager GroundBlockManager::getInstance()

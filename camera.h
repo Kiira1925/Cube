@@ -1,81 +1,64 @@
 #pragma once
 
 #include	<DirectXMath.h>
-#include	"vector.h"
 
 
-/*******************************************************************************
-	「カメラ」クラス
-*******************************************************************************/
 class Camera
 {
+private:
+    DirectX::XMFLOAT4X4 view; // 視野変換行列
+    DirectX::XMFLOAT4X4 projection; // 投影変換行列
+    DirectX::XMFLOAT3 eye; // 視点
+    DirectX::XMFLOAT3 focus; // 注視点
+    DirectX::XMFLOAT3 up; // 上ベクトル
+    float fov; // 画角
+    float aspect; // アスペクト比
+    float nearZ; // ニアクリップ面までの距離
+    float farZ; // ファークリップ面までの距離
 public:
-	/*******************************************************************************
-	TODO:01 カメラ状態管理番号の宣言
-	説明    前回の敵行動管理番号同様、カメラについても管理番号を宣言する
-	--------------------------------------------------------------------------------
-	手順    enumで以下の名称の定数を宣言せよ
-			・「監視カメラ」
-			・「相対位置固定カメラ」
-			・「追跡カメラ」
-			・「3人称カメラ(TPS)」
-			・「1人称カメラ(FPS)」
-			・「カメラ管理番号最大値」	←これは無くても良いが、あると便利
-	*******************************************************************************/
-	enum CAMERA_ACT
-	{
-		SurveillanceCamera,
-		FixedRelativePositionCamera,
-		TrackingCamera,
-		ThirdPersonCamera,
-		FirstPersonCamera,
-		MaximumCameraManagementNumber,
-	};
+    // 行列更新
+    void Active();
 
+    // setter
+    void SetPerspective(float fov, float aspect,
+        float nearZ, float farZ);
+    void SetEye(const DirectX::XMFLOAT3& eye);
+    void SetFocus(const DirectX::XMFLOAT3& focus);
+    void SetUp(const DirectX::XMFLOAT3& up);
+
+    // getter
+    const DirectX::XMFLOAT4X4& GetView() const { return view; }
+    const DirectX::XMFLOAT4X4& GetProjection() const { return projection; }
+    const DirectX::XMFLOAT3& GetEye() const { return eye; }
+    const DirectX::XMFLOAT3& GetFocus() const { return focus; }
+    const DirectX::XMFLOAT3& GetUp() const { return up; }
+};
+
+
+class MainCamera : public Camera
+{
+public:
+    enum MODE
+    {
+        MODE_FIX,
+        MODE_CHASE,
+        MODE_NUM
+    };
 
 private:
-	/*******************************************************************************
-	TODO:02 カメラ状態保存用変数の定義
-	説明    TODO01で作成したenumを保存する為の変数を作成する
-			今回は扱い易さ優先でint型で宣言する
-	--------------------------------------------------------------------------------
-	手順    int型変数「状態」を定義する
-			また、コンストラクタ内で「監視カメラ」の値で初期化する
-	*******************************************************************************/
-	int	state;
+    MODE mode = MODE_FIX; //カメラモード
+    float time = 0.0f; //振動時間
+    float range = 0.0f; //振動幅
+    DirectX::XMFLOAT3 moveTarget; // ターゲット
+    void Vibrate(float elapsedTime); //振動カメラ
+    void Chase(float elapsedTime); //追跡カメラ
+    void Fix(float elapsedTime); //固定カメラ
 
 public:
-	VECTOR3	pos;				//	「位置(座標)」
-	VECTOR3	target;				//	「注視点」
-	DirectX::XMMATRIX	projection;			//	「投影行列」
-
-	Camera();
-
-	/*******************************************************************************
-	TODO:03 カメラ更新関数の宣言
-	説明    カメラの切り替え、または更新を行う為の関数を用意する
-	--------------------------------------------------------------------------------
-	手順    以下のメンバ関数を追加する
-			・void 更新()
-			※必要に応じてメンバを追加しても良い
-	*******************************************************************************/
-	void Updata();
-
-	bool push_beforeflg;
-	bool push_afterflg;
-
-	void SLCamera();
-	void FRPCamera();
-	void TCamera();
-	void TPCamera();
-	void FPCamera();
-
-
-
-
-	DirectX::XMMATRIX	SetOrthographicMatrix(float w, float h, float znear, float zfar);			//	平行投影行列設定関数
-	DirectX::XMMATRIX	SetPerspectiveMatrix(float fov, float aspect, float znear, float zfar);	//	透視投影行列設定関数
-	DirectX::XMMATRIX	GetViewMatrix();															//	ビュー行列取得関数
-	DirectX::XMMATRIX	GetProjectionMatrix() { return	projection; }								//	投影行列取得関数
-
+    static const constexpr float FAR_DIST = 150.0f;
+    static const constexpr float NEAR_DIST = 50.0f;
+    void Updata(float elapsedTime); //カメラ更新
+    void SetMode(MODE mode); //モード設定
+    void SetVibration(float range, float timer); //振動開始
+    void SetmodeTarget(DirectX::XMFLOAT3 modeTarget) { this->moveTarget = modeTarget; }
 };

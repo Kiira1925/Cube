@@ -2,6 +2,9 @@
 #include "framework.h"
 #include <DirectXMath.h>
 #include <memory>
+#include "camera.h"
+#include "ground_blocks.h"
+#include "player.h"
 
 
 #define FbxMax 10
@@ -26,9 +29,12 @@ public:
 
 class SceneTitle : public Scene
 {
+private:
+    std::unique_ptr<MainCamera> camera1;
+    std::unique_ptr<Player> player;
+    std::unique_ptr<GroundBlockManager> block;
+
 public:
-    DirectX::XMMATRIX view;
-    DirectX::XMMATRIX projection;
     DirectX::XMFLOAT4 lightDirection;
 
 public:
@@ -49,16 +55,17 @@ public:
 class SceneGame : public Scene
 {
 private:
-
+    std::unique_ptr<MainCamera> camera;
+    std::unique_ptr<GroundBlockManager> blocks;
+    std::unique_ptr<Player> player;
 
 private:
     int timer;
     bool pause_flg;
 
 public:
-    DirectX::XMMATRIX view;
-    DirectX::XMMATRIX projection;
     DirectX::XMFLOAT4 lightDirection;
+    DirectX::XMFLOAT4 lightBG;
     float angle = 0;
 
 public:

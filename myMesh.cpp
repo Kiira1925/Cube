@@ -10,10 +10,19 @@ void MyMesh::Initialize()
 	color = VECTOR4(1, 1, 1, 1);
 
 	// ƒ‚ƒfƒ‹“Ç‚Ýž‚Ý
+	skinnedobj = nullptr;
+	staticObj = nullptr;
 	primitive = nullptr;
 	staticObj = nullptr;
 }
 
+bool MyMesh::skinnedLoad(const char* fbxFilename,bool clockflg)
+{
+	skinnedobj = new Skinned_Mesh(pFramework->getDevice(), fbxFilename, clockflg);
+	bLoad = true;
+
+	return true;
+}
 
 bool MyMesh::staticLoad(const wchar_t* objfilename, const char* shaderfilename)
 {
@@ -44,7 +53,7 @@ void MyMesh::Release()
 	bLoad = false;
 }
 
-void MyMesh::Render(const DirectX::XMMATRIX& view, const DirectX::XMMATRIX& projection, const DirectX::XMFLOAT4& light_dir ,bool wireframe)
+void MyMesh::Render(const DirectX::XMMATRIX& view, const DirectX::XMMATRIX& projection, const DirectX::XMFLOAT4& light_dir ,bool wireframe, float elapsedTime)
 {
 	if (primitive)
 	{
@@ -73,6 +82,21 @@ void MyMesh::Render(const DirectX::XMMATRIX& view, const DirectX::XMMATRIX& proj
 		DirectX::XMStoreFloat4x4(&world, worldMatrix);
 
 		staticObj->render(pFramework->getDeviceContext(), worldViewProjection, world, light_dir, color, wireframe);
+
+	}
+
+	if (skinnedobj)
+	{
+		// ƒ[ƒ‹ƒh•ÏŠ·
+		DirectX::XMMATRIX worldMatrix = GetWorldMatrix();
+
+		// Matrix‚©‚çFloat4x4‚Ö
+		DirectX::XMFLOAT4X4 worldViewProjection;
+		DirectX::XMFLOAT4X4 world;
+		DirectX::XMStoreFloat4x4(&worldViewProjection, worldMatrix * view * projection);
+		DirectX::XMStoreFloat4x4(&world, worldMatrix);
+
+		skinnedobj->render(pFramework->getDeviceContext(), worldViewProjection, world, light_dir, color, wireframe, elapsedTime);
 
 	}
 }

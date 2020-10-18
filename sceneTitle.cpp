@@ -1,27 +1,55 @@
 #include "scene.h"
-
-#include "camera.h"
-#include "player.h"
-
-Camera camera1;
-Player player1;
+#include "hover.h"
+#include "blender.h"
 
 void SceneTitle::Initialize()
 {
-    // 投影変換行列
-    projection = camera1.GetProjectionMatrix();
+    ID3D11Device* device = pFramework->getDevice();
 
     // 光源(平行光)
-    lightDirection = DirectX::XMFLOAT4(1, 10, 2, 0);
+    lightDirection = DirectX::XMFLOAT4(0, -1, 0, 0);
+    camera1 = std::make_unique<MainCamera>();
 
-    player1.Initialize(L"./Data/cube/cube_setM.obj", "not_light");
+    // ブロック設定
+    block = std::make_unique<GroundBlockManager>();
+    std::shared_ptr<GeometricPrimitive> cube = std::make_shared<GeometricCube>(device);
+
+    block = std::make_unique<GroundBlockManager>();
+    block->SetStageNum(0);
+    block->Initialize();
+    block->SetPrimitive(cube);
+
+    // プレイヤー
+    player = std::make_unique<Player>();
+    player->Initialize("./Data/cube/cube_setM.fbx");
+    player->SetPos(FLOAT3(2.0f, 0.0f, 0.0f));
+
+    // ビュー設定
+    camera1->SetEye(DirectX::XMFLOAT3(0.0f, 20.0f, -10.0f));
+    camera1->SetFocus(DirectX::XMFLOAT3(5, 0, 5));
+    camera1->SetUp(DirectX::XMFLOAT3(0.0f, 1.0f, 0.0f));
+
+    //　プロジェクションの設定
+    camera1->SetPerspective(DirectX::XMConvertToRadians(30), pFramework->GetScreenWidth() / pFramework->GetScreenHeight(), 0.1f, 1000.0f);
+
 }
 
 void SceneTitle::Update(float elapsedTime)
 {
-    player1.Move();
-    camera1.Updata();
+    player->Move();
+    block->Update();
 
+    for (int i = 0; i < block->GetMea(); i++)
+    {
+        if (hover(player->GetPos(), block->GetBlockPos(i)))
+        {
+            block->SetBlockHover(i, true);
+        }
+        else block->SetBlockHover(i, false);
+    }
+
+    camera1->Updata(elapsedTime);
+ 
     if (GetAsyncKeyState('V') & 1)
     {
         SceneManager::Instance().ChangeScene(SceneGame::getInstance());
@@ -30,9 +58,14 @@ void SceneTitle::Update(float elapsedTime)
 }
 void SceneTitle::Render(float elapsedTime)
 {
+    ID3D11DeviceContext* context = pFramework->getDeviceContext();
 
-    // ビュー変換行列
-    view = camera1.GetViewMatrix();
+    blender::Set(blender::BS_ALPHA);
 
-    player1.Render(view, projection, lightDirection,false);
+    DirectX::XMMATRIX view = DirectX::XMLoadFloat4x4(&camera1->GetView());
+    DirectX::XMMATRIX projection = DirectX::XMLoadFloat4x4(&camera1->GetProjection());
+
+    player->Render(view, projection, lightDirection, false, elapsedTime);
+    block->Render(context, view, projection, lightDirection, false);
+
 }

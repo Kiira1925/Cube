@@ -118,8 +118,8 @@ bool framework::initialize()
         sprites[1] = std::make_unique<Sprite>(pFramework->getDevice(), L"./Data/Menu/Pause.png");
         sprites[2] = std::make_unique<Sprite>(pFramework->getDevice(), L"./Data/Menu/Aicon.png");
 
-        // soundBGM = soundManager->CreateSoundSource("Data/Sounds/BGM.wav");
-        // soundBGM->Play(true);
+        //soundBGM = soundManager->CreateSoundSource("Data/Sounds/BGM.wav");
+        //soundBGM->Play(true);
 
         SceneManager::Instance().ChangeScene(SceneTitle::getInstance());
 
@@ -244,7 +244,7 @@ void framework::render(float elapsed_time/*Elapsed seconds from last frame*/)
     debug->setString("BenchMark:%d", min);
     blender::Set(blender::BS_ADD);
     // text->textout(p_deviceContext.Get(), s, 10, 10, 24, 32);
-    debug->display(p_deviceContext.Get(), 0.0f, 0.0f, 0.0f, 10.0f, 10.0f);
+    debug->display(p_deviceContext.Get(), 1.0f, 1.0f, 1.0f, 10.0f, 10.0f);
 
     ///////////////////////////////////////////////////
     //		•`‰æI—¹
