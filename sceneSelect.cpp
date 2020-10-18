@@ -20,7 +20,7 @@ void SceneSelect::Initialize()
 
     // ƒuƒƒbƒNİ’è
     block = std::make_unique<GroundBlockManager>();
-    std::shared_ptr<SkinndeCube> cube = std::make_shared<SkinndeCube>(device, cube_texture, 6);
+    std::shared_ptr<SkinnedCube> cube = std::make_shared<SkinnedCube>(device, cube_texture, 6);
 
     block = std::make_unique<GroundBlockManager>();
     block->SetStageNum(1);

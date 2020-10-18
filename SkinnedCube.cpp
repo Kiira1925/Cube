@@ -1,6 +1,6 @@
-#include "SkinndeCube.h"
+#include "SkinnedCube.h"
 
-void SkinndeCube::CreateBuffers(ID3D11Device * device, UINT num, Vertex * vertices, UINT numV, UINT * indices, UINT numI)
+void SkinnedCube::CreateBuffers(ID3D11Device * device, UINT num, Vertex * vertices, UINT numV, UINT * indices, UINT numI)
 {
 	HRESULT hr;
 	D3D11_BUFFER_DESC buffer_desc;
@@ -58,7 +58,7 @@ void SkinndeCube::CreateBuffers(ID3D11Device * device, UINT num, Vertex * vertic
 /*追加のインクルードディレクトリに追加されてないなら相対パスに変更*/
 #include <WICTextureLoader.h>
 
-void SkinndeCube::LoadTexture(ID3D11Device * device,FileName texture)
+void SkinnedCube::LoadTexture(ID3D11Device * device,FileName texture)
 {
 	this->texture.push_back(Texture());
 	UINT num = this->texture.size() - 1;
@@ -71,7 +71,7 @@ void SkinndeCube::LoadTexture(ID3D11Device * device,FileName texture)
 
 }
 
-SkinndeCube::SkinndeCube(ID3D11Device * device, FileName texture[], UINT size)
+SkinnedCube::SkinnedCube(ID3D11Device * device, FileName texture[], UINT size)
 {
 	HRESULT hr = S_OK;
 
@@ -371,7 +371,7 @@ SkinndeCube::SkinndeCube(ID3D11Device * device, FileName texture[], UINT size)
 	}
 }
 
-SkinndeCube::~SkinndeCube()
+SkinnedCube::~SkinnedCube()
 {
 	if (constant_buffer)constant_buffer->Release();
 	if (depth_stencil_state)depth_stencil_state->Release();
@@ -381,7 +381,7 @@ SkinndeCube::~SkinndeCube()
 	if (index_buffer[1])index_buffer[1]->Release();
 	if (sampler_state)sampler_state->Release();
 }
-void SkinndeCube::Render(ID3D11DeviceContext *context, UINT num,
+void SkinnedCube::Render(ID3D11DeviceContext *context, UINT num,
 	const XMFLOAT4X4 & wvp,
 	const XMFLOAT4X4 & world,
 	const XMFLOAT4 & material_color)

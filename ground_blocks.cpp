@@ -6,7 +6,7 @@
 #include <sstream>
 #include "debug.h"
 
-GroundBlock::GroundBlock(std::shared_ptr<SkinndeCube>& primitive)
+GroundBlock::GroundBlock(std::shared_ptr<SkinnedCube>& primitive)
 {
     count = 0;
     type = Block::I_block;
@@ -114,7 +114,7 @@ void GroundBlock::StegeBlock(int num)
 // ブロック管理
 //
 //*********************************************************
-void GroundBlockManager::Initialize(int y, int x, std::shared_ptr<SkinndeCube>& primitive)
+void GroundBlockManager::Initialize(int y, int x, std::shared_ptr<SkinnedCube>& primitive)
 {
     static int count; // このカウント数分objを生成する
     // 中に値が入っている可能性を考えて初期化する
@@ -175,7 +175,7 @@ void GroundBlockManager::Initialize()
 
 }
 
-void GroundBlockManager::SetPrimitive(std::shared_ptr<SkinndeCube> primitive)
+void GroundBlockManager::SetPrimitive(std::shared_ptr<SkinnedCube> primitive)
 {
     for (int i = 0; i < mea;i++)
     {

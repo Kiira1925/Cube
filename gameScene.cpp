@@ -10,7 +10,7 @@
 
 #include "hover.h"
 
-#include "SkinndeCube.h"
+#include "SkinnedCube.h"
 
 #include <memory>
 #include <DirectXMath.h>
@@ -56,7 +56,7 @@ void SceneGame::Initialize()
     player = std::make_unique<Player>();
     player->Initialize("./Data/cube/cube_setM.fbx");
 
-    std::shared_ptr<SkinndeCube> cube = std::make_shared<SkinndeCube>(device, cube_texture, 6);
+    std::shared_ptr<SkinnedCube> cube = std::make_shared<SkinnedCube>(device, cube_texture, 6);
     blocks = std::make_unique<GroundBlockManager>();
     blocks->SetStageNum(SceneManager::Instance().GetStageNum());
     blocks->Initialize();
@@ -147,7 +147,7 @@ void SceneGame::Finalize()
 void SceneGame::Reload(int stage_num)
 {
     ID3D11Device* device = pFramework->getDevice();
-    std::shared_ptr<SkinndeCube> cube = std::make_shared<SkinndeCube>(device, cube_texture, 6);
+    std::shared_ptr<SkinnedCube> cube = std::make_shared<SkinnedCube>(device, cube_texture, 6);
 
     blocks->Relese();
 

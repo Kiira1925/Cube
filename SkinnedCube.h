@@ -9,7 +9,7 @@ using namespace DirectX;
 using namespace std;
 typedef const wchar_t* FileName;
 
-class SkinndeCube final
+class SkinnedCube final
 {
 private:
 	struct Vertex
@@ -50,8 +50,8 @@ public:
 	//コンストラクタ
 	//FileName texture[] -> ロードしてくるテクスチャのファイルアドレスの配列
 	//UINT size -> 配列の要素数
-	SkinndeCube(ID3D11Device* device,FileName texture[],UINT size);
-	~SkinndeCube();
+	SkinnedCube(ID3D11Device* device,FileName texture[],UINT size);
+	~SkinnedCube();
 
 	//描画関数
 	//UINT num -> 使用するテクスチャ番号

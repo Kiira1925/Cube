@@ -117,11 +117,11 @@ bool framework::initialize()
         sprites[0] = std::make_unique<Sprite>(pFramework->getDevice(), L"./Data/Menu/BB.png");
         sprites[1] = std::make_unique<Sprite>(pFramework->getDevice(), L"./Data/Menu/Pause.png");
         sprites[2] = std::make_unique<Sprite>(pFramework->getDevice(), L"./Data/Menu/Aicon.png");
-        sprites[3] = std::make_unique<Sprite>(pFramework->getDevice(), L"./Data/Menu/WB.png");
+        // sprites[3] = std::make_unique<Sprite>(pFramework->getDevice(), L"./Data/Menu/WB.png");
 
         soundSE[0] = soundManager->CreateSoundSource("Data/Sounds/SE/select.wav");
         soundSE[1] = soundManager->CreateSoundSource("Data/Sounds/SE/check.wav");
-        //soundBGM->Play(true);
+        // soundBGM->Play(true);
 
         SceneManager::Instance().SetScene(SceneTitle::getInstance());
         if (FAILED(hr))		return false;

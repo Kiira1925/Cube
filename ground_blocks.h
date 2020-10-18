@@ -1,6 +1,6 @@
 #pragma once
 #include "geometric_primitive.h"
-#include "SkinndeCube.h"
+#include "SkinnedCube.h"
 #include "vector.h"
 #include <string>
 #include <memory>
@@ -40,10 +40,10 @@ private:
     bool oldhover;
     bool leaveflg;
 
-    std::shared_ptr<SkinndeCube> obj;
+    std::shared_ptr<SkinnedCube> obj;
 
 public:
-    GroundBlock(std::shared_ptr<SkinndeCube>& primitive);
+    GroundBlock(std::shared_ptr<SkinnedCube>& primitive);
     ~GroundBlock() {}
     void Update();
     void Render(ID3D11DeviceContext* context,const DirectX::XMFLOAT4X4& wvp, const DirectX::XMFLOAT4X4& world);
@@ -83,14 +83,14 @@ private:
     char fileNameStage[256];    // ñºëOì«çûÇ›óp
 
 public:
-    void Initialize(int x, int y, std::shared_ptr<SkinndeCube>& primitive);
+    void Initialize(int x, int y, std::shared_ptr<SkinnedCube>& primitive);
     void Initialize();
     void Update();
     void Render(ID3D11DeviceContext* context, const DirectX::XMMATRIX& view, const DirectX::XMMATRIX& projection);
     void Relese();
 
 public:
-    void SetPrimitive(std::shared_ptr<SkinndeCube> primitive);
+    void SetPrimitive(std::shared_ptr<SkinnedCube> primitive);
     void SetStageNum(int stage) { stageNum = stage; }
     bool LoadMapData(const char* fileName, char** map);
     bool GetCsvSize(std::string path, uint32_t* mapX, uint32_t* mapY);
