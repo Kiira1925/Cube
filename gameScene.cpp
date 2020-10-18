@@ -79,8 +79,8 @@ void SceneGame::Update(float elapsedTime)
 
     if (GetAsyncKeyState('V') & 1)
     {
-        SceneManager::Instance().ChangeScene(SceneTitle::getInstance());
-        blocks->Relese();
+        SceneManager::Instance().ChangeScenePerformance(SceneTitle::getInstance());
+        //blocks->Relese();
         return;
     }
 }
@@ -119,3 +119,22 @@ void SceneGame::Render(float elapsedTime)
     pPause->Draw();
 }
 
+void SceneGame::Finalize()
+{
+    blocks->Relese();
+}
+
+void SceneGame::Reload(int stage_num)
+{
+    ID3D11Device* device = pFramework->getDevice();
+    std::shared_ptr<SkinndeCube> cube = std::make_shared<SkinndeCube>(device, cube_texture, 6);
+
+    blocks = std::make_unique<GroundBlockManager>();
+    blocks->SetStageNum(SceneManager::Instance().GetStageNum());
+    blocks->Initialize();
+    blocks->SetPrimitive(cube);
+
+    SetPosflg = true;
+
+    pPause->Initialize();
+}

@@ -60,7 +60,7 @@ private:
 public:
 	std::unique_ptr<Sprite>							sprites[1024];
 	std::unique_ptr<SoundManager>					soundManager;
-	std::unique_ptr<SoundSource>					soundSE;
+	std::unique_ptr<SoundSource>					soundSE[10];
 	std::unique_ptr<SoundSource>					soundBGM;
 
 

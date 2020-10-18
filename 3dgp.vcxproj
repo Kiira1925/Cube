@@ -178,7 +178,7 @@
     <ClCompile Include="player.cpp" />
     <ClCompile Include="scene.cpp" />
     <ClCompile Include="sceneManager.cpp" />
-    <ClCompile Include="sceneSerect.cpp" />
+    <ClCompile Include="sceneSelect.cpp" />
     <ClCompile Include="sceneTitle.cpp" />
     <ClCompile Include="shader.cpp" />
     <ClCompile Include="SkinndeCube.cpp" />

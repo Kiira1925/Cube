@@ -1,9 +1,8 @@
 #include "scene.h"
 #include "hover.h"
 #include "blender.h"
-#include "SkinndeCube.h"
 
-void SceneTitle::Initialize()
+void SceneSelect::Initialize()
 {
     ID3D11Device* device = pFramework->getDevice();
 
@@ -13,7 +12,7 @@ void SceneTitle::Initialize()
 
     //” 
     cube_texture[0] = L"./Data/Floor/FloorS.png";
-    cube_texture[1] = L"./Data/Floor/Floor0.png";
+    cube_texture[1] = L"./Data/Floor/Floor0.png";  
     cube_texture[2] = L"./Data/Floor/Floor1.png";
     cube_texture[3] = L"./Data/Floor/Floor2.png";
     cube_texture[4] = L"./Data/Floor/Floor3.png";
@@ -24,7 +23,7 @@ void SceneTitle::Initialize()
     std::shared_ptr<SkinndeCube> cube = std::make_shared<SkinndeCube>(device, cube_texture, 6);
 
     block = std::make_unique<GroundBlockManager>();
-    block->SetStageNum(0 );
+    block->SetStageNum(1);
     block->Initialize();
     block->SetPrimitive(cube);
 
@@ -43,7 +42,7 @@ void SceneTitle::Initialize()
 
 }
 
-void SceneTitle::Update(float elapsedTime)
+void SceneSelect::Update(float elapsedTime)
 {
     player->Move();
     block->Update();
@@ -58,16 +57,16 @@ void SceneTitle::Update(float elapsedTime)
     }
 
     camera1->Updata(elapsedTime);
- 
+    camera1->SetmodeTarget(DirectX::XMFLOAT3(player->GetPos().x, player->GetPos().y, player->GetPos().z));
+
     if (GetAsyncKeyState('V') & 1)
     {
-        SceneManager::Instance().SetStageNum(2);
-        //SceneManager::Instance().ChangeScene(SceneGame::getInstance());
-        SceneManager::Instance().ChangeScenePerformance(SceneGame::getInstance());
+        SceneManager::Instance().ChangeScene(SceneGame::getInstance());
         return;
     }
 }
-void SceneTitle::Render(float elapsedTime)
+
+void SceneSelect::Render(float elapsedTime)
 {
     ID3D11DeviceContext* context = pFramework->getDeviceContext();
 
@@ -81,7 +80,7 @@ void SceneTitle::Render(float elapsedTime)
 
 }
 
-void SceneTitle::Finalize()
+void SceneSelect::Finalize()
 {
 
 }

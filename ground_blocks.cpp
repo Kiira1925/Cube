@@ -93,7 +93,7 @@ void GroundBlock::SelectBlock()
 {
     if (hoverflg)
     {
-        SceneManager::Instance().ChangeScene(SceneSerect::getInstance());
+        SceneManager::Instance().ChangeScene(SceneSelect::getInstance());
     }
 }
 
@@ -102,7 +102,8 @@ void GroundBlock::StegeBlock(int num)
     if (hoverflg)
     {
         SceneManager::Instance().SetStageNum(num);
-        SceneManager::Instance().ChangeScene(SceneGame::getInstance());
+        //SceneManager::Instance().ChangeScene(SceneGame::getInstance());
+        SceneManager::Instance().ChangeScenePerformance(SceneGame::getInstance());
     }
 }
 

@@ -28,6 +28,7 @@ public:
     //virtual void Release() = 0;
     virtual void Update(float elapsedTime) = 0;
     virtual void Render(float elapsedTime) = 0;
+    virtual void Finalize() = 0;
     
 };
 
@@ -48,6 +49,7 @@ public:
     void Initialize()override;
     void Update(float elapsedTime)override;
     void Render(float elapsedTime)override;
+    void Finalize()override;
 
     static SceneTitle* getInstance()
     {
@@ -56,7 +58,7 @@ public:
     }
 };
 
-class SceneSerect : public Scene
+class SceneSelect : public Scene
 {
 private:
     std::unique_ptr<MainCamera> camera1;
@@ -67,16 +69,17 @@ public:
     DirectX::XMFLOAT4 lightDirection;
 
 public:
-    SceneSerect() {}
-    ~SceneSerect() {}
+    SceneSelect() {}
+    ~SceneSelect() {}
 
     void Initialize()override;
     void Update(float elapsedTime)override;
     void Render(float elapsedTime)override;
+    void Finalize()override;
 
-    static SceneSerect* getInstance()
+    static SceneSelect* getInstance()
     {
-        static SceneSerect instance;
+        static SceneSelect instance;
         return &instance;
     }
 };
@@ -104,6 +107,9 @@ public:
     void Initialize()override;
     void Update(float elapsedTime)override;
     void Render(float elapsedTime)override;
+    void Finalize()override;
+
+    void Reload(int stage_num);
 
     static SceneGame* getInstance()
     {
@@ -115,6 +121,7 @@ public:
 
 //*******************************************************************
 
+enum CHANGE_PROCESS { Set, Out, In, Fin };
 
 //**********************************************
 //
@@ -124,12 +131,21 @@ public:
 class SceneManager
 {
 private:
-    Scene* currentScene;
+   // Scene* currentScene;
     int stageNum = 0;
+    Scene*  currentScene;
+    Scene*  nextScene;
+    int     change_timer;
+    bool    change_flg;
+
+    CHANGE_PROCESS currentProcess;
 private:
-    SceneManager() {}
+    SceneManager();
     ~SceneManager() {}
 public:
+    void changeProcessing();
+    void changeProcessDraw();
+
     static SceneManager& Instance()
     {
         static SceneManager instance;
@@ -138,10 +154,12 @@ public:
 
     void Update();
     void Render();
+    void SetScene(Scene* newScene);
     void ChangeScene(Scene *newScene);
 
 public:
     int GetStageNum() { return stageNum; }
 public:
     void SetStageNum(int stageNum) { this->stageNum = stageNum; }
+    void ChangeScenePerformance(Scene* newScene);
 };

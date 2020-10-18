@@ -21,7 +21,7 @@ public:
 	void Initialize();
 	bool Update();
 	void Draw();
-	void switch_pause() { pause_flg = !pause_flg; }
+	void switch_pause() { pause_flg = !pause_flg; pFramework->soundSE[1]->Play(false); }
 
 	static PauseMenu* getInstance()
 	{

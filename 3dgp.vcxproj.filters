@@ -117,7 +117,7 @@
     <ClCompile Include="sceneTitle.cpp">
       <Filter>Source\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="sceneSerect.cpp">
+    <ClCompile Include="sceneSelect.cpp">
       <Filter>Source\Scene</Filter>
     </ClCompile>
   </ItemGroup>

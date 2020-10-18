@@ -12,8 +12,16 @@ bool PauseMenu::Update()
 {
 	if (GetAsyncKeyState('P') & 1) { switch_pause(); }
 	if (!pause_flg) return false;
-	if (GetAsyncKeyState(VK_DOWN) & 1) { cursor++; }
-	if (GetAsyncKeyState(VK_UP) & 1) { cursor--; }
+	if (GetAsyncKeyState(VK_DOWN) & 1)
+	{
+		cursor++; 
+		pFramework->soundSE[0]->Play(false);
+	}
+	if (GetAsyncKeyState(VK_UP) & 1)
+	{
+		cursor--;
+		pFramework->soundSE[0]->Play(false);
+	}
 
 	if (cursor >= ITEM_MAX) { cursor = CONTINUE; }
 	if (cursor < CONTINUE) { cursor = END; }
@@ -25,12 +33,17 @@ bool PauseMenu::Update()
 		break;
 	case RESTART:
 		// ステージリセット処理
+		if (GetAsyncKeyState(' ') & 1)
+		{
+			switch_pause();
+			SceneGame::getInstance()->Reload(2);
+		}
 		break;
 	case RETURN_TO_STAGESELECT:
 		if (GetAsyncKeyState(' ') & 1)
 		{
 			switch_pause();
-			SceneManager::Instance().ChangeScene(SceneTitle::getInstance());
+			SceneManager::Instance().ChangeScene(SceneSelect::getInstance());
 		}
 		break;
 	case RETURN_TO_TITLE:
@@ -41,6 +54,10 @@ bool PauseMenu::Update()
 		}
 		break;
 	case END:
+		if (GetAsyncKeyState(' ') & 1)
+		{
+			SendMessage(pFramework->hwnd, WM_CLOSE, NULL, NULL);
+		}
 		break;
 	case ITEM_MAX:
 		cursor = CONTINUE;
