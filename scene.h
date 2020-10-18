@@ -162,7 +162,10 @@ public:
     void ChangeScene(Scene *newScene);
 
 public:
-    int GetStageNum() { return stageNum; }
+    int GetStageNum() 
+    { 
+        return stageNum;
+    }
 public:
     void SetStageNum(int stageNum) { this->stageNum = stageNum; }
     void ChangeScenePerformance(Scene* newScene);

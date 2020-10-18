@@ -36,7 +36,7 @@ bool PauseMenu::Update()
 		if (GetAsyncKeyState(' ') & 1)
 		{
 			switch_pause();
-			SceneGame::getInstance()->Reload(2);
+			SceneGame::getInstance()->Reload(SceneManager::Instance().GetStageNum());
 		}
 		break;
 	case RETURN_TO_STAGESELECT:

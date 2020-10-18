@@ -29,7 +29,7 @@ void SceneGame::Initialize()
     // ƒJƒƒ‰‚Ìİ’è
     camera = std::make_unique<MainCamera>();
     // ƒrƒ…[İ’è
-    camera->SetEye(DirectX::XMFLOAT3(0.0f, 10.0f, -30.0f));
+    camera->SetEye(DirectX::XMFLOAT3(10.0f, 20.0f, -15.0f));
     camera->SetFocus(DirectX::XMFLOAT3(25,1,25));
     camera->SetUp(DirectX::XMFLOAT3(0.0f, 1.0f, 0.0f));
     camera->SetMode(camera->MODE_FIX);
@@ -73,7 +73,9 @@ void SceneGame::Initialize()
 void SceneGame::Update(float elapsedTime)
 {
     if (clearTimer > 120) 
-    { Reload(2); clearTimer = 0; }
+    {
+        Reload(SceneManager::Instance().GetStageNum() + 1); clearTimer = 0; return;
+    }
     if (clearFlg()) { clearTimer++; return; }
     if (pPause->Update())return;
     player->Move();
@@ -82,7 +84,7 @@ void SceneGame::Update(float elapsedTime)
 
     for (int i = 0; i < blocks->GetMea(); i++)
     {
-        if (hover(player->GetPos(), blocks->GetBlockPos(i)))
+        if (hover(player->pos, blocks->GetBlockPos(i)))
         {
             blocks->SetBlockHover(i, true);
         }
@@ -152,7 +154,8 @@ void SceneGame::Reload(int stage_num)
     blocks->Relese();
 
     blocks = std::make_unique<GroundBlockManager>();
-    blocks->SetStageNum(SceneManager::Instance().GetStageNum());
+    blocks->SetStageNum(stage_num);
+    SceneManager::Instance().SetStageNum(stage_num);
     blocks->Initialize();
     blocks->SetPrimitive(cube);
 
@@ -161,7 +164,7 @@ void SceneGame::Reload(int stage_num)
         if (blocks->GetBlockObj(i)->GetType() == Block::S_block)
         {
             player->SetPos(blocks->GetBlockPos(i).x, 0.0f, blocks->GetBlockPos(i).z);
-            SetPosflg = false;
+            SetPosflg = true;
             break;
         }
         else player->SetPos(0.0f, 0.0f, 0.0f);

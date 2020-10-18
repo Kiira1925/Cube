@@ -59,8 +59,8 @@ bool GeometricPrimitive::CreateBuffers(ID3D11Device* p_device, vertex* vertices,
     }
     // 入力レイアウトオブジェックト生成
     D3D11_INPUT_ELEMENT_DESC input_element_desc[] = {
-        { "POSITION",0, DXGI_FORMAT_R32G32B32_FLOAT,0, D3D11_APPEND_ALIGNED_ELEMENT,D3D11_INPUT_PER_VERTEX_DATA,0},
-        { "NORMAL" , 0, DXGI_FORMAT_R32G32B32_FLOAT,0,D3D11_APPEND_ALIGNED_ELEMENT,D3D11_INPUT_PER_VERTEX_DATA,0 },
+        { "POSITION",0, DXGI_FORMAT_R32G32B32_FLOAT,0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA,0 },
+        { "NORMAL" , 0, DXGI_FORMAT_R32G32B32_FLOAT,0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA,0 },
     };
     createVsFromCso(p_device, "geometric_primitive_vs.cso", p_vertexShader.GetAddressOf(), p_inputLayout.GetAddressOf(), input_element_desc, ARRAYSIZE(input_element_desc));
     createPsFromCso(p_device, "geometric_primitive_ps.cso", p_pixelShader.GetAddressOf());
@@ -87,7 +87,7 @@ bool GeometricPrimitive::CreateBuffers(ID3D11Device* p_device, vertex* vertices,
 
 
     D3D11_DEPTH_STENCIL_DESC depthStencilDesc;
-    ZeroMemory(&depthStencilDesc, 0); // 初期化
+    ZeroMemory(&depthStencilDesc, 0);   // 初期化
     depthStencilDesc.DepthEnable = TRUE;       // 深度テスト
     depthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;  // 深度書き込み
     depthStencilDesc.DepthFunc = D3D11_COMPARISON_LESS;

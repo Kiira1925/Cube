@@ -33,8 +33,6 @@ enum Block
 class GroundBlock
 {
 private:
-    int count; // 落ちるまでのカウント
-    int type;
     FLOAT3 pos;
     bool hoverflg;
     bool oldhover;
@@ -43,6 +41,8 @@ private:
     std::shared_ptr<SkinnedCube> obj;
 
 public:
+    int count; // 落ちるまでのカウント
+    int type;
     GroundBlock(std::shared_ptr<SkinnedCube>& primitive);
     ~GroundBlock() {}
     void Update();
@@ -62,8 +62,14 @@ public: // Set関数
 
 public:
    FLOAT3 GetPosition() { return pos; }
-   int    GetType() { return type; }
-   int    GetCount() { return count; }
+   int    GetType() 
+   {
+       return type;
+   }
+   int    GetCount() 
+   {
+       return count;
+   }
 };
 
 // 地面ブロック管理

@@ -62,9 +62,7 @@ void GroundBlock::Update()
     case Block::Stage10:
         StegeBlock(Block::Stage10);
         break;
-
     }
-
 }
 
 void GroundBlock::Render(ID3D11DeviceContext* context,const DirectX::XMFLOAT4X4& wvp, const DirectX::XMFLOAT4X4& world)
@@ -73,11 +71,13 @@ void GroundBlock::Render(ID3D11DeviceContext* context,const DirectX::XMFLOAT4X4&
     {
         obj->Render(context, count + 1, wvp, world);
     }
-    else obj->Render(context, type +1, wvp, world);
+    else obj->Render(context, type + 1, wvp, world);
 }
 
 void GroundBlock::DestroyBlock()
 {
+    //framework::getInstance()->debug->setString("obj.oldhover:%d", oldhover);
+    //framework::getInstance()->debug->setString("obj.hover:%d", hoverflg);
     if (oldhover == true && hoverflg == false)
     {
         leaveflg = true;
@@ -207,12 +207,12 @@ void GroundBlockManager::Render(ID3D11DeviceContext* context, const DirectX::XMM
     int count = 0;
     for (int y = 0; y < mapY; y++) {
         for (int x = 0; x < mapX; x++) {
-            if (mapData[y][x] < 0) continue;
+            if (mapData[y][x] < 0) { count++; continue; }
             DirectX::XMMATRIX W, S, R, T;
             DirectX::XMFLOAT4X4 wvp;
             DirectX::XMFLOAT4X4 world;
 
-            int posx = x * 1.0f, posz = y * 1.0f;
+            int posx = x * 1.0f, posz = y * -1.0f;
 
             S = DirectX::XMMatrixScaling(1.0f, 1.0f, 1.0f);
             R = DirectX::XMMatrixRotationRollPitchYaw(0, 0, 0);
@@ -227,6 +227,8 @@ void GroundBlockManager::Render(ID3D11DeviceContext* context, const DirectX::XMM
             //DirectX::XMFLOAT4 material_color = { 0.0f,0.6f,0.5f,1.0f };
 
             obj[count]->Render(context,wvp, world);
+            framework::getInstance()->debug->setString("type:%d", obj[count]->type);
+            framework::getInstance()->debug->setString("count:%d", obj[count]->count);
             count++;
         }
     }
@@ -292,11 +294,6 @@ bool GroundBlockManager::checkBlockExist()
 {
     for (int count = 0; count < mea; count++)
     {
-        framework::getInstance()->debug->setString("obj.count:%d", obj[count]->GetCount());
-    }
-    for (int count = 0; count < mea; count++)
-    {
-        //framework::getInstance()->debug->setString("obj.count:%f", obj[count]->GetCount());
         if (obj[count]->GetType() < 4 && obj[count]->GetCount() > 0) return true;
     }
     return false;

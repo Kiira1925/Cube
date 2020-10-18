@@ -200,7 +200,7 @@ Skinned_Mesh::Skinned_Mesh(ID3D11Device* device, const char* fbxFilename,bool cl
     }
     // Import the contents of the file into the scene
     importStatus = importer->Import(scene);
-    _ASSERT_EXPR_A(importStatus, importer->GetStatus().GetErrorString());
+    //_ASSERT_EXPR_A(importStatus, importer->GetStatus().GetErrorString());
 
     //OŠpƒ|ƒŠƒSƒ“‰»
     // Convert mesh, NURBS and patch into triangle mesh
