@@ -44,7 +44,7 @@ void SceneGame::Initialize()
     camera->SetPerspective(DirectX::XMConvertToRadians(45), pFramework->GetScreenWidth() / pFramework->GetScreenHeight(), 0.1f, 1000.0f);
 
     sky.Initialize();
-    sky.skinnedLoad("./Data/cube/cube_BG.fbx",true);
+    sky.skinnedLoad("./Data/cube/cube_0.fbx",true);
     sky.scale = VECTOR3(50.0f, 50.0f, 50.0f);
 
     //” 
