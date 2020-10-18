@@ -24,6 +24,7 @@ public:
     //virtual void Release() = 0;
     virtual void Update(float elapsedTime) = 0;
     virtual void Render(float elapsedTime) = 0;
+    virtual void Finalize() = 0;
     
 };
 
@@ -44,6 +45,7 @@ public:
     void Initialize()override;
     void Update(float elapsedTime)override;
     void Render(float elapsedTime)override;
+    void Finalize()override;
 
     static SceneTitle* getInstance()
     {
@@ -73,6 +75,9 @@ public:
     void Initialize()override;
     void Update(float elapsedTime)override;
     void Render(float elapsedTime)override;
+    void Finalize()override;
+
+    void Reload(int stage_num);
 
     static SceneGame* getInstance()
     {
@@ -84,6 +89,7 @@ public:
 
 //*******************************************************************
 
+enum CHANGE_PROCESS { Set, Out, In, Fin };
 
 //**********************************************
 //
@@ -93,11 +99,19 @@ public:
 class SceneManager
 {
 private:
-    Scene* currentScene;
+    Scene*  currentScene;
+    Scene*  nextScene;
+    int     change_timer;
+    bool    change_flg;
+
+    CHANGE_PROCESS currentProcess;
 private:
-    SceneManager() {}
+    SceneManager();
     ~SceneManager() {}
 public:
+    void changeProcessing();
+    void changeProcessDraw();
+
     static SceneManager& Instance()
     {
         static SceneManager instance;
@@ -106,5 +120,7 @@ public:
 
     void Update();
     void Render();
+    void SetScene(Scene* newScene);
     void ChangeScene(Scene *newScene);
+    void ChangeScenePerformance(Scene* newScene);
 };

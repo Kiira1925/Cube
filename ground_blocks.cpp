@@ -52,7 +52,7 @@ void GroundBlock::SelectBlock()
 {
     if (hoverflg)
     {
-        SceneManager::Instance().ChangeScene(SceneGame::getInstance());
+        SceneManager::Instance().ChangeScenePerformance(SceneGame::getInstance());
     }
 }
 

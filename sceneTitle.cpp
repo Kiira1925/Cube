@@ -52,7 +52,7 @@ void SceneTitle::Update(float elapsedTime)
  
     if (GetAsyncKeyState('V') & 1)
     {
-        SceneManager::Instance().ChangeScene(SceneGame::getInstance());
+        SceneManager::Instance().ChangeScenePerformance(SceneGame::getInstance());
         return;
     }
 }
@@ -67,5 +67,10 @@ void SceneTitle::Render(float elapsedTime)
 
     player->Render(view, projection, lightDirection, false);
     block->Render(context, view, projection, lightDirection, false);
+
+}
+
+void SceneTitle::Finalize()
+{
 
 }
