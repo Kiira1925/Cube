@@ -212,7 +212,7 @@ void GroundBlockManager::Render(ID3D11DeviceContext* context, const DirectX::XMM
             DirectX::XMFLOAT4X4 wvp;
             DirectX::XMFLOAT4X4 world;
 
-            int posx = x * 1.0f, posz = y * -1.0f;
+            int posx = x * 1.0f, posz = -y * 1.0f;
 
             S = DirectX::XMMatrixScaling(1.0f, 1.0f, 1.0f);
             R = DirectX::XMMatrixRotationRollPitchYaw(0, 0, 0);

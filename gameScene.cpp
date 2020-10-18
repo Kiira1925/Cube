@@ -133,6 +133,7 @@ void SceneGame::Render(float elapsedTime)
             }
             else player->SetPos(0.0f, 0.0f, 0.0f);
         }
+        SetPosflg = false;
     }
 
     //player->Render(view, projection, lightDirection, wireframe);
