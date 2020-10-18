@@ -165,7 +165,7 @@ private:
 	void render(float elapsed_time/*Elapsed seconds from last frame*/);
 
 public:
-	float	clearColor[4] = { 0.0f, 0.8f, 0.0f ,1.0f };
+	float	clearColor[4] = { 0.0f, 0.0f, 0.0f ,1.0f };
 
 	
 private:

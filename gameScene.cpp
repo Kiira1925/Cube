@@ -29,8 +29,9 @@ void SceneGame::Initialize()
     // ƒJƒƒ‰‚Ìİ’è
     camera = std::make_unique<MainCamera>();
     // ƒrƒ…[İ’è
-    camera->SetEye(DirectX::XMFLOAT3(0.0f, 10.0f, -30.0f));
-    camera->SetFocus(DirectX::XMFLOAT3(25,1,25));
+    camera->SetEye(DirectX::XMFLOAT3(0.0f, 20.0f, -30.0f));
+    // camera->SetFocus(DirectX::XMFLOAT3(25,1,25));
+    camera->SetFocus(DirectX::XMFLOAT3(0,0,0));
     camera->SetUp(DirectX::XMFLOAT3(0.0f, 1.0f, 0.0f));
     camera->SetMode(camera->MODE_FIX);
 
@@ -131,6 +132,7 @@ void SceneGame::Render(float elapsedTime)
             }
             else player->SetPos(0.0f, 0.0f, 0.0f);
         }
+        SetPosflg = false;
     }
 
     //player->Render(view, projection, lightDirection, wireframe);
