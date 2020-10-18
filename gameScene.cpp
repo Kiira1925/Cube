@@ -17,12 +17,6 @@
 
 
 MyMesh sky;
-Camera camera;
-Player  player;
-GroundBlockManager block;
-
-SkinndeCube* scube;
-FileName cube_texture[5];
 
 void SceneGame::Initialize()
 {
@@ -52,19 +46,17 @@ void SceneGame::Initialize()
     cube_texture[2] = L"./Data/Floor/Floor1.png";
     cube_texture[3] = L"./Data/Floor/Floor2.png";
     cube_texture[4] = L"./Data/Floor/Floor3.png";
-    scube = new SkinndeCube(device, cube_texture, 5);
+    cube_texture[5] = L"./Data/Floor/FloorG.png";
 
-   // player.Initialize(new GeometricCube(pFramework->getDevice()));
-   // player.Initialize(new GeometricCube(device));
-    player = std::make_unique<Player>();
-    player->Initialize(new GeometricCube(pFramework->getDevice()));
-    std::shared_ptr<GeometricPrimitive> cube = std::make_shared<GeometricCube>(device);
-
+    std::shared_ptr<SkinndeCube> cube = std::make_shared<SkinndeCube>(device, cube_texture, 6);
     blocks = std::make_unique<GroundBlockManager>();
-    blocks->SetStageNum(2);
+    blocks->SetStageNum(SceneManager::Instance().GetStageNum());
     blocks->Initialize();
     blocks->SetPrimitive(cube);
 
+    player = std::make_unique<Player>();
+    player->Initialize(new GeometricCube(pFramework->getDevice()));
+    SetPosflg = true;
 
     pPause->Initialize();
 } 
@@ -100,62 +92,30 @@ void SceneGame::Render(float elapsedTime)
     ID3D11DeviceContext* context = pFramework->getDeviceContext();
 
     static bool wireframe = false;
-    //if (GetAsyncKeyState(' ') & 1)
-    //{
-    //    wireframe = !wireframe;
-    //}
-    static int anime = 0;
-    if (GetAsyncKeyState('X') & 1)
-    {
-        anime += 1;
-        if (anime > 2) anime = 0;
-    }
-    // ƒrƒ…[•ÏŠ·s—ñ
-    //view = camera.GetViewMatrix();
+
 
     DirectX::XMMATRIX view = DirectX::XMLoadFloat4x4(&camera->GetView());
     DirectX::XMMATRIX projection = DirectX::XMLoadFloat4x4(&camera->GetProjection());
 
+    blocks->Render(context, view, projection);
+
+    if (SetPosflg)
+    {
+        for (int i = 0; i < blocks->GetMea(); i++)
+        {
+            if (blocks->GetBlockObj(i)->GetType() == Block::S_block)
+            {
+                player->SetPos(blocks->GetBlockPos(i).x, 0.0f, blocks->GetBlockPos(i).z);
+                SetPosflg = false;
+                break;
+            }
+            else player->SetPos(0.0f, 0.0f, 0.0f);
+        }
+    }
+
     player->Render(view, projection, lightDirection, wireframe);
     sky.Render(view, projection, lightDirection, wireframe);
 
-    //block.Render(context, view, projection, lightDirection, wireframe);
-
-    //” 
-    DirectX::XMMATRIX world;
-    DirectX::XMMATRIX Scale, Rotation, Rx, Ry, Rz, Translation;
-
-    //	‰Šú‰»
-    world = DirectX::XMMatrixIdentity();
-    //	Šg‘åEk¬
-    Scale = DirectX::XMMatrixScaling(1, 0.5, 1);
-
-    //	‰ñ“]
-    Rx = DirectX::XMMatrixRotationX(0);				//	XŽ²‚ðŠî€‚Æ‚µ‚½‰ñ“]s—ñ
-    Ry = DirectX::XMMatrixRotationY(0);				//	YŽ²‚ðŠî€‚Æ‚µ‚½‰ñ“]s—ñ
-    Rz = DirectX::XMMatrixRotationZ(0);				//	ZŽ²‚ðŠî€‚Æ‚µ‚½‰ñ“]s—ñ
-    Rotation = Rz * Ry * Rx;
-
-    //	•½sˆÚ“®
-    Translation = DirectX::XMMatrixTranslation(-10,0,0);
-
-    //	ƒ[ƒ‹ƒh•ÏŠ·s—ñ
-    world = Scale * Rotation * Translation;
-
-    DirectX::XMFLOAT4X4 wvp;
-    DirectX::XMFLOAT4X4 W;
-    XMStoreFloat4x4(&wvp, (world * view * projection));
-    XMStoreFloat4x4(&W, world);
-
-    static int FloorNUM = 1;
-    if (GetAsyncKeyState('N') & 1)
-    {
-        FloorNUM++;
-    }
-    if (FloorNUM > 4) { FloorNUM = 1; }
-
-    scube->Render(context, FloorNUM, wvp, W);
-    blocks->Render(context, view, projection, lightDirection, wireframe);
     pPause->Draw();
 }
 

@@ -1,10 +1,11 @@
 #include "ground_blocks.h"
 #include "scene.h"
+
 #include <fstream>
 #include <iostream>
 #include <sstream>
 
-GroundBlock::GroundBlock(std::shared_ptr<GeometricPrimitive>& primitive)
+GroundBlock::GroundBlock(std::shared_ptr<SkinndeCube>& primitive)
 {
     count = 0;
     type = Block::I_block;
@@ -25,13 +26,53 @@ void GroundBlock::Update()
     case Block::C_block:
         SelectBlock();
         break;
+    //case Block::S_block:
+    //    StartBlock();
+    //    break;
+    //case Block::G_block:
+    //    break;
+    case Block::Stage1:
+        StegeBlock(Block::Stage1);
+        break;
+    case Block::Stage2:
+        StegeBlock(Block::Stage2);
+        break;
+    case Block::Stage3:
+        StegeBlock(Block::Stage3);
+        break;
+    case Block::Stage4:
+        StegeBlock(Block::Stage4);
+        break;
+    case Block::Stage5:
+        StegeBlock(Block::Stage5);
+        break;
+    case Block::Stage6:
+        StegeBlock(Block::Stage6);
+        break;
+    case Block::Stage7:
+        StegeBlock(Block::Stage7);
+        break;
+    case Block::Stage8:
+        StegeBlock(Block::Stage8);
+        break;
+    case Block::Stage9:
+        StegeBlock(Block::Stage9);
+        break;
+    case Block::Stage10:
+        StegeBlock(Block::Stage10);
+        break;
+
     }
 
 }
 
-void GroundBlock::Render(ID3D11DeviceContext* context, const DirectX::XMFLOAT4X4& wvp, const DirectX::XMFLOAT4X4& world, const DirectX::XMFLOAT4& light_dir, const DirectX::XMFLOAT4& materialColor, bool wireframe)
+void GroundBlock::Render(ID3D11DeviceContext* context,const DirectX::XMFLOAT4X4& wvp, const DirectX::XMFLOAT4X4& world)
 {
-    obj->render(context,wvp,world,light_dir,materialColor,wireframe);
+    if (type > 0 && type < 4)
+    {
+        obj->Render(context, count + 1, wvp, world);
+    }
+    else obj->Render(context, type +1, wvp, world);
 }
 
 void GroundBlock::DestroyBlock()
@@ -52,6 +93,15 @@ void GroundBlock::SelectBlock()
 {
     if (hoverflg)
     {
+        SceneManager::Instance().ChangeScene(SceneSerect::getInstance());
+    }
+}
+
+void GroundBlock::StegeBlock(int num)
+{
+    if (hoverflg)
+    {
+        SceneManager::Instance().SetStageNum(num);
         SceneManager::Instance().ChangeScene(SceneGame::getInstance());
     }
 }
@@ -62,7 +112,7 @@ void GroundBlock::SelectBlock()
 // ブロック管理
 //
 //*********************************************************
-void GroundBlockManager::Initialize(int y, int x, std::shared_ptr<GeometricPrimitive>& primitive)
+void GroundBlockManager::Initialize(int y, int x, std::shared_ptr<SkinndeCube>& primitive)
 {
     static int count; // このカウント数分objを生成する
     // 中に値が入っている可能性を考えて初期化する
@@ -123,7 +173,7 @@ void GroundBlockManager::Initialize()
 
 }
 
-void GroundBlockManager::SetPrimitive(std::shared_ptr<GeometricPrimitive> primitive)
+void GroundBlockManager::SetPrimitive(std::shared_ptr<SkinndeCube> primitive)
 {
     for (int i = 0; i < mea;i++)
     {
@@ -150,7 +200,7 @@ void GroundBlockManager::Update()
     }
 }
 
-void GroundBlockManager::Render(ID3D11DeviceContext* context, const DirectX::XMMATRIX& view, const DirectX::XMMATRIX& projection, const DirectX::XMFLOAT4& light_dir, bool wireframe)
+void GroundBlockManager::Render(ID3D11DeviceContext* context, const DirectX::XMMATRIX& view, const DirectX::XMMATRIX& projection)
 {
     int count = 0;
     for (int y = 0; y < mapY; y++) {
@@ -172,9 +222,9 @@ void GroundBlockManager::Render(ID3D11DeviceContext* context, const DirectX::XMM
             // ★MATRIX -> FLOAT4X4
             DirectX::XMStoreFloat4x4(&world, W);
             DirectX::XMStoreFloat4x4(&wvp, W * view * projection);
-            DirectX::XMFLOAT4 material_color = { 0.0f,0.6f,0.5f,1.0f };
+            //DirectX::XMFLOAT4 material_color = { 0.0f,0.6f,0.5f,1.0f };
 
-            obj[count]->Render(context,wvp, world, light_dir, material_color, wireframe);
+            obj[count]->Render(context,wvp, world);
             count++;
         }
     }

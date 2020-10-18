@@ -10,8 +10,12 @@
 #define FbxMax 10
 #define Gravity 0.25f
 
+static FileName cube_texture[6];
+
 class Scene
 {
+private:
+
 protected:
     virtual void ImGuiUpdate();
     void ImGuiRender();
@@ -29,7 +33,7 @@ public:
 
 class SceneTitle : public Scene
 {
-private:
+private: 
     std::unique_ptr<MainCamera> camera1;
     std::unique_ptr<Player> player;
     std::unique_ptr<GroundBlockManager> block;
@@ -52,6 +56,32 @@ public:
     }
 };
 
+class SceneSerect : public Scene
+{
+private:
+    std::unique_ptr<MainCamera> camera1;
+    std::unique_ptr<Player> player;
+    std::unique_ptr<GroundBlockManager> block;
+
+public:
+    DirectX::XMFLOAT4 lightDirection;
+
+public:
+    SceneSerect() {}
+    ~SceneSerect() {}
+
+    void Initialize()override;
+    void Update(float elapsedTime)override;
+    void Render(float elapsedTime)override;
+
+    static SceneSerect* getInstance()
+    {
+        static SceneSerect instance;
+        return &instance;
+    }
+};
+
+
 class SceneGame : public Scene
 {
 private:
@@ -62,6 +92,7 @@ private:
 private:
     int timer;
     bool pause_flg;
+    bool SetPosflg;
 
 public:
     DirectX::XMFLOAT4 lightDirection;
@@ -94,6 +125,7 @@ class SceneManager
 {
 private:
     Scene* currentScene;
+    int stageNum = 0;
 private:
     SceneManager() {}
     ~SceneManager() {}
@@ -107,4 +139,9 @@ public:
     void Update();
     void Render();
     void ChangeScene(Scene *newScene);
+
+public:
+    int GetStageNum() { return stageNum; }
+public:
+    void SetStageNum(int stageNum) { this->stageNum = stageNum; }
 };

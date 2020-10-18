@@ -117,6 +117,9 @@
     <ClCompile Include="sceneTitle.cpp">
       <Filter>Source\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="sceneSerect.cpp">
+      <Filter>Source\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="blender.h">
