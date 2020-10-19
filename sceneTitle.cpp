@@ -23,7 +23,7 @@ void SceneTitle::Initialize()
     block = std::make_unique<GroundBlockManager>();
     std::shared_ptr<SkinnedCube> cube = std::make_shared<SkinnedCube>(device, cube_texture, 6);
 
-    block = std::make_unique<GroundBlockManager>();
+    block = std::make_shared<GroundBlockManager>();
     block->SetStageNum(0 );
     block->Initialize();
     block->SetPrimitive(cube);
@@ -31,7 +31,7 @@ void SceneTitle::Initialize()
     // プレイヤー
     player = std::make_unique<Player>();
     player->Initialize("./Data/cube/cube_setM.fbx");
-    player->SetPos(FLOAT3(2.0f, 0.0f, 0.0f));
+    player->SetPos(FLOAT3(2.0f, 0.0f, -2.0f));
 
     // ビュー設定
     camera1->SetEye(DirectX::XMFLOAT3(0.0f, 20.0f, -10.0f));
@@ -45,8 +45,16 @@ void SceneTitle::Initialize()
 
 void SceneTitle::Update(float elapsedTime)
 {
+
+    // 場外に行かないための判定
+    player->SetFront(Front(player->GetPos(), block));
+    player->SetBack(Back(player->GetPos(), block));
+    player->SetRight(Right(player->GetPos(), block));
+    player->SetLeft(Left(player->GetPos(), block));
+
     player->Move();
     block->Update();
+
 
     for (int i = 0; i < block->GetMea(); i++)
     {
@@ -56,7 +64,6 @@ void SceneTitle::Update(float elapsedTime)
         }
         else block->SetBlockHover(i, false);
     }
-
     camera1->Updata(elapsedTime);
  
     if (GetAsyncKeyState('V') & 1)

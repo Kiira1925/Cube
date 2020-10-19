@@ -2,7 +2,7 @@
 #include "hover.h"
 #include "blender.h"
 
-void SceneSelect::Initialize()
+void SceneSerect::Initialize()
 {
     ID3D11Device* device = pFramework->getDevice();
 
@@ -20,19 +20,16 @@ void SceneSelect::Initialize()
 
     // ブロック設定
     block = std::make_unique<GroundBlockManager>();
-    std::shared_ptr<SkinnedCube> cube = std::make_shared<SkinnedCube>(device, cube_texture, 6);
+    std::shared_ptr<SkinndeCube> cube = std::make_shared<SkinndeCube>(device, cube_texture, 6);
 
-    block = std::make_shared<GroundBlockManager>();
+    block = std::make_unique<GroundBlockManager>();
     block->SetStageNum(1);
     block->Initialize();
     block->SetPrimitive(cube);
 
     // プレイヤー
-    //player = std::make_unique<Player>();
-    //player->Initialize(new GeometricCube(pFramework->getDevice()));
-
     player = std::make_unique<Player>();
-    player->Initialize("./Data/cube/cube_setM.fbx");
+    player->Initialize(new GeometricCube(pFramework->getDevice()));
     player->SetPos(FLOAT3(2.0f, 0.0f, 0.0f));
 
     // ビュー設定
@@ -45,15 +42,8 @@ void SceneSelect::Initialize()
 
 }
 
-void SceneSelect::Update(float elapsedTime)
+void SceneSerect::Update(float elapsedTime)
 {
-
-    // 場外に行かないための判定
-    player->SetFront(Front(player->GetPos(), block));
-    player->SetBack( Back(player->GetPos(),  block));
-    player->SetRight(Right(player->GetPos(), block));
-    player->SetLeft(Left(player->GetPos(),   block));
-
     player->Move();
     block->Update();
 
@@ -76,7 +66,7 @@ void SceneSelect::Update(float elapsedTime)
     }
 }
 
-void SceneSelect::Render(float elapsedTime)
+void SceneSerect::Render(float elapsedTime)
 {
     ID3D11DeviceContext* context = pFramework->getDeviceContext();
 
@@ -85,12 +75,7 @@ void SceneSelect::Render(float elapsedTime)
     DirectX::XMMATRIX view = DirectX::XMLoadFloat4x4(&camera1->GetView());
     DirectX::XMMATRIX projection = DirectX::XMLoadFloat4x4(&camera1->GetProjection());
 
-    player->Render(view, projection, lightDirection, false, elapsedTime);
+    player->Render(view, projection, lightDirection, false);
     block->Render(context, view, projection);
-
-}
-
-void SceneSelect::Finalize()
-{
 
 }

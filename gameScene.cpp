@@ -57,7 +57,7 @@ void SceneGame::Initialize()
     player->Initialize("./Data/cube/cube_setM.fbx");
 
     std::shared_ptr<SkinnedCube> cube = std::make_shared<SkinnedCube>(device, cube_texture, 6);
-    blocks = std::make_unique<GroundBlockManager>();
+    blocks = std::make_shared<GroundBlockManager>();
     blocks->SetStageNum(SceneManager::Instance().GetStageNum());
     blocks->Initialize();
     blocks->SetPrimitive(cube);
@@ -78,9 +78,15 @@ void SceneGame::Update(float elapsedTime)
     }
     if (clearFlg()) { clearTimer++; return; }
     if (pPause->Update())return;
+
+    // êŠO‚És‚©‚È‚¢‚½‚ß‚Ì”»’è
+    player->SetFront(Front(player->GetPos(), blocks));
+    player->SetBack (Back(player->GetPos(), blocks));
+    player->SetRight(Right(player->GetPos(), blocks));
+    player->SetLeft (Left(player->GetPos(), blocks));
+
     player->Move();
     camera->Updata(elapsedTime);
-    blocks->Update();
 
     for (int i = 0; i < blocks->GetMea(); i++)
     {
@@ -91,10 +97,11 @@ void SceneGame::Update(float elapsedTime)
         else blocks->SetBlockHover(i, false);
     }
 
+    blocks->Update();
+
     if (GetAsyncKeyState('V') & 1)
     {
         SceneManager::Instance().ChangeScenePerformance(SceneTitle::getInstance());
-        //blocks->Relese();
         return;
     }
 

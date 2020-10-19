@@ -51,36 +51,44 @@ void Player::Move()
 		//	‰ñ“]
 		if (GetAsyncKeyState(VK_LEFT) < 0)
 		{
-			axis.x = 0.0f;
-			axis.y = 0.0f;
-			axis.z = 1.0f;
-			moveAngle += dangle;
-			speed.x -= moveSpeed;
-
+			if (!left) {
+				axis.x = 0.0f;
+				axis.y = 0.0f;
+				axis.z = 1.0f;
+				moveAngle += dangle;
+				speed.x -= moveSpeed;
+			}
 		}
 		else if (GetAsyncKeyState(VK_RIGHT) < 0)
 		{
-			axis.x = 0.0f;
-			axis.y = 0.0f;
-			axis.z = 1.0f;
-			moveAngle -= dangle;
-			speed.x += moveSpeed;
+			if (!right) {
+				axis.x = 0.0f;
+				axis.y = 0.0f;
+				axis.z = 1.0f;
+				moveAngle -= dangle;
+				speed.x += moveSpeed;
+			}
 		}
 		else if (GetAsyncKeyState(VK_UP) < 0)
 		{
-			axis.x = 1.0f;
-			axis.y = 0.0f;
-			axis.z = 0.0f;
-			moveAngle += dangle;
-			speed.z += moveSpeed;
+			if (!front) {
+				axis.x = 1.0f;
+				axis.y = 0.0f;
+				axis.z = 0.0f;
+				moveAngle += dangle;
+				speed.z += moveSpeed;
+			}
 		}
 		else if (GetAsyncKeyState(VK_DOWN) < 0)
 		{
-			axis.x = 1.0f;
-			axis.y = 0.0f;
-			axis.z = 0.0f;
-			moveAngle -= dangle;
-			speed.z -= moveSpeed;
+			if (!back)
+			{
+				axis.x = 1.0f;
+				axis.y = 0.0f;
+				axis.z = 0.0f;
+				moveAngle -= dangle;
+				speed.z -= moveSpeed;
+			}
 		}
 	}
 	DirectX::XMVECTOR qua, Axis, delta, def;

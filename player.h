@@ -21,6 +21,10 @@ public:
     DirectX::XMFLOAT4 color;
 
     int animetion;
+    bool front;
+    bool back;
+    bool right;
+    bool left;
 
     //OBB playerObb;
     //bool              exist;
@@ -38,6 +42,11 @@ public:
 public:
     void SetPos(FLOAT3 pos) { this->pos = pos; }
     void SetPos(float x, float y, float z) { this->pos.x = x; this->pos.y = y; this->pos.z = z; }
+    void SetFront(bool front) { this->front = front; }
+    void SetBack(bool back) { this->back = back; }
+    void SetRight(bool right) { this->right = right; }
+    void SetLeft(bool left) { this->left = left; }
+
 public:
     DirectX::XMMATRIX GetWorldMatrix();
     FLOAT3 GetPos() { return (FLOAT3)pos; }

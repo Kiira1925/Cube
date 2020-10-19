@@ -37,7 +37,7 @@ class SceneTitle : public Scene
 private: 
     std::unique_ptr<MainCamera> camera1;
     std::unique_ptr<Player> player;
-    std::unique_ptr<GroundBlockManager> block;
+    std::shared_ptr<GroundBlockManager> block;
 
 public:
     DirectX::XMFLOAT4 lightDirection;
@@ -63,7 +63,7 @@ class SceneSelect : public Scene
 private:
     std::unique_ptr<MainCamera> camera1;
     std::unique_ptr<Player> player;
-    std::unique_ptr<GroundBlockManager> block;
+    std::shared_ptr<GroundBlockManager> block;
 
 public:
     DirectX::XMFLOAT4 lightDirection;
@@ -89,7 +89,7 @@ class SceneGame : public Scene
 {
 private:
     std::unique_ptr<MainCamera> camera;
-    std::unique_ptr<GroundBlockManager> blocks;
+    std::shared_ptr<GroundBlockManager> blocks;
     std::unique_ptr<Player> player;
 
 private:

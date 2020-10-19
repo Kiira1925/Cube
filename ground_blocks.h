@@ -62,14 +62,11 @@ public: // Set関数
 
 public:
    FLOAT3 GetPosition() { return pos; }
-   int    GetType() 
-   {
-       return type;
-   }
-   int    GetCount() 
-   {
-       return count;
-   }
+   int    GetType() {return type;}
+   int    GetCount() { return count;}
+
+public:
+    bool checkExist();
 };
 
 // 地面ブロック管理
