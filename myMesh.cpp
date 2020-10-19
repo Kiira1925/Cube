@@ -66,8 +66,8 @@ void MyMesh::Render(const DirectX::XMMATRIX& view, const DirectX::XMMATRIX& proj
 		DirectX::XMStoreFloat4x4(&worldViewProjection, worldMatrix * view * projection);
 		DirectX::XMStoreFloat4x4(&world, worldMatrix);
 
-		primitive->render(pFramework->getDeviceContext(), worldViewProjection, world, light_dir, color, wireframe);
-
+		// primitive->render(pFramework->getDeviceContext(), worldViewProjection, world, light_dir, color, wireframe);
+		primitive->render(pFramework->getDeviceContext(), worldViewProjection, world);
 	}
 
 	if (staticObj)
