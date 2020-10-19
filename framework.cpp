@@ -124,6 +124,9 @@ bool framework::initialize()
         sprites[7] = std::make_unique<Sprite>(pFramework->getDevice(), L"./Data/UI/U.png");
         sprites[8] = std::make_unique<Sprite>(pFramework->getDevice(), L"./Data/UI/C.png");
         sprites[9] = std::make_unique<Sprite>(pFramework->getDevice(), L"./Data/UI/E.png");
+        sprites[10] = std::make_unique<Sprite>(pFramework->getDevice(), L"./Data/UI/R.png");
+        sprites[11] = std::make_unique<Sprite>(pFramework->getDevice(), L"./Data/UI/L.png");
+        sprites[12] = std::make_unique<Sprite>(pFramework->getDevice(), L"./Data/UI/A.png");
 
 
         soundSE[0] = soundManager->CreateSoundSource("Data/Sounds/SE/select.wav");

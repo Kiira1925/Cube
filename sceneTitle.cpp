@@ -55,8 +55,8 @@ void SceneTitle::Initialize()
     player->SetPos(FLOAT3(2.0f, 0.0f, 0.0f));
 
     // ビュー設定
-    camera1->SetEye(DirectX::XMFLOAT3(block->GetMapX()/2, 20.0f, (-block->GetMapY()/2)-10));
-    camera1->SetFocus(DirectX::XMFLOAT3(block->GetMapX()/2, 0, -block->GetMapY()/2));
+    camera1->SetEye(DirectX::XMFLOAT3(block->GetMapX()/2, 20.0f, (-block->GetMapY()/2)-8));
+    camera1->SetFocus(DirectX::XMFLOAT3(block->GetMapX()/2, 0, -block->GetMapY()/2 + 2));
     camera1->SetUp(DirectX::XMFLOAT3(0.0f, 1.0f, 0.0f));
 
     //　プロジェクションの設定
@@ -106,13 +106,15 @@ void SceneTitle::Render(float elapsedTime)
 
     pFramework->sprites[5]->render(pFramework->getDeviceContext(), 20, 170, 360, 72, 0, 0, 600, 120, 0, XMFLOAT4(1, 1, 1, 1));
 
-    //pFramework->sprites[6]->render(pFramework->getDeviceContext(), 280+190*0, 400, 190, 274, 0, 0, 190, 274, 0, XMFLOAT4(1, 1, 1, 1));//S
-    //pFramework->sprites[7]->render(pFramework->getDeviceContext(), 280+190*1, 400, 190, 274, 0, 0, 190, 274, 0, XMFLOAT4(1, 1, 1, 1));//U
-    //pFramework->sprites[8]->render(pFramework->getDeviceContext(), 280+190*2, 400, 190, 274, 0, 0, 190, 274, 0, XMFLOAT4(1, 1, 1, 1));//C
-    //pFramework->sprites[8]->render(pFramework->getDeviceContext(), 280+190*3, 400, 190, 274, 0, 0, 190, 274, 0, XMFLOAT4(1, 1, 1, 1));//C
-    //pFramework->sprites[9]->render(pFramework->getDeviceContext(), 280+190*4, 400, 190, 274, 0, 0, 190, 274, 0, XMFLOAT4(1, 1, 1, 1));//E
-    //pFramework->sprites[6]->render(pFramework->getDeviceContext(), 280+190*5, 400, 190, 274, 0, 0, 190, 274, 0, XMFLOAT4(1, 1, 1, 1));//S
-    //pFramework->sprites[6]->render(pFramework->getDeviceContext(), 280+190*6, 400, 190, 274, 0, 0, 190, 274, 0, XMFLOAT4(1, 1, 1, 1));//S
+    //pFramework->sprites[12] ->render(pFramework->getDeviceContext(), 490+190*0, 510-274, 190, 274, 0, 0, 190, 274, 0, XMFLOAT4(1, 1, 1, 1));//A
+    //pFramework->sprites[11] ->render(pFramework->getDeviceContext(), 490+190*1, 510-274, 190, 274, 0, 0, 190, 274, 0, XMFLOAT4(1, 1, 1, 1));//L
+    //pFramework->sprites[11] ->render(pFramework->getDeviceContext(), 490+190*2, 510-274, 190, 274, 0, 0, 190, 274, 0, XMFLOAT4(1, 1, 1, 1));//L
+
+    //pFramework->sprites[8]  ->render(pFramework->getDeviceContext(), 490+190*0, 510, 190, 274, 0, 0, 190, 274, 0, XMFLOAT4(1, 1, 1, 1));//C
+    //pFramework->sprites[11] ->render(pFramework->getDeviceContext(), 490+190*1, 510, 190, 274, 0, 0, 190, 274, 0, XMFLOAT4(1, 1, 1, 1));//L
+    //pFramework->sprites[9]  ->render(pFramework->getDeviceContext(), 490+190*2, 510, 190, 274, 0, 0, 190, 274, 0, XMFLOAT4(1, 1, 1, 1));//E
+    //pFramework->sprites[12] ->render(pFramework->getDeviceContext(), 490+190*3, 510, 190, 274, 0, 0, 190, 274, 0, XMFLOAT4(1, 1, 1, 1));//A
+    //pFramework->sprites[10] ->render(pFramework->getDeviceContext(), 490+190*4, 510, 190, 274, 0, 0, 190, 274, 0, XMFLOAT4(1, 1, 1, 1));//R
 }
 
 void SceneTitle::Finalize()

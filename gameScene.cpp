@@ -79,7 +79,14 @@ void SceneGame::Update(float elapsedTime)
     if (clearTimer == 10) { pFramework->soundSE[3]->Play(false); }
     if (clearTimer > 120) 
     {
-        Reload(SceneManager::Instance().GetStageNum() + 1); clearTimer = 0; return;
+        if (SceneManager::Instance().GetStageNum() < 19)
+        {
+            Reload(SceneManager::Instance().GetStageNum() + 1); clearTimer = 0; return;
+        }
+        else if (clearTimer > 240)
+        {
+            SceneManager::Instance().ChangeScenePerformance(SceneTitle::getInstance()); return;
+        }
     }
     if (clearFlg()) { clearTimer++; return; }
     if (pPause->Update())return;
@@ -209,14 +216,30 @@ void SceneGame::clearDraw()
     if (clearFlg())
     {
         float alpha = clearTimer / 60.0f;
+        if (alpha > 1.40) { alpha = 1.40; }
         blender::Set(blender::BS_ADD);
-        pFramework->sprites[6]->render(pFramework->getDeviceContext(), 280 + 190 * 0, 400, 190, 274, 0, 0, 190, 274, 0, XMFLOAT4(1, 1, 1, alpha-0.05));//S
-        pFramework->sprites[7]->render(pFramework->getDeviceContext(), 280 + 190 * 1, 400, 190, 274, 0, 0, 190, 274, 0, XMFLOAT4(1, 1, 1, alpha-0.10));//U
-        pFramework->sprites[8]->render(pFramework->getDeviceContext(), 280 + 190 * 2, 400, 190, 274, 0, 0, 190, 274, 0, XMFLOAT4(1, 1, 1, alpha-0.15));//C
-        pFramework->sprites[8]->render(pFramework->getDeviceContext(), 280 + 190 * 3, 400, 190, 274, 0, 0, 190, 274, 0, XMFLOAT4(1, 1, 1, alpha-0.20));//C
-        pFramework->sprites[9]->render(pFramework->getDeviceContext(), 280 + 190 * 4, 400, 190, 274, 0, 0, 190, 274, 0, XMFLOAT4(1, 1, 1, alpha-0.25));//E
-        pFramework->sprites[6]->render(pFramework->getDeviceContext(), 280 + 190 * 5, 400, 190, 274, 0, 0, 190, 274, 0, XMFLOAT4(1, 1, 1, alpha-0.30));//S
-        pFramework->sprites[6]->render(pFramework->getDeviceContext(), 280 + 190 * 6, 400, 190, 274, 0, 0, 190, 274, 0, XMFLOAT4(1, 1, 1, alpha-0.35));//S
+        if (SceneManager::Instance().GetStageNum() < 19)
+        {
+            pFramework->sprites[6]->render(pFramework->getDeviceContext(), 280 + 190 * 0, 400, 190, 274, 0, 0, 190, 274, 0, XMFLOAT4(1, 1, 1, alpha - 0.05));//S
+            pFramework->sprites[7]->render(pFramework->getDeviceContext(), 280 + 190 * 1, 400, 190, 274, 0, 0, 190, 274, 0, XMFLOAT4(1, 1, 1, alpha - 0.10));//U
+            pFramework->sprites[8]->render(pFramework->getDeviceContext(), 280 + 190 * 2, 400, 190, 274, 0, 0, 190, 274, 0, XMFLOAT4(1, 1, 1, alpha - 0.15));//C
+            pFramework->sprites[8]->render(pFramework->getDeviceContext(), 280 + 190 * 3, 400, 190, 274, 0, 0, 190, 274, 0, XMFLOAT4(1, 1, 1, alpha - 0.20));//C
+            pFramework->sprites[9]->render(pFramework->getDeviceContext(), 280 + 190 * 4, 400, 190, 274, 0, 0, 190, 274, 0, XMFLOAT4(1, 1, 1, alpha - 0.25));//E
+            pFramework->sprites[6]->render(pFramework->getDeviceContext(), 280 + 190 * 5, 400, 190, 274, 0, 0, 190, 274, 0, XMFLOAT4(1, 1, 1, alpha - 0.30));//S
+            pFramework->sprites[6]->render(pFramework->getDeviceContext(), 280 + 190 * 6, 400, 190, 274, 0, 0, 190, 274, 0, XMFLOAT4(1, 1, 1, alpha - 0.35));//S
+        }
+        else
+        {
+            pFramework->sprites[12] ->render(pFramework->getDeviceContext(), 490 + 190 * 0, 510 - 274, 190, 274, 0, 0, 190, 274, 0, XMFLOAT4(1, 1, 1, alpha-0.05));//A
+            pFramework->sprites[11] ->render(pFramework->getDeviceContext(), 490 + 190 * 1, 510 - 274, 190, 274, 0, 0, 190, 274, 0, XMFLOAT4(1, 1, 1, alpha-0.10));//L
+            pFramework->sprites[11] ->render(pFramework->getDeviceContext(), 490 + 190 * 2, 510 - 274, 190, 274, 0, 0, 190, 274, 0, XMFLOAT4(1, 1, 1, alpha-0.15));//L
+
+            pFramework->sprites[8]  ->render(pFramework->getDeviceContext(), 490 + 190 * 0, 510, 190, 274, 0, 0, 190, 274, 0, XMFLOAT4(1, 1, 1, alpha - 0.20));//C
+            pFramework->sprites[11] ->render(pFramework->getDeviceContext(), 490 + 190 * 1, 510, 190, 274, 0, 0, 190, 274, 0, XMFLOAT4(1, 1, 1, alpha - 0.25));//L
+            pFramework->sprites[9]  ->render(pFramework->getDeviceContext(), 490 + 190 * 2, 510, 190, 274, 0, 0, 190, 274, 0, XMFLOAT4(1, 1, 1, alpha - 0.30));//E
+            pFramework->sprites[12] ->render(pFramework->getDeviceContext(), 490 + 190 * 3, 510, 190, 274, 0, 0, 190, 274, 0, XMFLOAT4(1, 1, 1, alpha - 0.35));//A
+            pFramework->sprites[10] ->render(pFramework->getDeviceContext(), 490 + 190 * 4, 510, 190, 274, 0, 0, 190, 274, 0, XMFLOAT4(1, 1, 1, alpha - 0.40));//R
+        }
         blender::Set(blender::BS_NONE);
     }
 }
