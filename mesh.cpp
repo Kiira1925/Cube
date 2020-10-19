@@ -216,7 +216,7 @@ Static_mesh::Static_mesh(ID3D11Device* device, const wchar_t* objfile,bool flipp
     //  CSOファイルの読み込みをする
     //  geometric_primitive_vs.csoのロード
     FILE* fp = 0;
-    fopen_s(&fp, "static_mesh_vs.cso", "rb");
+    fopen_s(&fp, "./Shaders/static_mesh_vs.cso", "rb");
     fseek(fp, 0, SEEK_END);
     long cso_sz = ftell(fp);
     fseek(fp, 0, SEEK_SET);
@@ -232,7 +232,7 @@ Static_mesh::Static_mesh(ID3D11Device* device, const wchar_t* objfile,bool flipp
     // CSOファイルを読み込む
     // geometric_primitive_ps.csoのロード
     fp = 0;
-    fopen_s(&fp, "static_mesh_ps.cso", "rb");
+    fopen_s(&fp, "./Shaders/static_mesh_ps.cso", "rb");
     fseek(fp, 0, SEEK_END);
     cso_sz = ftell(fp);
     fseek(fp, 0, SEEK_SET);
@@ -543,7 +543,7 @@ Static_mesh::Static_mesh(ID3D11Device* device, const wchar_t* objfile, const cha
     strcpy_s(cso_name, shaderfile);//　後ろの変数内を1つ目の引数にコピー
     strcat_s(cso_name, "_ps.cso"); // 第1引数の文字列の後ろに第2引数を付け足す
 
-    fopen_s(&fp, "static_mesh_ps.cso", "rb");
+    fopen_s(&fp, "./Shaders/static_mesh_ps.cso", "rb");
     fseek(fp, 0, SEEK_END);
     cso_sz = ftell(fp);
     fseek(fp, 0, SEEK_SET);

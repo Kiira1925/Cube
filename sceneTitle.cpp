@@ -17,8 +17,9 @@ void SceneTitle::Initialize()
     title = std::make_unique<MyMesh>();
     title->Initialize();
     title->SetPrimitive(new GeometricBoard(device, L"./Data/flipImage/title.png"));
-    title->pos.x = -3.0f;
-    title->pos.z = 3.0f;
+    title->pos.x = 2.0f;
+    title->pos.z = 4.0f;
+    title->angle.x = XMConvertToRadians(60);
     title->scale.x = 10.0f;
     title->scale.y = 10.0f;
     title->scale.z = 10.0f;
@@ -26,10 +27,16 @@ void SceneTitle::Initialize()
     selectGuide = std::make_unique<MyMesh>();
     selectGuide->Initialize();
     selectGuide->SetPrimitive(new GeometricRect(device, L"./Data/flipImage/stageselect.png"));
-    selectGuide->pos.z = 2.0f;
+    selectGuide->pos.x = 2.0f;
+    selectGuide->pos.z = 1.5f;
     selectGuide->scale.x = 5.0f;
-    selectGuide->scale.y = 3.0f;
-    selectGuide->scale.z = 3.0f;
+    selectGuide->scale.y = 1.0f;
+    selectGuide->scale.z = 2.0f;
+
+    // ”wŒi
+    sky.Initialize();
+    sky.skinnedLoad("./Data/cube/cube_0.fbx", true);
+    sky.scale = VECTOR3(50.0f, 50.0f, 50.0f);
 
     //” 
     cube_texture[0] = L"./Data/Floor/FloorS.png";
@@ -98,6 +105,7 @@ void SceneTitle::Render(float elapsedTime)
     DirectX::XMMATRIX projection = DirectX::XMLoadFloat4x4(&camera1->GetProjection());
 
     //player->Render(view, projection, lightDirection, false);
+    sky.Render(view, projection, lightDirection, false, elapsedTime);
     block->Render(context, view, projection);
     player->Render(view, projection, lightDirection, false, elapsedTime);
     title->Render(view, projection, lightDirection, false, elapsedTime);

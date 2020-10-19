@@ -112,9 +112,9 @@ void Player::Move()
 
 	framework::getInstance()->debug->setString("Pl.moveAngle:%f", moveAngle);
 
-	framework::getInstance()->debug->setString("Pl.speed.x:%f", speed.x);
-	framework::getInstance()->debug->setString("Pl.speed.y:%f", speed.y);
-	framework::getInstance()->debug->setString("Pl.speed.z:%f", speed.z);
+	framework::getInstance()->debug->setString("Pl.pos.x:%f", pos.x);
+	framework::getInstance()->debug->setString("Pl.pos.y:%f", pos.y);
+	framework::getInstance()->debug->setString("Pl.pos.z:%f", pos.z);
 	framework::getInstance()->debug->setString("Pl.axis.x:%2.f", axis.x);
 	framework::getInstance()->debug->setString("Pl.axis.y:%2.f", axis.y);
 	framework::getInstance()->debug->setString("Pl.axis.z:%2.f", axis.z);
@@ -132,7 +132,9 @@ void Player::Move()
 		}
 		if (timer >= second)
 		{
+			pos.x = round(pos.x);
 			pos.y = 0;
+			pos.z = round(pos.z);
 			axis.x = 0.0f;
 			axis.y = 1.0f;
 			axis.z = 0.0f;

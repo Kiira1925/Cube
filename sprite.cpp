@@ -54,7 +54,7 @@ Sprite::Sprite(ID3D11Device* p_device, const wchar_t* p_texturefile)
 	//  CSOファイルの読み込みをする
 	//  sprite_vs.csoのロード
 	FILE* fp = 0;
-	fopen_s(&fp, "sprite_vs.cso", "rb");
+	fopen_s(&fp, "./Shaders/sprite_vs.cso", "rb");
 	fseek(fp, 0, SEEK_END);
 	long cso_sz = ftell(fp);
 	fseek(fp, 0, SEEK_SET);
@@ -72,7 +72,7 @@ Sprite::Sprite(ID3D11Device* p_device, const wchar_t* p_texturefile)
 	// CSOファイルを読み込む
 	//  sprite_ps.csoのロード
 	fp = 0;
-	fopen_s(&fp, "sprite_ps.cso", "rb");
+	fopen_s(&fp, "./Shaders/sprite_ps.cso", "rb");
 	fseek(fp, 0, SEEK_END);
 	cso_sz = ftell(fp);
 	fseek(fp, 0, SEEK_SET);
