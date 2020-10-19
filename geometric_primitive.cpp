@@ -63,8 +63,8 @@ bool GeometricPrimitive::CreateBuffers(ID3D11Device* p_device, vertex* vertices,
 		{ "POSITION",0, DXGI_FORMAT_R32G32B32_FLOAT,0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA,0 },
 		{ "NORMAL" , 0, DXGI_FORMAT_R32G32B32_FLOAT,0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA,0 },
 	};
-	createVsFromCso(p_device, "geometric_primitive_vs.cso", p_vertexShader.GetAddressOf(), p_inputLayout.GetAddressOf(), input_element_desc, ARRAYSIZE(input_element_desc));
-	createPsFromCso(p_device, "geometric_primitive_ps.cso", p_pixelShader.GetAddressOf());
+	createVsFromCso(p_device, "./Shaders/geometric_primitive_vs.cso", p_vertexShader.GetAddressOf(), p_inputLayout.GetAddressOf(), input_element_desc, ARRAYSIZE(input_element_desc));
+	createPsFromCso(p_device, "./Shaders/geometric_primitive_ps.cso", p_pixelShader.GetAddressOf());
 
 	// ラスタライザーステート(ワイヤーフレーム)の作成
 	D3D11_RASTERIZER_DESC rsDesc;
@@ -161,8 +161,8 @@ bool GeometricPrimitive::TextureCreateBuffers(ID3D11Device* p_device, vertex* ve
 		{ "NORMAL" , 0, DXGI_FORMAT_R32G32B32_FLOAT,0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA,0 },
 		{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
 	};
-	createVsFromCso(p_device, "not_light_vs.cso", p_vertexShader.GetAddressOf(), p_inputLayout.GetAddressOf(), input_element_desc, ARRAYSIZE(input_element_desc));
-	createPsFromCso(p_device, "not_light_ps.cso", p_pixelShader.GetAddressOf());
+	createVsFromCso(p_device, "./Shaders/not_light_vs.cso", p_vertexShader.GetAddressOf(), p_inputLayout.GetAddressOf(), input_element_desc, ARRAYSIZE(input_element_desc));
+	createPsFromCso(p_device, "./Shaders/not_light_ps.cso", p_pixelShader.GetAddressOf());
 
 	// ラスタライザーステート(ワイヤーフレーム)の作成
 	D3D11_RASTERIZER_DESC rsDesc;

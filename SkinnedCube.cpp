@@ -78,7 +78,7 @@ SkinnedCube::SkinnedCube(ID3D11Device * device, FileName texture[], UINT size)
 	{
 		FILE* fp = nullptr;
 		//シェーダーのファイルのアドレスは好きに変更して
-		fopen_s(&fp, "cube_vs.cso", "rb");
+		fopen_s(&fp, "./Shaders/cube_vs.cso", "rb");
 		_ASSERT_EXPR(fp, "CSO File not found");
 		fseek(fp, 0, SEEK_END);
 		long cso_sz = ftell(fp);
@@ -116,7 +116,7 @@ SkinnedCube::SkinnedCube(ID3D11Device * device, FileName texture[], UINT size)
 	{
 		FILE* fp = nullptr;
 		//シェーダーのファイルのアドレスは好きに変更して
-		fopen_s(&fp, "cube_ps.cso", "rb");
+		fopen_s(&fp, "./Shaders/cube_ps.cso", "rb");
 		fseek(fp, 0, SEEK_END);
 		long cso_sz = ftell(fp);
 		fseek(fp, 0, SEEK_SET);
