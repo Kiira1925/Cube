@@ -4,7 +4,7 @@
 #include "framework.h"
 #include "blender.h"
 const float upS = 0.5f;
-const float second = 60;
+const float second = 30;
 //void Player::Initialize(GeometricPrimitive* _primitive)
 //{
 //	obj.Initialize();
@@ -59,7 +59,7 @@ void Player::InitStatus()
 
 void Player::Move()
 {
-	const float dangle = DirectX::XMConvertToRadians(90.0f / 60);		//	1度
+	const float dangle = DirectX::XMConvertToRadians(90.0f / second);		//	1度
 	const float moveSpeed = 1.0f;/* / 60; 一秒で進める距離	*/								//	プレイヤーの速度
 
 	if (speed.x == 0 && speed.z == 0)
@@ -126,11 +126,11 @@ void Player::Move()
 		pos.z += speed.z / second;
 		timer++;
 		speed.y -= 0.01;
-		if (timer == 30)
+		if (timer == second/2)
 		{
 			speed.y *= -1;
 		}
-		if (timer >= 60)
+		if (timer >= second)
 		{
 			pos.y = 0;
 			axis.x = 0.0f;

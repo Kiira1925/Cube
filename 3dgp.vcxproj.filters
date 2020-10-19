@@ -31,6 +31,12 @@
     <FxCompile Include="static_mesh_vs.hlsl">
       <Filter>Shader\static_mesh</Filter>
     </FxCompile>
+    <FxCompile Include="skinned_not_light_vs.hlsl">
+      <Filter>Shader\skinned_not_light</Filter>
+    </FxCompile>
+    <FxCompile Include="skinned_not_light_ps.hlsl">
+      <Filter>Shader\skinned_not_light</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="blender.cpp">
@@ -241,6 +247,9 @@
     <None Include="static_mesh.hlsli">
       <Filter>Shader\static_mesh</Filter>
     </None>
+    <None Include="skinned_not_light.hlsli">
+      <Filter>Shader\skinned_not_light</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">
@@ -272,6 +281,8 @@
     </Filter>
     <Filter Include="Source\Scene">
       <UniqueIdentifier>{3eab98ed-8095-4536-8f71-8023277c81c6}</UniqueIdentifier>
+    <Filter Include="Shader\skinned_not_light">
+      <UniqueIdentifier>{1ad5be48-e1c7-44dd-9f48-e1b72d4aeb67}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

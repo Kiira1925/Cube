@@ -1,5 +1,6 @@
 #pragma once
 #include <d3d11.h>
+#include <vector>
 #include <DirectXMath.h>
 
 #include <wrl.h>		// ComPtr
@@ -14,7 +15,16 @@ protected:
     {
         DirectX::XMFLOAT3 pos;
         DirectX::XMFLOAT3 normal;
+        DirectX::XMFLOAT2 texcoord;
     };
+
+    struct Texture
+    {
+        Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> data;
+        D3D11_TEXTURE2D_DESC desc;
+    };
+
+    Texture texture;
 
     // 定数バッファ
     struct cbuffer
@@ -36,9 +46,9 @@ private:
     Microsoft::WRL::ComPtr<ID3D11DepthStencilState>  p_depthStancilState;
    
     // テクスチャを使用する際に外す
-    //Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> pShaderResourceView;
-    //D3D11_TEXTURE2D_DESC texture2dDesc;
-    Microsoft::WRL::ComPtr<ID3D11SamplerState> pSamplerState = NULL;
+    // Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> pShaderResourceView;
+    // D3D11_TEXTURE2D_DESC texture2dDesc;
+    Microsoft::WRL::ComPtr<ID3D11SamplerState> pSamplerState;
 
     int                 numIndices;
 
@@ -52,8 +62,16 @@ public:
         const DirectX::XMFLOAT4&,  //材質色 
         bool       //線・塗りつぶし描画フラグ 
     );
+    void render(
+        ID3D11DeviceContext*,   //デバイスコンテキスト 
+        const DirectX::XMFLOAT4X4&, //ワールド・ビュー・プロジェクション合成行列 
+        const DirectX::XMFLOAT4X4&, //ワールド変換行列
+        const DirectX::XMFLOAT4& color = DirectX::XMFLOAT4(1, 1, 1, 1),  //材質色 
+        bool wireframe = false      //線・塗りつぶし描画フラグ 
+    );
 public:
     bool CreateBuffers(ID3D11Device* device,vertex* vertices, int numVertex,unsigned int* indices,int numIndex);
+    bool TextureCreateBuffers(ID3D11Device* device, vertex* vertices, int numVertex, unsigned int* indices, int numIndex, const wchar_t* filename);
     GeometricPrimitive() :p_vertexShader(NULL), p_pixelShader(NULL), p_inputLayout(NULL), p_vertexBuffer(NULL),
         p_indexBuffer(NULL), p_constBuffer(NULL), p_rasterizerState(), p_depthStancilState(NULL),numIndices(0)
     {}
@@ -61,10 +79,18 @@ public:
 
 };
 
+class GeometricBoard : public GeometricPrimitive
+{
+public:
+    GeometricBoard(ID3D11Device* p_device, const wchar_t*);
+    ~GeometricBoard() {};
+};
+
 class GeometricRect : public GeometricPrimitive
 {
 public:
     GeometricRect(ID3D11Device* p_device);
+    GeometricRect(ID3D11Device* p_device, const wchar_t*);
     ~GeometricRect() {};
 };
 

@@ -535,8 +535,8 @@ Skinned_Mesh::Skinned_Mesh(ID3D11Device* device, const char* fbxFilename,bool cl
         { "WEIGHTS", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
         { "BONES" ,  0, DXGI_FORMAT_R32G32B32A32_UINT,  0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
     };
-    createVsFromCso(device, "skinned_mesh_vs.cso", vertexShader.GetAddressOf(), inputLayout.GetAddressOf(), input_element_desc, ARRAYSIZE(input_element_desc));
-    createPsFromCso(device, "skinned_mesh_ps.cso", pixelShader.GetAddressOf());
+    createVsFromCso(device, "skinned_not_light_vs.cso", vertexShader.GetAddressOf(), inputLayout.GetAddressOf(), input_element_desc, ARRAYSIZE(input_element_desc));
+    createPsFromCso(device, "skinned_not_light_ps.cso", pixelShader.GetAddressOf());
 
     // create rasterizer state : solid mode
     {

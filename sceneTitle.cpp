@@ -11,6 +11,26 @@ void SceneTitle::Initialize()
     lightDirection = DirectX::XMFLOAT4(0, -1, 0, 0);
     camera1 = std::make_unique<MainCamera>();
 
+    /*title = std::make_unique<MyMesh>();
+    title->Initialize();
+    std::unique_ptr<GeometricPrimitive> board = std::make_unique<GeometricBoard>(device, L"./Data/title/title.png");*/
+    title = std::make_unique<MyMesh>();
+    title->Initialize();
+    title->SetPrimitive(new GeometricBoard(device, L"./Data/flipImage/title.png"));
+    title->pos.x = -3.0f;
+    title->pos.z = 3.0f;
+    title->scale.x = 10.0f;
+    title->scale.y = 10.0f;
+    title->scale.z = 10.0f;
+
+    selectGuide = std::make_unique<MyMesh>();
+    selectGuide->Initialize();
+    selectGuide->SetPrimitive(new GeometricRect(device, L"./Data/flipImage/stageselect.png"));
+    selectGuide->pos.z = 2.0f;
+    selectGuide->scale.x = 5.0f;
+    selectGuide->scale.y = 3.0f;
+    selectGuide->scale.z = 3.0f;
+
     //” 
     cube_texture[0] = L"./Data/Floor/FloorS.png";
     cube_texture[1] = L"./Data/Floor/Floor0.png";
@@ -80,6 +100,8 @@ void SceneTitle::Render(float elapsedTime)
     //player->Render(view, projection, lightDirection, false);
     block->Render(context, view, projection);
     player->Render(view, projection, lightDirection, false, elapsedTime);
+    title->Render(view, projection, lightDirection, false, elapsedTime);
+    selectGuide->Render(view, projection, lightDirection, false, elapsedTime);
     //block->Render(context, view, projection, lightDirection, false);
 
     pFramework->sprites[5]->render(pFramework->getDeviceContext(), 20, 170, 360, 72, 0, 0, 600, 120, 0, XMFLOAT4(1, 1, 1, 1));
