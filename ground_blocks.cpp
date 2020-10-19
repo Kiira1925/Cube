@@ -71,7 +71,9 @@ void GroundBlock::Render(ID3D11DeviceContext* context,const DirectX::XMFLOAT4X4&
     {
         obj->Render(context, count + 1, wvp, world);
     }
-    else obj->Render(context, type + 1, wvp, world);
+    else if (type == 0 || type == 5) { obj->Render(context, 6, wvp, world); }
+    else if (type >= 10) { obj->Render(context, type-3, wvp, world); }
+    else obj->Render(context, 5, wvp, world);
 }
 
 void GroundBlock::DestroyBlock()
@@ -86,7 +88,7 @@ void GroundBlock::DestroyBlock()
 
     if (count <= 0)
     {
-        pos.y -= 1.0f;
+        pos.y -= 0.5f;
     }
 }
 
@@ -94,7 +96,7 @@ void GroundBlock::SelectBlock()
 {
     if (hoverflg)
     {
-        SceneManager::Instance().ChangeScene(SceneSelect::getInstance());
+        SceneManager::Instance().ChangeScenePerformance(SceneSelect::getInstance());
     }
 }
 
@@ -104,6 +106,7 @@ void GroundBlock::StegeBlock(int num)
     {
         SceneManager::Instance().SetStageNum(num);
         //SceneManager::Instance().ChangeScene(SceneGame::getInstance());
+
         SceneManager::Instance().ChangeScenePerformance(SceneGame::getInstance());
     }
 }
@@ -177,7 +180,7 @@ void GroundBlockManager::Initialize()
 
 void GroundBlockManager::SetPrimitive(std::shared_ptr<SkinnedCube> primitive)
 {
-    for (int i = 0; i < mea;i++)
+    for (int i = 0; i < mea; i++)
     {
         obj[i] = std::make_unique<GroundBlock>(primitive);
     }
@@ -227,8 +230,8 @@ void GroundBlockManager::Render(ID3D11DeviceContext* context, const DirectX::XMM
             //DirectX::XMFLOAT4 material_color = { 0.0f,0.6f,0.5f,1.0f };
 
             obj[count]->Render(context,wvp, world);
-            framework::getInstance()->debug->setString("type:%d", obj[count]->type);
-            framework::getInstance()->debug->setString("count:%d", obj[count]->count);
+            //framework::getInstance()->debug->setString("type:%d", obj[count]->type);
+            //framework::getInstance()->debug->setString("count:%d", obj[count]->count);
             count++;
         }
     }

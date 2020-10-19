@@ -41,6 +41,22 @@ void Player::Initialize(const char* fileName)
 	color = obj.color;
 }
 
+void Player::InitStatus()
+{
+	pos.y = 0;
+	axis.x = 0.0f;
+	axis.y = 1.0f;
+	axis.z = 0.0f;
+	axis.w = 1.0f;
+	orientation.x = axis.x * sinf(0 / 2);
+	orientation.y = axis.y * sinf(0 / 2);
+	orientation.z = axis.z * sinf(0 / 2);
+	orientation.w = cosf(0 / 2);
+	moveAngle = 0;
+	speed = VECTOR3(0.0f, upS, 0.0f);
+	timer = 0;
+}
+
 void Player::Move()
 {
 	const float dangle = DirectX::XMConvertToRadians(90.0f / 60);		//	1“x
@@ -56,7 +72,6 @@ void Player::Move()
 			axis.z = 1.0f;
 			moveAngle += dangle;
 			speed.x -= moveSpeed;
-
 		}
 		else if (GetAsyncKeyState(VK_RIGHT) < 0)
 		{
@@ -125,6 +140,8 @@ void Player::Move()
 			moveAngle = 0;
 			speed = VECTOR3(0.0f, upS, 0.0f);
 			timer = 0;
+			pFramework->soundSE[2]->Play(false);
+
 		}
 	}
 

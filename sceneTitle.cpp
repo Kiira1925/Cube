@@ -18,10 +18,11 @@ void SceneTitle::Initialize()
     cube_texture[3] = L"./Data/Floor/Floor2.png";
     cube_texture[4] = L"./Data/Floor/Floor3.png";
     cube_texture[5] = L"./Data/Floor/FloorG.png";
+    cube_texture[6] = L"./Data/Floor/FloorN.png";
 
     // ブロック設定
     block = std::make_unique<GroundBlockManager>();
-    std::shared_ptr<SkinnedCube> cube = std::make_shared<SkinnedCube>(device, cube_texture, 6);
+    std::shared_ptr<SkinnedCube> cube = std::make_shared<SkinnedCube>(device, cube_texture, 7);
 
     block = std::make_unique<GroundBlockManager>();
     block->SetStageNum(0 );
@@ -34,8 +35,8 @@ void SceneTitle::Initialize()
     player->SetPos(FLOAT3(2.0f, 0.0f, 0.0f));
 
     // ビュー設定
-    camera1->SetEye(DirectX::XMFLOAT3(0.0f, 20.0f, -10.0f));
-    camera1->SetFocus(DirectX::XMFLOAT3(5, 0, 5));
+    camera1->SetEye(DirectX::XMFLOAT3(block->GetMapX()/2, 20.0f, (-block->GetMapY()/2)-10));
+    camera1->SetFocus(DirectX::XMFLOAT3(block->GetMapX()/2, 0, -block->GetMapY()/2));
     camera1->SetUp(DirectX::XMFLOAT3(0.0f, 1.0f, 0.0f));
 
     //　プロジェクションの設定
@@ -80,6 +81,16 @@ void SceneTitle::Render(float elapsedTime)
     block->Render(context, view, projection);
     player->Render(view, projection, lightDirection, false, elapsedTime);
     //block->Render(context, view, projection, lightDirection, false);
+
+    pFramework->sprites[5]->render(pFramework->getDeviceContext(), 20, 170, 360, 72, 0, 0, 600, 120, 0, XMFLOAT4(1, 1, 1, 1));
+
+    //pFramework->sprites[6]->render(pFramework->getDeviceContext(), 280+190*0, 400, 190, 274, 0, 0, 190, 274, 0, XMFLOAT4(1, 1, 1, 1));//S
+    //pFramework->sprites[7]->render(pFramework->getDeviceContext(), 280+190*1, 400, 190, 274, 0, 0, 190, 274, 0, XMFLOAT4(1, 1, 1, 1));//U
+    //pFramework->sprites[8]->render(pFramework->getDeviceContext(), 280+190*2, 400, 190, 274, 0, 0, 190, 274, 0, XMFLOAT4(1, 1, 1, 1));//C
+    //pFramework->sprites[8]->render(pFramework->getDeviceContext(), 280+190*3, 400, 190, 274, 0, 0, 190, 274, 0, XMFLOAT4(1, 1, 1, 1));//C
+    //pFramework->sprites[9]->render(pFramework->getDeviceContext(), 280+190*4, 400, 190, 274, 0, 0, 190, 274, 0, XMFLOAT4(1, 1, 1, 1));//E
+    //pFramework->sprites[6]->render(pFramework->getDeviceContext(), 280+190*5, 400, 190, 274, 0, 0, 190, 274, 0, XMFLOAT4(1, 1, 1, 1));//S
+    //pFramework->sprites[6]->render(pFramework->getDeviceContext(), 280+190*6, 400, 190, 274, 0, 0, 190, 274, 0, XMFLOAT4(1, 1, 1, 1));//S
 }
 
 void SceneTitle::Finalize()
