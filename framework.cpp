@@ -117,10 +117,19 @@ bool framework::initialize()
         sprites[0] = std::make_unique<Sprite>(pFramework->getDevice(), L"./Data/Menu/BB.png");
         sprites[1] = std::make_unique<Sprite>(pFramework->getDevice(), L"./Data/Menu/Pause.png");
         sprites[2] = std::make_unique<Sprite>(pFramework->getDevice(), L"./Data/Menu/Aicon.png");
-        // sprites[3] = std::make_unique<Sprite>(pFramework->getDevice(), L"./Data/Menu/WB.png");
+        sprites[3] = std::make_unique<Sprite>(pFramework->getDevice(), L"./Data/UI/UiStage.png");
+        sprites[4] = std::make_unique<Sprite>(pFramework->getDevice(), L"./Data/UI/Nunber128X50Max16.png");
+        sprites[5] = std::make_unique<Sprite>(pFramework->getDevice(), L"./Data/UI/UiKey.png");
+        sprites[6] = std::make_unique<Sprite>(pFramework->getDevice(), L"./Data/UI/S.png");
+        sprites[7] = std::make_unique<Sprite>(pFramework->getDevice(), L"./Data/UI/U.png");
+        sprites[8] = std::make_unique<Sprite>(pFramework->getDevice(), L"./Data/UI/C.png");
+        sprites[9] = std::make_unique<Sprite>(pFramework->getDevice(), L"./Data/UI/E.png");
+
 
         soundSE[0] = soundManager->CreateSoundSource("Data/Sounds/SE/select.wav");
         soundSE[1] = soundManager->CreateSoundSource("Data/Sounds/SE/check.wav");
+        soundSE[2] = soundManager->CreateSoundSource("Data/Sounds/SE/move.wav");
+        soundSE[3] = soundManager->CreateSoundSource("Data/Sounds/SE/clear.wav");
         // soundBGM->Play(true);
 
         SceneManager::Instance().SetScene(SceneTitle::getInstance());
@@ -245,7 +254,7 @@ void framework::render(float elapsed_time/*Elapsed seconds from last frame*/)
     debug->setString("BenchMark:%d", min);
     blender::Set(blender::BS_ADD);
     // text->textout(p_deviceContext.Get(), s, 10, 10, 24, 32);
-    debug->display(p_deviceContext.Get(), 1.0f, 1.0f, 1.0f, 10.0f, 10.0f);
+    //debug->display(p_deviceContext.Get(), 1.0f, 1.0f, 1.0f, 10.0f, 10.0f);
 
     ///////////////////////////////////////////////////
     //		ï`âÊèIóπ

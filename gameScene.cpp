@@ -48,6 +48,7 @@ void SceneGame::Initialize()
     cube_texture[3] = L"./Data/Floor/Floor2.png";
     cube_texture[4] = L"./Data/Floor/Floor3.png";
     cube_texture[5] = L"./Data/Floor/FloorG.png";
+    cube_texture[6] = L"./Data/Floor/FloorN.png";
 
     //scube = new SkinndeCube(device, cube_texture, 5);
 
@@ -56,11 +57,14 @@ void SceneGame::Initialize()
     player = std::make_unique<Player>();
     player->Initialize("./Data/cube/cube_setM.fbx");
 
-    std::shared_ptr<SkinnedCube> cube = std::make_shared<SkinnedCube>(device, cube_texture, 6);
+    std::shared_ptr<SkinnedCube> cube = std::make_shared<SkinnedCube>(device, cube_texture, 7);
     blocks = std::make_unique<GroundBlockManager>();
     blocks->SetStageNum(SceneManager::Instance().GetStageNum());
     blocks->Initialize();
     blocks->SetPrimitive(cube);
+
+    camera->SetFocus(DirectX::XMFLOAT3(blocks->GetMapX() / 2, 1, -blocks->GetMapY() / 2.0f));
+    camera->SetEye(DirectX::XMFLOAT3(camera->GetFocus().x + 5.0f, 15.0f, camera->GetFocus().z - 10.0f));
 
     //player = std::make_unique<Player>();
     //player->Initialize(new GeometricCube(pFramework->getDevice()));
@@ -72,6 +76,7 @@ void SceneGame::Initialize()
 
 void SceneGame::Update(float elapsedTime)
 {
+    if (clearTimer == 10) { pFramework->soundSE[3]->Play(false); }
     if (clearTimer > 120) 
     {
         Reload(SceneManager::Instance().GetStageNum() + 1); clearTimer = 0; return;
@@ -139,6 +144,14 @@ void SceneGame::Render(float elapsedTime)
     //player->Render(view, projection, lightDirection, wireframe);
     //sky.Render(view, projection, lightDirection, wireframe);
 
+    // UI•\Ž¦
+    pFramework->sprites[3]->render(pFramework->getDeviceContext(), 10, 10, 564, 150, 0, 0, 789, 210, 0, XMFLOAT4(1, 1, 1, 1));
+    pFramework->sprites[4]->render(pFramework->getDeviceContext(), 450, 60, 128, 50, 0 + (SceneManager::Instance().GetStageNum()-10)*128, 0, 128, 50, 0, XMFLOAT4(1, 1, 1, 1));
+
+    pFramework->sprites[5]->render(pFramework->getDeviceContext(), 20, 170, 360, 72, 0, 0, 600, 120, 0, XMFLOAT4(1, 1, 1, 1));
+
+    clearDraw();
+
     pPause->Draw();
 }
 
@@ -150,7 +163,7 @@ void SceneGame::Finalize()
 void SceneGame::Reload(int stage_num)
 {
     ID3D11Device* device = pFramework->getDevice();
-    std::shared_ptr<SkinnedCube> cube = std::make_shared<SkinnedCube>(device, cube_texture, 6);
+    std::shared_ptr<SkinnedCube> cube = std::make_shared<SkinnedCube>(device, cube_texture, 7);
 
     blocks->Relese();
 
@@ -159,6 +172,11 @@ void SceneGame::Reload(int stage_num)
     SceneManager::Instance().SetStageNum(stage_num);
     blocks->Initialize();
     blocks->SetPrimitive(cube);
+    player->InitStatus();
+
+    //camera->SetEye(DirectX::XMFLOAT3(blocks->GetMapX() / 2 + 5.0f, 15.0f, (blocks->GetMapY() / 2) - 10.0f));
+    camera->SetFocus(DirectX::XMFLOAT3(blocks->GetMapX() / 2, 1, -blocks->GetMapY() / 2.0f));
+    camera->SetEye(DirectX::XMFLOAT3(camera->GetFocus().x + 5.0f, 15.0f, camera->GetFocus().z - 10.0f));
 
     for (int i = 0; i < blocks->GetMea(); i++)
     {
@@ -184,4 +202,21 @@ bool SceneGame::clearFlg()
         }
     }
     return false;
+}
+
+void SceneGame::clearDraw()
+{
+    if (clearFlg())
+    {
+        float alpha = clearTimer / 60.0f;
+        blender::Set(blender::BS_ADD);
+        pFramework->sprites[6]->render(pFramework->getDeviceContext(), 280 + 190 * 0, 400, 190, 274, 0, 0, 190, 274, 0, XMFLOAT4(1, 1, 1, alpha-0.05));//S
+        pFramework->sprites[7]->render(pFramework->getDeviceContext(), 280 + 190 * 1, 400, 190, 274, 0, 0, 190, 274, 0, XMFLOAT4(1, 1, 1, alpha-0.10));//U
+        pFramework->sprites[8]->render(pFramework->getDeviceContext(), 280 + 190 * 2, 400, 190, 274, 0, 0, 190, 274, 0, XMFLOAT4(1, 1, 1, alpha-0.15));//C
+        pFramework->sprites[8]->render(pFramework->getDeviceContext(), 280 + 190 * 3, 400, 190, 274, 0, 0, 190, 274, 0, XMFLOAT4(1, 1, 1, alpha-0.20));//C
+        pFramework->sprites[9]->render(pFramework->getDeviceContext(), 280 + 190 * 4, 400, 190, 274, 0, 0, 190, 274, 0, XMFLOAT4(1, 1, 1, alpha-0.25));//E
+        pFramework->sprites[6]->render(pFramework->getDeviceContext(), 280 + 190 * 5, 400, 190, 274, 0, 0, 190, 274, 0, XMFLOAT4(1, 1, 1, alpha-0.30));//S
+        pFramework->sprites[6]->render(pFramework->getDeviceContext(), 280 + 190 * 6, 400, 190, 274, 0, 0, 190, 274, 0, XMFLOAT4(1, 1, 1, alpha-0.35));//S
+        blender::Set(blender::BS_NONE);
+    }
 }

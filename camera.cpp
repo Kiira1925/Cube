@@ -1,5 +1,6 @@
 #include	"camera.h"
 #include <stdlib.h>
+#include "framework.h"
 
 
 void Camera::Active()
@@ -16,7 +17,8 @@ void Camera::Active()
     DirectX::XMMATRIX p = DirectX::XMLoadFloat4x4(&projection);
     p = DirectX::XMMatrixPerspectiveFovLH(fov, aspect, nearZ, farZ);
     DirectX::XMStoreFloat4x4(&projection, p);
-
+    framework::getInstance()->debug->setString("camera_pos:%f,%f,%f", eye.x, eye.y, eye.z);
+    framework::getInstance()->debug->setString("camera_focus:%f,%f,%f", focus.x, focus.y, focus.z);
 }
 
 void Camera::SetPerspective(float fov, float aspect, float nearZ, float farZ)
@@ -68,6 +70,8 @@ void MainCamera::Chase(float elapsedTime)
 
     // ãóó£Çë™Ç¡Çƒ(Yï˚å¸ÇÕì¸ÇÍÇ»Ç¢)ê≥ãKâª
     float d = sqrtf(dx * dx + dz * dz);
+    // ãóó£:10
+    //framework::getInstance()->debug->setString("camera_distance:%f", d);
 
     if (d > 0) {
         dx /= d;
@@ -88,10 +92,23 @@ void MainCamera::Chase(float elapsedTime)
     SetEye(eye);
     SetFocus(moveTarget);
 
+    // 130ìx
+    //framework::getInstance()->debug->setString("camera_angle:%f", XMConvertToDegrees(atan2f(moveTarget.z-eye.z,moveTarget.x-eye.y)));
 }
 
 void MainCamera::Fix(float elapsedTime)
 {
+    SetFocus(GetFocus());
+}
+
+void MainCamera::Side(float elapsedTime)
+{
+    float radian = XMConvertToRadians(130);
+    float dist = 10.0f;
+
+    XMFLOAT3 camera_pos = { moveTarget.x+cosf(radian)*dist, 10.0f, moveTarget.z-sinf(radian)*dist };
+
+    SetEye(camera_pos);
     SetFocus(moveTarget);
 }
 
@@ -103,6 +120,9 @@ void MainCamera::Updata(float elapsedTime)
         break;
     case MODE::MODE_CHASE:
         Chase(elapsedTime);
+        break;
+    case MODE::MODE_SIDE:
+        Side(elapsedTime);
         break;
     }
     //Vibrate(elapsedTime); //êUìÆÉJÉÅÉâ

@@ -10,7 +10,7 @@
 #define FbxMax 10
 #define Gravity 0.25f
 
-static FileName cube_texture[6];
+static FileName cube_texture[8];
 
 class Scene
 {
@@ -119,6 +119,8 @@ public:
 
     void Reload(int stage_num);
     bool clearFlg();
+
+    void clearDraw();
 
     static SceneGame* getInstance()
     {

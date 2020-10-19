@@ -54,9 +54,6 @@
     <ClCompile Include="framework.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="gameScene.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
     <ClCompile Include="geometric_primitive.cpp">
       <Filter>Source</Filter>
     </ClCompile>
@@ -84,16 +81,7 @@
     <ClCompile Include="player.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="scene.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
     <ClCompile Include="sceneManager.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="sceneSelect.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="sceneTitle.cpp">
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="shader.cpp">
@@ -134,6 +122,18 @@
     </ClCompile>
     <ClCompile Include="imGui\imgui_widgets.cpp">
       <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="sceneSelect.cpp">
+      <Filter>Source\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="sceneTitle.cpp">
+      <Filter>Source\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="scene.cpp">
+      <Filter>Source\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="gameScene.cpp">
+      <Filter>Source\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -279,6 +279,8 @@
     <Filter Include="Shader\static_mesh">
       <UniqueIdentifier>{12fb5525-f923-4aee-bff1-6354d138905a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Scene">
+      <UniqueIdentifier>{3eab98ed-8095-4536-8f71-8023277c81c6}</UniqueIdentifier>
     <Filter Include="Shader\skinned_not_light">
       <UniqueIdentifier>{1ad5be48-e1c7-44dd-9f48-e1b72d4aeb67}</UniqueIdentifier>
     </Filter>

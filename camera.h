@@ -42,6 +42,7 @@ public:
     {
         MODE_FIX,
         MODE_CHASE,
+        MODE_SIDE,
         MODE_NUM
     };
 
@@ -53,10 +54,11 @@ private:
     void Vibrate(float elapsedTime); //振動カメラ
     void Chase(float elapsedTime); //追跡カメラ
     void Fix(float elapsedTime); //固定カメラ
+    void Side(float elapsedTime);
 
 public:
-    static const constexpr float FAR_DIST = 150.0f;
-    static const constexpr float NEAR_DIST = 50.0f;
+    static const constexpr float FAR_DIST = 30.0f;
+    static const constexpr float NEAR_DIST = 10.0f;
     void Updata(float elapsedTime); //カメラ更新
     void SetMode(MODE mode); //モード設定
     void SetVibration(float range, float timer); //振動開始
