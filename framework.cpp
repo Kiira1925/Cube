@@ -136,7 +136,7 @@ bool framework::initialize()
 
         soundBGM = soundManager->CreateSoundSource("Data/Sounds/BGM/bgm.wav");
         soundBGM->SetVolume(0.55f);
-        soundBGM->Play(false);
+        soundBGM->Play(true);
 
         SceneManager::Instance().SetScene(SceneTitle::getInstance());
         if (FAILED(hr))		return false;

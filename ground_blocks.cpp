@@ -146,6 +146,12 @@ void GroundBlock::StegeBlock(int num)
     }
 }
 
+bool GroundBlock::checkExist()
+{
+    if (count <= 0 && type < 4 && type > 0) return true;
+    return false;
+}
+
 
 //*********************************************************
 //
@@ -245,7 +251,7 @@ void GroundBlockManager::Render(ID3D11DeviceContext* context, const DirectX::XMM
     int count = 0;
     for (int y = 0; y < mapY; y++) {
         for (int x = 0; x < mapX; x++) {
-            if (mapData[y][x] < 0) { count++; continue; }
+            //if (mapData[y][x] < 0) { count++; continue; }
             DirectX::XMMATRIX W, S, R, T;
             DirectX::XMFLOAT4X4 wvp;
             DirectX::XMFLOAT4X4 world;
@@ -258,6 +264,7 @@ void GroundBlockManager::Render(ID3D11DeviceContext* context, const DirectX::XMM
             W = S * R * T;
 
             obj[count]->SetBlockPosXZ(posx, posz);
+            if (mapData[y][x] < 0) { count++; continue; }
 
             // šMATRIX -> FLOAT4X4
             DirectX::XMStoreFloat4x4(&world, W);
