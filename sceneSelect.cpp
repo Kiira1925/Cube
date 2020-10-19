@@ -35,7 +35,8 @@ void SceneSelect::Initialize()
 
     player = std::make_unique<Player>();
     player->Initialize("./Data/cube/cube_setM.fbx");
-    player->SetPos(FLOAT3(1.0f, 0.0f, -1.0f));
+    if (GroundBlockManager::getInstance()->isSelect01) { player->SetPos(FLOAT3(1.0f, 0.0f, -1.0f)); }
+    else { player->SetPos(FLOAT3(18.0f, 0.0f, -1.0f)); }
 
     // ƒrƒ…[Ý’è
     camera1->SetEye(DirectX::XMFLOAT3(0.0f, 10.0f, -1.0f));

@@ -133,7 +133,10 @@ bool framework::initialize()
         soundSE[1] = soundManager->CreateSoundSource("Data/Sounds/SE/check.wav");
         soundSE[2] = soundManager->CreateSoundSource("Data/Sounds/SE/move.wav");
         soundSE[3] = soundManager->CreateSoundSource("Data/Sounds/SE/clear.wav");
-        // soundBGM->Play(true);
+
+        soundBGM = soundManager->CreateSoundSource("Data/Sounds/BGM/bgm.wav");
+        soundBGM->SetVolume(0.55f);
+        soundBGM->Play(false);
 
         SceneManager::Instance().SetScene(SceneTitle::getInstance());
         if (FAILED(hr))		return false;

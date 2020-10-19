@@ -27,6 +27,15 @@ void GroundBlock::Update()
     case Block::C_block:
         SelectBlock();
         break;
+    case Block::S_01_block:
+        Select01Block();
+        break;
+    case Block::S_10_block:
+        Select10Block();
+        break;
+    case Block::T_block:
+        TitleBlock();
+        break;
     //case Block::S_block:
     //    StartBlock();
     //    break;
@@ -97,6 +106,32 @@ void GroundBlock::SelectBlock()
     if (hoverflg)
     {
         SceneManager::Instance().ChangeScenePerformance(SceneSelect::getInstance());
+    }
+}
+
+void GroundBlock::Select01Block()
+{
+    if (hoverflg)
+    {
+        GroundBlockManager::getInstance()->isSelect01 = true;
+        SceneManager::Instance().ChangeScenePerformance(SceneSelect::getInstance());
+    }
+}
+
+void GroundBlock::Select10Block()
+{
+    if (hoverflg)
+    {
+        GroundBlockManager::getInstance()->isSelect01 = false;
+        SceneManager::Instance().ChangeScenePerformance(SceneSelect::getInstance());
+    }
+}
+
+void GroundBlock::TitleBlock()
+{
+    if (hoverflg)
+    {
+        SceneManager::Instance().ChangeScenePerformance(SceneTitle::getInstance());
     }
 }
 
