@@ -40,6 +40,7 @@ public:
 public:
     void SetPos(FLOAT3 pos) { this->pos = pos; }
     void SetPos(float x, float y, float z) { this->pos.x = x; this->pos.y = y; this->pos.z = z; }
+    
 public:
     DirectX::XMMATRIX GetWorldMatrix();
     FLOAT3 GetPos() { return (FLOAT3)pos; }

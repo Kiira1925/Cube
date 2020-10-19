@@ -17,8 +17,9 @@ void SceneTitle::Initialize()
     title = std::make_unique<MyMesh>();
     title->Initialize();
     title->SetPrimitive(new GeometricBoard(device, L"./Data/flipImage/title.png"));
-    title->pos.x = -3.0f;
-    title->pos.z = 3.0f;
+    title->pos.x = 2.0f;
+    title->pos.z = 4.0f;
+    title->angle.x = XMConvertToRadians(60);
     title->scale.x = 10.0f;
     title->scale.y = 10.0f;
     title->scale.z = 10.0f;
@@ -26,10 +27,11 @@ void SceneTitle::Initialize()
     selectGuide = std::make_unique<MyMesh>();
     selectGuide->Initialize();
     selectGuide->SetPrimitive(new GeometricRect(device, L"./Data/flipImage/stageselect.png"));
-    selectGuide->pos.z = 2.0f;
+    selectGuide->pos.x = 2.0f;
+    selectGuide->pos.z = 1.5f;
     selectGuide->scale.x = 5.0f;
-    selectGuide->scale.y = 3.0f;
-    selectGuide->scale.z = 3.0f;
+    selectGuide->scale.y = 1.0f;
+    selectGuide->scale.z = 2.0f;
 
     // 背景
     sky.Initialize();
@@ -60,8 +62,8 @@ void SceneTitle::Initialize()
     player->SetPos(FLOAT3(2.0f, 0.0f, 0.0f));
 
     // ビュー設定
-    camera1->SetEye(DirectX::XMFLOAT3(block->GetMapX()/2, 20.0f, (-block->GetMapY()/2)-10));
-    camera1->SetFocus(DirectX::XMFLOAT3(block->GetMapX()/2, 0, -block->GetMapY()/2));
+    camera1->SetEye(DirectX::XMFLOAT3(block->GetMapX()/2, 20.0f, (-block->GetMapY()/2)-8));
+    camera1->SetFocus(DirectX::XMFLOAT3(block->GetMapX() / 2, 0, -block->GetMapY() / 2 + 2));
     camera1->SetUp(DirectX::XMFLOAT3(0.0f, 1.0f, 0.0f));
 
     //　プロジェクションの設定
