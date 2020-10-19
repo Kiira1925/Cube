@@ -31,6 +31,11 @@ void SceneTitle::Initialize()
     selectGuide->scale.y = 3.0f;
     selectGuide->scale.z = 3.0f;
 
+    // ”wŒi
+    sky.Initialize();
+    sky.skinnedLoad("./Data/cube/cube_0.fbx", true);
+    sky.scale = VECTOR3(50.0f, 50.0f, 50.0f);
+
     //” 
     cube_texture[0] = L"./Data/Floor/FloorS.png";
     cube_texture[1] = L"./Data/Floor/Floor0.png";
@@ -97,6 +102,7 @@ void SceneTitle::Render(float elapsedTime)
     DirectX::XMMATRIX projection = DirectX::XMLoadFloat4x4(&camera1->GetProjection());
 
     //player->Render(view, projection, lightDirection, false);
+    sky.Render(view, projection, lightDirection, false, elapsedTime);
     block->Render(context, view, projection);
     player->Render(view, projection, lightDirection, false, elapsedTime);
     title->Render(view, projection, lightDirection, false, elapsedTime);

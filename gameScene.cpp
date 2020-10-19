@@ -16,7 +16,7 @@
 #include <DirectXMath.h>
 
 
-MyMesh sky;
+
 
 void SceneGame::Initialize()
 {

@@ -10,6 +10,10 @@ void SceneSelect::Initialize()
     lightDirection = DirectX::XMFLOAT4(0, -1, 0, 0);
     camera1 = std::make_unique<MainCamera>();
 
+    sky.Initialize();
+    sky.skinnedLoad("./Data/cube/cube_0.fbx", true);
+    sky.scale = VECTOR3(50.0f, 50.0f, 50.0f);
+
     //” 
     cube_texture[0] = L"./Data/Floor/FloorS.png";
     cube_texture[1] = L"./Data/Floor/Floor0.png";  
@@ -78,6 +82,7 @@ void SceneSelect::Render(float elapsedTime)
     DirectX::XMMATRIX view = DirectX::XMLoadFloat4x4(&camera1->GetView());
     DirectX::XMMATRIX projection = DirectX::XMLoadFloat4x4(&camera1->GetProjection());
 
+    sky.Render(view, projection, lightDirection, false, elapsedTime);
     player->Render(view, projection, lightDirection, false, elapsedTime);
     block->Render(context, view, projection);
 

@@ -40,6 +40,7 @@ private:
     std::unique_ptr<GroundBlockManager> block;
     std::unique_ptr<MyMesh> title;
     std::unique_ptr<MyMesh> selectGuide;
+    MyMesh sky;
 
 public:
     DirectX::XMFLOAT4 lightDirection;
@@ -66,6 +67,7 @@ private:
     std::unique_ptr<MainCamera> camera1;
     std::unique_ptr<Player> player;
     std::unique_ptr<GroundBlockManager> block;
+    MyMesh sky;
 
 public:
     DirectX::XMFLOAT4 lightDirection;
@@ -93,6 +95,7 @@ private:
     std::unique_ptr<MainCamera> camera;
     std::unique_ptr<GroundBlockManager> blocks;
     std::unique_ptr<Player> player;
+    MyMesh sky;
 
 private:
     int timer;
