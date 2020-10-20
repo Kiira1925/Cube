@@ -80,7 +80,7 @@ void GroundBlock::Render(ID3D11DeviceContext* context,const DirectX::XMFLOAT4X4&
     {
         obj->Render(context, count + 1, wvp, world);
     }
-    else if (type == 0 || type == 5) { obj->Render(context, 6, wvp, world); }
+    else if (type == 0 || type == 5 || type == 6) { obj->Render(context, 6, wvp, world); }
     else if (type >= 10) { obj->Render(context, type-3, wvp, world); }
     else obj->Render(context, 5, wvp, world);
 }
