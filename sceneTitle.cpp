@@ -102,14 +102,6 @@ void SceneTitle::Update(float elapsedTime)
         else block->SetBlockHover(i, false);
     }
     camera1->Updata(elapsedTime);
- 
-    if (GetAsyncKeyState('V') & 1)
-    {
-        SceneManager::Instance().SetStageNum(2);
-        //SceneManager::Instance().ChangeScene(SceneGame::getInstance());
-        SceneManager::Instance().ChangeScenePerformance(SceneGame::getInstance());
-        return;
-    }
 }
 void SceneTitle::Render(float elapsedTime)
 {

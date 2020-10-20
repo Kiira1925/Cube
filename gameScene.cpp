@@ -65,6 +65,12 @@ void SceneGame::Initialize()
 
     camera->SetFocus(DirectX::XMFLOAT3(blocks->GetMapX() / 2, 1, -blocks->GetMapY() / 2.0f));
     camera->SetEye(DirectX::XMFLOAT3(camera->GetFocus().x + 5.0f, 15.0f, camera->GetFocus().z - 10.0f));
+    if (SceneManager::Instance().GetStageNum() >= 18) 
+    {
+        camera->SetFocus(DirectX::XMFLOAT3(blocks->GetMapX() / 2, 1, -blocks->GetMapY() / 2.0f -2));
+        camera->SetEye(DirectX::XMFLOAT3(camera->GetFocus().x + 5.0f, 15.0f, camera->GetFocus().z - 11.0f));
+    }
+
 
     //player = std::make_unique<Player>();
     //player->Initialize(new GeometricCube(pFramework->getDevice()));
@@ -199,6 +205,11 @@ void SceneGame::Reload(int stage_num)
     //camera->SetEye(DirectX::XMFLOAT3(blocks->GetMapX() / 2 + 5.0f, 15.0f, (blocks->GetMapY() / 2) - 10.0f));
     camera->SetFocus(DirectX::XMFLOAT3(blocks->GetMapX() / 2, 1, -blocks->GetMapY() / 2.0f));
     camera->SetEye(DirectX::XMFLOAT3(camera->GetFocus().x + 5.0f, 15.0f, camera->GetFocus().z - 10.0f));
+    if (SceneManager::Instance().GetStageNum() >= 18)
+    {
+        camera->SetFocus(DirectX::XMFLOAT3(blocks->GetMapX() / 2, 1, -blocks->GetMapY() / 2.0f - 2));
+        camera->SetEye(DirectX::XMFLOAT3(camera->GetFocus().x + 5.0f, 15.0f, camera->GetFocus().z - 11.0f));
+    }
 
     for (int i = 0; i < blocks->GetMea(); i++)
     {

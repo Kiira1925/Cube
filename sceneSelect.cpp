@@ -49,7 +49,7 @@ void SceneSelect::Initialize()
     player = std::make_unique<Player>();
     player->Initialize("./Data/cube/cube_setM.fbx");
     if (GroundBlockManager::getInstance()->isSelect01) { player->SetPos(FLOAT3(2.0f, 0.0f, -2.0f)); }
-    else { player->SetPos(FLOAT3(19.0f, 0.0f, -2.0f)); }
+    else { player->SetPos(FLOAT3(20.0f, 0.0f, -2.0f)); }
 
     // ƒrƒ…[Ý’è
     camera1->SetEye(DirectX::XMFLOAT3(0.0f, 10.0f, -1.0f));
@@ -93,12 +93,6 @@ void SceneSelect::Update(float elapsedTime)
 
     camera1->Updata(elapsedTime);
     camera1->SetmodeTarget(DirectX::XMFLOAT3(player->GetPos().x, player->GetPos().y, player->GetPos().z));
-
-    if (GetAsyncKeyState('V') & 1)
-    {
-        SceneManager::Instance().ChangeScene(SceneGame::getInstance());
-        return;
-    }
 }
 
 void SceneSelect::Render(float elapsedTime)

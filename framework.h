@@ -188,7 +188,7 @@ private:
             std::ostringstream outs;
             outs.precision(6);
             outs << "FPS : " << fps << " / " << "Frame Time : " << mspf << " (ms)";
-            SetWindowTextA(hwnd, outs.str().c_str());
+           // SetWindowTextA(hwnd, outs.str().c_str());
 			
             // Reset for next average.
             frames = 0;

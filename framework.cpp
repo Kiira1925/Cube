@@ -51,7 +51,7 @@ bool framework::initialize()
     sd.OutputWindow = hwnd;
     sd.SampleDesc.Count = 1;
     sd.SampleDesc.Quality = 0;
-    sd.Windowed = TRUE;
+    sd.Windowed = FALSE;
     // ここでドライブタイプのデバイスとスワップチェインを作成していると考えている
     for (UINT driverTypeIndex = 0; driverTypeIndex < numDriverTypes; driverTypeIndex++)
     {
