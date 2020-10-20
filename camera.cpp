@@ -109,7 +109,7 @@ void MainCamera::Side(float elapsedTime)
     XMFLOAT3 camera_pos = { moveTarget.x+cosf(radian)*dist, 10.0f, moveTarget.z-sinf(radian)*dist };
 
     SetEye(camera_pos);
-    SetFocus(moveTarget);
+    SetFocus(XMFLOAT3(moveTarget.x,0,moveTarget.z));
 }
 
 void MainCamera::Updata(float elapsedTime)

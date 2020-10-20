@@ -17,8 +17,8 @@ void SceneTitle::Initialize()
     title = std::make_unique<MyMesh>();
     title->Initialize();
     title->SetPrimitive(new GeometricBoard(device, L"./Data/flipImage/title.png"));
-    title->pos.x = 2.0f;
-    title->pos.z = 4.0f;
+    title->pos.x = 3.0f;
+    title->pos.z = 3.0f;
     title->angle.x = XMConvertToRadians(60);
     title->scale.x = 10.0f;
     title->scale.y = 10.0f;
@@ -27,8 +27,8 @@ void SceneTitle::Initialize()
     selectGuide = std::make_unique<MyMesh>();
     selectGuide->Initialize();
     selectGuide->SetPrimitive(new GeometricRect(device, L"./Data/flipImage/stageselect.png"));
-    selectGuide->pos.x = 2.0f;
-    selectGuide->pos.z = 1.5f;
+    selectGuide->pos.x = 3.0f;
+    selectGuide->pos.z = 0.5f;
     selectGuide->scale.x = 5.0f;
     selectGuide->scale.y = 1.0f;
     selectGuide->scale.z = 2.0f;
@@ -46,12 +46,13 @@ void SceneTitle::Initialize()
     cube_texture[4] = L"./Data/Floor/Floor3.png";
     cube_texture[5] = L"./Data/Floor/FloorG.png";
     cube_texture[6] = L"./Data/Floor/FloorN.png";
+    cube_texture[7] = L"./Data/Floor/stage01.png";
 
     // ブロック設定
     block = std::make_unique<GroundBlockManager>();
-    std::shared_ptr<SkinnedCube> cube = std::make_shared<SkinnedCube>(device, cube_texture, 7);
+    std::shared_ptr<SkinnedCube> cube = std::make_shared<SkinnedCube>(device, cube_texture, 8);
 
-    block = std::make_unique<GroundBlockManager>();
+    block = std::make_shared<GroundBlockManager>();
     block->SetStageNum(0 );
     block->Initialize();
     block->SetPrimitive(cube);
@@ -59,11 +60,11 @@ void SceneTitle::Initialize()
     // プレイヤー
     player = std::make_unique<Player>();
     player->Initialize("./Data/cube/cube_setM.fbx");
-    player->SetPos(FLOAT3(2.0f, 0.0f, 0.0f));
+    player->SetPos(FLOAT3(3.0f, 0.0f, -1.0f));
 
     // ビュー設定
     camera1->SetEye(DirectX::XMFLOAT3(block->GetMapX()/2, 20.0f, (-block->GetMapY()/2)-8));
-    camera1->SetFocus(DirectX::XMFLOAT3(block->GetMapX() / 2, 0, -block->GetMapY() / 2 + 2));
+    camera1->SetFocus(DirectX::XMFLOAT3(block->GetMapX()/2, 0, -block->GetMapY()/2 + 2));
     camera1->SetUp(DirectX::XMFLOAT3(0.0f, 1.0f, 0.0f));
 
     //　プロジェクションの設定
@@ -73,8 +74,24 @@ void SceneTitle::Initialize()
 
 void SceneTitle::Update(float elapsedTime)
 {
+
+    if (Front(player->GetPos(), block) &&
+        Back(player->GetPos(), block) &&
+        Right(player->GetPos(), block) &&
+        Left(player->GetPos(), block) && player->pos.y <= 0)
+    {
+        SceneManager::Instance().ChangeScenePerformance(SceneTitle::getInstance()); return;
+    }
+
+    // 場外に行かないための判定
+    player->SetFront(Front(player->GetPos(), block));
+    player->SetBack(Back(player->GetPos(), block));
+    player->SetRight(Right(player->GetPos(), block));
+    player->SetLeft(Left(player->GetPos(), block));
+
     player->Move();
     block->Update();
+
 
     for (int i = 0; i < block->GetMea(); i++)
     {
@@ -84,7 +101,6 @@ void SceneTitle::Update(float elapsedTime)
         }
         else block->SetBlockHover(i, false);
     }
-
     camera1->Updata(elapsedTime);
  
     if (GetAsyncKeyState('V') & 1)
@@ -114,13 +130,15 @@ void SceneTitle::Render(float elapsedTime)
 
     pFramework->sprites[5]->render(pFramework->getDeviceContext(), 20, 170, 360, 72, 0, 0, 600, 120, 0, XMFLOAT4(1, 1, 1, 1));
 
-    //pFramework->sprites[6]->render(pFramework->getDeviceContext(), 280+190*0, 400, 190, 274, 0, 0, 190, 274, 0, XMFLOAT4(1, 1, 1, 1));//S
-    //pFramework->sprites[7]->render(pFramework->getDeviceContext(), 280+190*1, 400, 190, 274, 0, 0, 190, 274, 0, XMFLOAT4(1, 1, 1, 1));//U
-    //pFramework->sprites[8]->render(pFramework->getDeviceContext(), 280+190*2, 400, 190, 274, 0, 0, 190, 274, 0, XMFLOAT4(1, 1, 1, 1));//C
-    //pFramework->sprites[8]->render(pFramework->getDeviceContext(), 280+190*3, 400, 190, 274, 0, 0, 190, 274, 0, XMFLOAT4(1, 1, 1, 1));//C
-    //pFramework->sprites[9]->render(pFramework->getDeviceContext(), 280+190*4, 400, 190, 274, 0, 0, 190, 274, 0, XMFLOAT4(1, 1, 1, 1));//E
-    //pFramework->sprites[6]->render(pFramework->getDeviceContext(), 280+190*5, 400, 190, 274, 0, 0, 190, 274, 0, XMFLOAT4(1, 1, 1, 1));//S
-    //pFramework->sprites[6]->render(pFramework->getDeviceContext(), 280+190*6, 400, 190, 274, 0, 0, 190, 274, 0, XMFLOAT4(1, 1, 1, 1));//S
+    //pFramework->sprites[12] ->render(pFramework->getDeviceContext(), 490+190*0, 510-274, 190, 274, 0, 0, 190, 274, 0, XMFLOAT4(1, 1, 1, 1));//A
+    //pFramework->sprites[11] ->render(pFramework->getDeviceContext(), 490+190*1, 510-274, 190, 274, 0, 0, 190, 274, 0, XMFLOAT4(1, 1, 1, 1));//L
+    //pFramework->sprites[11] ->render(pFramework->getDeviceContext(), 490+190*2, 510-274, 190, 274, 0, 0, 190, 274, 0, XMFLOAT4(1, 1, 1, 1));//L
+
+    //pFramework->sprites[8]  ->render(pFramework->getDeviceContext(), 490+190*0, 510, 190, 274, 0, 0, 190, 274, 0, XMFLOAT4(1, 1, 1, 1));//C
+    //pFramework->sprites[11] ->render(pFramework->getDeviceContext(), 490+190*1, 510, 190, 274, 0, 0, 190, 274, 0, XMFLOAT4(1, 1, 1, 1));//L
+    //pFramework->sprites[9]  ->render(pFramework->getDeviceContext(), 490+190*2, 510, 190, 274, 0, 0, 190, 274, 0, XMFLOAT4(1, 1, 1, 1));//E
+    //pFramework->sprites[12] ->render(pFramework->getDeviceContext(), 490+190*3, 510, 190, 274, 0, 0, 190, 274, 0, XMFLOAT4(1, 1, 1, 1));//A
+    //pFramework->sprites[10] ->render(pFramework->getDeviceContext(), 490+190*4, 510, 190, 274, 0, 0, 190, 274, 0, XMFLOAT4(1, 1, 1, 1));//R
 }
 
 void SceneTitle::Finalize()

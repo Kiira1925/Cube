@@ -37,7 +37,7 @@ void SceneSelect::Initialize()
     block = std::make_unique<GroundBlockManager>();
     std::shared_ptr<SkinnedCube> cube = std::make_shared<SkinnedCube>(device, cube_texture, 17);
 
-    block = std::make_unique<GroundBlockManager>();
+    block = std::make_shared<GroundBlockManager>();
     block->SetStageNum(1);
     block->Initialize();
     block->SetPrimitive(cube);
@@ -48,7 +48,8 @@ void SceneSelect::Initialize()
 
     player = std::make_unique<Player>();
     player->Initialize("./Data/cube/cube_setM.fbx");
-    player->SetPos(FLOAT3(1.0f, 0.0f, -1.0f));
+    if (GroundBlockManager::getInstance()->isSelect01) { player->SetPos(FLOAT3(2.0f, 0.0f, -2.0f)); }
+    else { player->SetPos(FLOAT3(19.0f, 0.0f, -2.0f)); }
 
     // ビュー設定
     camera1->SetEye(DirectX::XMFLOAT3(0.0f, 10.0f, -1.0f));
@@ -63,6 +64,21 @@ void SceneSelect::Initialize()
 
 void SceneSelect::Update(float elapsedTime)
 {
+
+    if (Front(player->GetPos(), block) &&
+        Back(player->GetPos(), block) &&
+        Right(player->GetPos(), block) &&
+        Left(player->GetPos(), block) && player->pos.y <= 0)
+    {
+        SceneManager::Instance().ChangeScenePerformance(SceneSelect::getInstance()); return;
+    }
+
+    // 場外に行かないための判定
+    player->SetFront(Front(player->GetPos(), block));
+    player->SetBack( Back(player->GetPos(),  block));
+    player->SetRight(Right(player->GetPos(), block));
+    player->SetLeft(Left(player->GetPos(),   block));
+
     player->Move();
     block->Update();
 

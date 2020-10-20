@@ -16,6 +16,9 @@ enum Block
     C_block,    // セレクトブロック
     S_block,    // スタートブロック
     G_block,    // ゴールブロック
+    S_01_block, // ステージ1側ブロック
+    S_10_block, // ステージ10側ブロック
+    T_block,    // タイトルブロック
 
     Stage1 = 10,
     Stage2,
@@ -51,6 +54,11 @@ public:
 public: // 各ブロックの処理関数
     void DestroyBlock();
     void SelectBlock();
+
+    void Select01Block();
+    void Select10Block();
+    void TitleBlock();
+
     void StartBlock();
     void GoalBlock() {}
     void StegeBlock(int num);
@@ -62,14 +70,11 @@ public: // Set関数
 
 public:
    FLOAT3 GetPosition() { return pos; }
-   int    GetType() 
-   {
-       return type;
-   }
-   int    GetCount() 
-   {
-       return count;
-   }
+   int    GetType() {return type;}
+   int    GetCount() { return count;}
+
+public:
+    bool checkExist();
 };
 
 // 地面ブロック管理
@@ -89,6 +94,8 @@ private:
     char fileNameStage[256];    // 名前読込み用
 
 public:
+    bool isSelect01;
+
     void Initialize(int x, int y, std::shared_ptr<SkinnedCube>& primitive);
     void Initialize();
     void Update();

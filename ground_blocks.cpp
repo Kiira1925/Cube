@@ -27,6 +27,15 @@ void GroundBlock::Update()
     case Block::C_block:
         SelectBlock();
         break;
+    case Block::S_01_block:
+        Select01Block();
+        break;
+    case Block::S_10_block:
+        Select10Block();
+        break;
+    case Block::T_block:
+        TitleBlock();
+        break;
     //case Block::S_block:
     //    StartBlock();
     //    break;
@@ -71,7 +80,7 @@ void GroundBlock::Render(ID3D11DeviceContext* context,const DirectX::XMFLOAT4X4&
     {
         obj->Render(context, count + 1, wvp, world);
     }
-    else if (type == 0 || type == 5) { obj->Render(context, 6, wvp, world); }
+    else if (type == 0 || type == 5 || type == 6) { obj->Render(context, 6, wvp, world); }
     else if (type >= 10) { obj->Render(context, type-3, wvp, world); }
     else obj->Render(context, 5, wvp, world);
 }
@@ -100,6 +109,32 @@ void GroundBlock::SelectBlock()
     }
 }
 
+void GroundBlock::Select01Block()
+{
+    if (hoverflg)
+    {
+        GroundBlockManager::getInstance()->isSelect01 = true;
+        SceneManager::Instance().ChangeScenePerformance(SceneSelect::getInstance());
+    }
+}
+
+void GroundBlock::Select10Block()
+{
+    if (hoverflg)
+    {
+        GroundBlockManager::getInstance()->isSelect01 = false;
+        SceneManager::Instance().ChangeScenePerformance(SceneSelect::getInstance());
+    }
+}
+
+void GroundBlock::TitleBlock()
+{
+    if (hoverflg)
+    {
+        SceneManager::Instance().ChangeScenePerformance(SceneTitle::getInstance());
+    }
+}
+
 void GroundBlock::StegeBlock(int num)
 {
     if (hoverflg)
@@ -109,6 +144,12 @@ void GroundBlock::StegeBlock(int num)
 
         SceneManager::Instance().ChangeScenePerformance(SceneGame::getInstance());
     }
+}
+
+bool GroundBlock::checkExist()
+{
+    if (count <= 0 && type < 4 && type > 0) return true;
+    return false;
 }
 
 
@@ -210,7 +251,7 @@ void GroundBlockManager::Render(ID3D11DeviceContext* context, const DirectX::XMM
     int count = 0;
     for (int y = 0; y < mapY; y++) {
         for (int x = 0; x < mapX; x++) {
-            if (mapData[y][x] < 0) { count++; continue; }
+            //if (mapData[y][x] < 0) { count++; continue; }
             DirectX::XMMATRIX W, S, R, T;
             DirectX::XMFLOAT4X4 wvp;
             DirectX::XMFLOAT4X4 world;
@@ -223,6 +264,7 @@ void GroundBlockManager::Render(ID3D11DeviceContext* context, const DirectX::XMM
             W = S * R * T;
 
             obj[count]->SetBlockPosXZ(posx, posz);
+            if (mapData[y][x] < 0) { count++; continue; }
 
             // šMATRIX -> FLOAT4X4
             DirectX::XMStoreFloat4x4(&world, W);
