@@ -10,7 +10,7 @@
 #define FbxMax 10
 #define Gravity 0.25f
 
-static FileName cube_texture[8];
+static FileName cube_texture[17];
 
 class Scene
 {

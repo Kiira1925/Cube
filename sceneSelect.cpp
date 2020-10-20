@@ -22,11 +22,20 @@ void SceneSelect::Initialize()
     cube_texture[4] = L"./Data/Floor/Floor3.png";
     cube_texture[5] = L"./Data/Floor/FloorG.png";
     cube_texture[6] = L"./Data/Floor/FloorN.png";
-    cube_texture[7] = L"./Data/Floor/stage_sample.png";
+    cube_texture[7] = L"./Data/Floor/stage01.png";
+    cube_texture[8] = L"./Data/Floor/stage02.png";
+    cube_texture[9] = L"./Data/Floor/stage03.png";
+    cube_texture[10] = L"./Data/Floor/stage04.png";
+    cube_texture[11] = L"./Data/Floor/stage05.png";
+    cube_texture[12] = L"./Data/Floor/stage06.png";
+    cube_texture[13] = L"./Data/Floor/stage07.png";
+    cube_texture[14] = L"./Data/Floor/stage08.png";
+    cube_texture[15] = L"./Data/Floor/stage09.png";
+    cube_texture[16] = L"./Data/Floor/stage10.png";
 
     // ÉuÉçÉbÉNê›íË
     block = std::make_unique<GroundBlockManager>();
-    std::shared_ptr<SkinnedCube> cube = std::make_shared<SkinnedCube>(device, cube_texture, 8);
+    std::shared_ptr<SkinnedCube> cube = std::make_shared<SkinnedCube>(device, cube_texture, 17);
 
     block = std::make_unique<GroundBlockManager>();
     block->SetStageNum(1);
