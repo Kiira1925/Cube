@@ -196,7 +196,7 @@ void Player::Render(const DirectX::XMMATRIX& view, const DirectX::XMMATRIX& proj
 		obj.staticObj->render(pFramework->getDeviceContext(), worldViewProjection, world, lightDir, color, wireframe);
 
 	}
-
+	color.w = 0.5f;
 	if (obj.skinnedobj)
 	{
 		// ƒ[ƒ‹ƒh•ÏŠ·

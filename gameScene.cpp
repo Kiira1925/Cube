@@ -56,6 +56,7 @@ void SceneGame::Initialize()
    // player.Initialize(new GeometricCube(device));
     player = std::make_unique<Player>();
     player->Initialize("./Data/cube/cube_setM.fbx");
+    
 
     std::shared_ptr<SkinnedCube> cube = std::make_shared<SkinnedCube>(device, cube_texture, 7);
     blocks = std::make_shared<GroundBlockManager>();
@@ -141,12 +142,17 @@ void SceneGame::Render(float elapsedTime)
     DirectX::XMMATRIX projection = DirectX::XMLoadFloat4x4(&camera->GetProjection());
 
     blocks->Render(context, view, projection);
+    player->obj.color.x = 1.0f;
+    player->obj.color.y = 1.0f;
+    player->obj.color.z = 1.0f;
+    player->obj.color.w = 0.5f;
     player->Render(view, projection, lightDirection, wireframe, elapsedTime);
     sky.Render(view, projection, lightBG, wireframe, elapsedTime);
 
-    framework::getInstance()->debug->setString("sky.Pos.x:%f", sky.pos.x);
-    framework::getInstance()->debug->setString("sky.Pos.y:%f", sky.pos.y);
-    framework::getInstance()->debug->setString("sky.Pos.z:%f", sky.pos.z);
+    framework::getInstance()->debug->setString("pl.color.x:%f", player->obj.color.x);
+    framework::getInstance()->debug->setString("pl.color.y:%f", player->obj.color.y);
+    framework::getInstance()->debug->setString("pl.color.z:%f", player->obj.color.z);
+    framework::getInstance()->debug->setString("pl.color.w:%f", player->obj.color.w);
 
     if (SetPosflg)
     {
