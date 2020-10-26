@@ -8,6 +8,7 @@
 #include "player.h"
 #include "pause.h"
 
+#include "save.h"
 #include "hover.h"
 
 #include "SkinnedCube.h"
@@ -25,6 +26,9 @@ void SceneGame::Initialize()
     // 光源(平行光)
     lightDirection = DirectX::XMFLOAT4(0, -1, 0, 0);
     lightBG = DirectX::XMFLOAT4(0, 1, -1, 0);
+
+    // 一つ戻る用のコンテナの設定
+    SaveDataManager::getInstance()->init();
 
     // カメラの設定
     camera = std::make_unique<MainCamera>();
@@ -59,12 +63,12 @@ void SceneGame::Initialize()
     
 
     std::shared_ptr<SkinnedCube> cube = std::make_shared<SkinnedCube>(device, cube_texture, 7);
-    blocks = std::make_shared<GroundBlockManager>();
-    blocks->SetStageNum(SceneManager::Instance().GetStageNum());
-    blocks->Initialize();
-    blocks->SetPrimitive(cube);
+    // blocks = std::make_shared<GroundBlockManager>();
+    GBManager->SetStageNum(SceneManager::Instance().GetStageNum());
+    GBManager->Initialize();
+    GBManager->SetPrimitive(cube);
 
-    camera->SetFocus(DirectX::XMFLOAT3(blocks->GetMapX() / 2, 1, -blocks->GetMapY() / 2.0f));
+    camera->SetFocus(DirectX::XMFLOAT3(GBManager->GetMapX() / 2, 1, -GBManager->GetMapY() / 2.0f));
     camera->SetEye(DirectX::XMFLOAT3(camera->GetFocus().x + 5.0f, 15.0f, camera->GetFocus().z - 10.0f));
 
     //player = std::make_unique<Player>();
@@ -92,33 +96,53 @@ void SceneGame::Update(float elapsedTime)
     if (clearFlg()) { clearTimer++; return; }
     if (pPause->Update())return;
 
-    if (Front(player->GetPos(), blocks) &&
-        Back(player->GetPos(), blocks) &&
-        Right(player->GetPos(), blocks) &&
-        Left(player->GetPos(), blocks) && player->pos.y <= 0)
+    if (Front(player->GetPos(), GBManager) &&
+        Back(player->GetPos(),  GBManager) &&
+        Right(player->GetPos(), GBManager) &&
+        Left(player->GetPos(),  GBManager) && player->pos.y <= 0)
     {
         SceneManager::Instance().ChangeScenePerformance(SceneGame::getInstance()); return;
     }
 
     // 場外に行かないための判定
-    player->SetFront(Front(player->GetPos(), blocks));
-    player->SetBack (Back(player->GetPos(), blocks));
-    player->SetRight(Right(player->GetPos(), blocks));
-    player->SetLeft (Left(player->GetPos(), blocks));
+    player->SetFront(Front(player->GetPos(), GBManager));
+    player->SetBack (Back(player->GetPos(),  GBManager));
+    player->SetRight(Right(player->GetPos(), GBManager));
+    player->SetLeft (Left(player->GetPos(),  GBManager));
 
     player->Move();
     camera->Updata(elapsedTime);
-
-    for (int i = 0; i < blocks->GetMea(); i++)
-    {
-        if (hover(player->pos, blocks->GetBlockPos(i)))
+    //SaveDataManager::getInstance()->update(player->GetPos());
+    
+        if (!SaveDataManager::getInstance()->SaveList.empty())
         {
-            blocks->SetBlockHover(i, true);
+            static bool flg, o_flg;
+            flg = false;
+            if (SaveDataManager::getInstance()->SaveList.empty())
+            {
+                framework::getInstance()->debug->setString("karakarakara!!!!!!!!!!!!!");
+            }
+            if (GetAsyncKeyState('I'))
+            {
+                flg = true;
+                if (flg != o_flg)
+                {
+                    player->SetPos(SaveDataManager::getInstance()->SaveLoad(player->GetPos()));
+                }
+            }
+            o_flg = flg;
         }
-        else blocks->SetBlockHover(i, false);
+    
+    for (int i = 0; i < GBManager->GetMea(); i++)
+    {
+        if (hover(player->pos, GBManager->GetBlockPos(i)))
+        {
+            GBManager->SetBlockHover(i, true);
+        }
+        else GBManager->SetBlockHover(i, false);
     }
 
-    blocks->Update();
+    GBManager->Update();
 
     //iRight(player->GetPos(), blocks));f (GetAsyncKeyState('V') & 1)
     //{Left(player->GetPos(), blocks));
@@ -141,7 +165,7 @@ void SceneGame::Render(float elapsedTime)
     DirectX::XMMATRIX view = DirectX::XMLoadFloat4x4(&camera->GetView());
     DirectX::XMMATRIX projection = DirectX::XMLoadFloat4x4(&camera->GetProjection());
 
-    blocks->Render(context, view, projection);
+    GBManager->Render(context, view, projection);
     player->obj.color.x = 1.0f;
     player->obj.color.y = 1.0f;
     player->obj.color.z = 1.0f;
@@ -149,18 +173,18 @@ void SceneGame::Render(float elapsedTime)
     player->Render(view, projection, lightDirection, wireframe, elapsedTime);
     sky.Render(view, projection, lightBG, wireframe, elapsedTime);
 
-    framework::getInstance()->debug->setString("pl.color.x:%f", player->obj.color.x);
+   /* framework::getInstance()->debug->setString("pl.color.x:%f", player->obj.color.x);
     framework::getInstance()->debug->setString("pl.color.y:%f", player->obj.color.y);
     framework::getInstance()->debug->setString("pl.color.z:%f", player->obj.color.z);
-    framework::getInstance()->debug->setString("pl.color.w:%f", player->obj.color.w);
+    framework::getInstance()->debug->setString("pl.color.w:%f", player->obj.color.w);*/
 
     if (SetPosflg)
     {
-        for (int i = 0; i < blocks->GetMea(); i++)
+        for (int i = 0; i < GBManager->GetMea(); i++)
         {
-            if (blocks->GetBlockObj(i)->GetType() == Block::S_block)
+            if (GBManager->GetBlockObj(i)->GetType() == Block::S_block)
             {
-                player->SetPos(blocks->GetBlockPos(i).x, 0.0f, blocks->GetBlockPos(i).z);
+                player->SetPos(GBManager->GetBlockPos(i).x, 0.0f, GBManager->GetBlockPos(i).z);
                 SetPosflg = false;
                 break;
             }
@@ -185,7 +209,8 @@ void SceneGame::Render(float elapsedTime)
 
 void SceneGame::Finalize()
 {
-    blocks->Relese();
+    GBManager->Relese();
+    SaveDataManager::getInstance()->uninit();
 }
 
 void SceneGame::Reload(int stage_num)
@@ -193,24 +218,25 @@ void SceneGame::Reload(int stage_num)
     ID3D11Device* device = pFramework->getDevice();
     std::shared_ptr<SkinnedCube> cube = std::make_shared<SkinnedCube>(device, cube_texture, 7);
 
-    blocks->Relese();
+    SaveDataManager::getInstance()->uninit();
+    GBManager->Relese();
 
-    blocks = std::make_unique<GroundBlockManager>();
-    blocks->SetStageNum(stage_num);
+    // blocks = std::make_unique<GroundBlockManager>();
+    GBManager->SetStageNum(stage_num);
     SceneManager::Instance().SetStageNum(stage_num);
-    blocks->Initialize();
-    blocks->SetPrimitive(cube);
+    GBManager->Initialize();
+    GBManager->SetPrimitive(cube);
     player->InitStatus();
 
     //camera->SetEye(DirectX::XMFLOAT3(blocks->GetMapX() / 2 + 5.0f, 15.0f, (blocks->GetMapY() / 2) - 10.0f));
-    camera->SetFocus(DirectX::XMFLOAT3(blocks->GetMapX() / 2, 1, -blocks->GetMapY() / 2.0f));
+    camera->SetFocus(DirectX::XMFLOAT3(GBManager->GetMapX() / 2, 1, -GBManager->GetMapY() / 2.0f));
     camera->SetEye(DirectX::XMFLOAT3(camera->GetFocus().x + 5.0f, 15.0f, camera->GetFocus().z - 10.0f));
 
-    for (int i = 0; i < blocks->GetMea(); i++)
+    for (int i = 0; i < GBManager->GetMea(); i++)
     {
-        if (blocks->GetBlockObj(i)->GetType() == Block::S_block)
+        if (GBManager->GetBlockObj(i)->GetType() == Block::S_block)
         {
-            player->SetPos(blocks->GetBlockPos(i).x, 0.0f, blocks->GetBlockPos(i).z);
+            player->SetPos(GBManager->GetBlockPos(i).x, 0.0f, GBManager->GetBlockPos(i).z);
             SetPosflg = true;
             break;
         }
@@ -222,7 +248,7 @@ void SceneGame::Reload(int stage_num)
 
 bool SceneGame::clearFlg()
 {
-    if (!blocks->checkBlockExist())
+    if (!GBManager->checkBlockExist())
     {
         if (player->speed.x == 0 && player->speed.z == 0)
         {

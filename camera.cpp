@@ -17,8 +17,8 @@ void Camera::Active()
     DirectX::XMMATRIX p = DirectX::XMLoadFloat4x4(&projection);
     p = DirectX::XMMatrixPerspectiveFovLH(fov, aspect, nearZ, farZ);
     DirectX::XMStoreFloat4x4(&projection, p);
-    framework::getInstance()->debug->setString("camera_pos:%f,%f,%f", eye.x, eye.y, eye.z);
-    framework::getInstance()->debug->setString("camera_focus:%f,%f,%f", focus.x, focus.y, focus.z);
+   /* framework::getInstance()->debug->setString("camera_pos:%f,%f,%f", eye.x, eye.y, eye.z);
+    framework::getInstance()->debug->setString("camera_focus:%f,%f,%f", focus.x, focus.y, focus.z);*/
 }
 
 void Camera::SetPerspective(float fov, float aspect, float nearZ, float farZ)
