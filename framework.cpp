@@ -261,7 +261,7 @@ void framework::render(float elapsed_time/*Elapsed seconds from last frame*/)
     debug->setString("BenchMark:%d", min);
     blender::Set(blender::BS_ADD);
     // text->textout(p_deviceContext.Get(), s, 10, 10, 24, 32);
-    debug->display(p_deviceContext.Get(), 1.0f, 1.0f, 1.0f, 20.0f, 20.0f);
+    // debug->display(p_deviceContext.Get(), 1.0f, 1.0f, 1.0f, 20.0f, 20.0f);
 
     ///////////////////////////////////////////////////
     //		•`‰æI—¹

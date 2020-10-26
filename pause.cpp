@@ -29,32 +29,32 @@ bool PauseMenu::Update()
 	switch (cursor)
 	{
 	case CONTINUE:
-		if (GetAsyncKeyState(' ') & 1) { switch_pause(); }
+		if (GetAsyncKeyState(VK_RETURN) & 1) { switch_pause(); }
 		break;
 	case RESTART:
 		// ステージリセット処理
-		if (GetAsyncKeyState(' ') & 1)
+		if (GetAsyncKeyState(VK_RETURN) & 1)
 		{
 			switch_pause();
 			SceneGame::getInstance()->Reload(SceneManager::Instance().GetStageNum());
 		}
 		break;
 	case RETURN_TO_STAGESELECT:
-		if (GetAsyncKeyState(' ') & 1)
+		if (GetAsyncKeyState(VK_RETURN) & 1)
 		{
 			switch_pause();
 			SceneManager::Instance().ChangeScene(SceneSelect::getInstance());
 		}
 		break;
 	case RETURN_TO_TITLE:
-		if (GetAsyncKeyState(' ') & 1)
+		if (GetAsyncKeyState(VK_RETURN) & 1)
 		{
 			switch_pause();
 			SceneManager::Instance().ChangeScene(SceneTitle::getInstance());
 		}
 		break;
 	case END:
-		if (GetAsyncKeyState(' ') & 1)
+		if (GetAsyncKeyState(VK_RETURN) & 1)
 		{
 			SendMessage(pFramework->hwnd, WM_CLOSE, NULL, NULL);
 		}

@@ -114,14 +114,10 @@ void SceneGame::Update(float elapsedTime)
     camera->Updata(elapsedTime);
     //SaveDataManager::getInstance()->update(player->GetPos());
     
-        if (!SaveDataManager::getInstance()->SaveList.empty())
+    if (!SaveDataManager::getInstance()->SaveList.empty() && player->speed.x == 0 && player->pos.y == 0 && player->speed.z == 0)
         {
             static bool flg, o_flg;
             flg = false;
-            if (SaveDataManager::getInstance()->SaveList.empty())
-            {
-                framework::getInstance()->debug->setString("karakarakara!!!!!!!!!!!!!");
-            }
             if (GetAsyncKeyState('I'))
             {
                 flg = true;

@@ -1,6 +1,7 @@
 
 #include "player.h"
 #include "save.h"
+#include "ground_blocks.h"
 
 #include "framework.h"
 #include "blender.h"
@@ -109,7 +110,8 @@ void Player::Move()
 		}
 		if (speed.x != 0 || speed.z != 0)
 		{
-			SaveDataManager::getInstance()->add(pos);
+			int Z = pos.z * GBManager->GetMapX();
+			SaveDataManager::getInstance()->add(pos, GBManager->GetBlockObj(pos.x + -Z)->GetCount());
 		}
 	}
 	DirectX::XMVECTOR qua, Axis, delta, def;

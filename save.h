@@ -8,7 +8,8 @@ class SaveData
 private:
 
 public:
-	FLOAT3 plPos;
+	FLOAT3 plPos; // その時の自機の位置
+	int thatCount; // その時の自機の足元のブロックのカウント
 };
 
 class SaveDataManager
@@ -26,13 +27,13 @@ public:
 
 	~SaveDataManager();
 
-	void init();
-	void update(FLOAT3 playerPos); // Iを押したら戻るようにします
+	void init(); // リストの中身を初期化
+	void update(FLOAT3 playerPos); // gameSceneに直接処理をかいているので使う必要がありません
 
-	void uninit();
+	void uninit(); // リストの中身を初期化
 
-	FLOAT3 SaveLoad(FLOAT3 playerPos);
-	SaveData* add(FLOAT3 pos);
+	FLOAT3 SaveLoad(FLOAT3 playerPos); // リストの中身を現在に反映 一つ戻る
+	SaveData* add(FLOAT3 pos, int count); // リストにデータを保存する
 	std::list<SaveData>* getList() { return  &SaveList; }
 
 };
