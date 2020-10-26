@@ -1,5 +1,7 @@
 
 #include "player.h"
+#include "save.h"
+#include "ground_blocks.h"
 
 #include "framework.h"
 #include "blender.h"
@@ -106,6 +108,11 @@ void Player::Move()
 				speed.z -= moveSpeed;
 			}
 		}
+		if (speed.x != 0 || speed.z != 0)
+		{
+			int Z = pos.z * GBManager->GetMapX();
+			SaveDataManager::getInstance()->add(pos, GBManager->GetBlockObj(pos.x + -Z)->GetCount());
+		}
 	}
 	DirectX::XMVECTOR qua, Axis, delta, def;
 	// ã‚Åİ’è‚µ‚½²( axis )‚ğ XMVECTOR ( Axis )‚É•ÏŠ·‚·‚é
@@ -119,14 +126,14 @@ void Player::Move()
 	// Float4 ‚É–ß‚·
 	XMStoreFloat4(&orientation, qua);
 
-	framework::getInstance()->debug->setString("Pl.moveAngle:%f", moveAngle);
+	/*framework::getInstance()->debug->setString("Pl.moveAngle:%f", moveAngle);*/
 
 	framework::getInstance()->debug->setString("Pl.pos.x:%f", pos.x);
-	framework::getInstance()->debug->setString("Pl.pos.y:%f", pos.y);
+	
 	framework::getInstance()->debug->setString("Pl.pos.z:%f", pos.z);
-	framework::getInstance()->debug->setString("Pl.axis.x:%2.f", axis.x);
+	/*framework::getInstance()->debug->setString("Pl.axis.x:%2.f", axis.x);
 	framework::getInstance()->debug->setString("Pl.axis.y:%2.f", axis.y);
-	framework::getInstance()->debug->setString("Pl.axis.z:%2.f", axis.z);
+	framework::getInstance()->debug->setString("Pl.axis.z:%2.f", axis.z);*/
 	if (speed.x != 0 || speed.z != 0)
 	{
 
@@ -196,7 +203,7 @@ void Player::Render(const DirectX::XMMATRIX& view, const DirectX::XMMATRIX& proj
 		obj.staticObj->render(pFramework->getDeviceContext(), worldViewProjection, world, lightDir, color, wireframe);
 
 	}
-
+	color.w = 0.5f;
 	if (obj.skinnedobj)
 	{
 		// ƒ[ƒ‹ƒh•ÏŠ·

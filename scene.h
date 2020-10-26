@@ -40,7 +40,7 @@ private:
     std::unique_ptr<MyMesh> title;
     std::unique_ptr<MyMesh> selectGuide;
     MyMesh sky;
-    std::shared_ptr<GroundBlockManager> block;
+    // std::shared_ptr<GroundBlockManager> block;
 
 public:
     DirectX::XMFLOAT4 lightDirection;
@@ -67,7 +67,7 @@ private:
     std::unique_ptr<MainCamera> camera1;
     std::unique_ptr<Player> player;
     MyMesh sky;
-    std::shared_ptr<GroundBlockManager> block;
+    // std::shared_ptr<GroundBlockManager> block;
 
 public:
     DirectX::XMFLOAT4 lightDirection;
@@ -93,7 +93,7 @@ class SceneGame : public Scene
 {
 private:
     std::unique_ptr<MainCamera> camera;
-    std::shared_ptr<GroundBlockManager> blocks;
+    // std::shared_ptr<GroundBlockManager> blocks;
     std::unique_ptr<Player> player;
     MyMesh sky;
 

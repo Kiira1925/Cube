@@ -10,7 +10,7 @@ bool hover(FLOAT3 PlayerPos, FLOAT3 BlockPos)
     return false;
 }
 
-bool Front(FLOAT3 playerPos, std::shared_ptr<GroundBlockManager> obj)
+bool Front(FLOAT3 playerPos, GroundBlockManager* obj)
 {
     for (int i = 0; i < obj->GetMea(); i++)
     {
@@ -36,7 +36,7 @@ bool Front(FLOAT3 playerPos, std::shared_ptr<GroundBlockManager> obj)
     return false;
 }
 
-bool Back(FLOAT3 playerPos, std::shared_ptr<GroundBlockManager> obj)
+bool Back(FLOAT3 playerPos, GroundBlockManager* obj)
 {
     for (int i = 0; i < obj->GetMea(); i++)
     {
@@ -62,7 +62,7 @@ bool Back(FLOAT3 playerPos, std::shared_ptr<GroundBlockManager> obj)
     return false;
 }
 
-bool Right(FLOAT3 playerPos, std::shared_ptr<GroundBlockManager> obj)
+bool Right(FLOAT3 playerPos, GroundBlockManager* obj)
 {
     for (int i = 0; i < obj->GetMea(); i++)
     {
@@ -88,7 +88,7 @@ bool Right(FLOAT3 playerPos, std::shared_ptr<GroundBlockManager> obj)
     return false;
 }
 
-bool Left(FLOAT3 playerPos, std::shared_ptr<GroundBlockManager> obj)
+bool Left(FLOAT3 playerPos, GroundBlockManager* obj)
 {
     for (int i = 0; i < obj->GetMea(); i++)
     {

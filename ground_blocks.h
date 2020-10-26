@@ -64,9 +64,11 @@ public: // 各ブロックの処理関数
     void StegeBlock(int num);
 
 public: // Set関数
+    void SetBlockPosY(float y) { this->pos.y = y; }
     void SetType(int type) { this->type = type; if (type > 0 && type < 4)this->count = type; }
     void SetBlockPosXZ(int x, int z) { this->pos.x = x, this->pos.z = z; }
     void SetHover(bool flg) { oldhover = hoverflg, hoverflg = flg; }
+    void ReSetHover() { oldhover = false, hoverflg = false, leaveflg = false; }
 
 public:
    FLOAT3 GetPosition() { return pos; }

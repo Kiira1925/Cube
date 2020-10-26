@@ -34,13 +34,13 @@ void SceneSelect::Initialize()
     cube_texture[16] = L"./Data/Floor/stage10.png";
 
     // ブロック設定
-    block = std::make_unique<GroundBlockManager>();
+    // block = std::make_unique<GroundBlockManager>();
     std::shared_ptr<SkinnedCube> cube = std::make_shared<SkinnedCube>(device, cube_texture, 17);
 
-    block = std::make_shared<GroundBlockManager>();
-    block->SetStageNum(1);
-    block->Initialize();
-    block->SetPrimitive(cube);
+    // block = std::make_shared<GroundBlockManager>();
+    GBManager->SetStageNum(1);
+    GBManager->Initialize();
+    GBManager->SetPrimitive(cube);
 
     // プレイヤー
     //player = std::make_unique<Player>();
@@ -65,30 +65,30 @@ void SceneSelect::Initialize()
 void SceneSelect::Update(float elapsedTime)
 {
 
-    if (Front(player->GetPos(), block) &&
-        Back(player->GetPos(), block) &&
-        Right(player->GetPos(), block) &&
-        Left(player->GetPos(), block) && player->pos.y <= 0)
+    if (Front(player->GetPos(), GBManager) &&
+        Back(player->GetPos(),  GBManager) &&
+        Right(player->GetPos(), GBManager) &&
+        Left(player->GetPos(),  GBManager) && player->pos.y <= 0)
     {
         SceneManager::Instance().ChangeScenePerformance(SceneSelect::getInstance()); return;
     }
 
     // 場外に行かないための判定
-    player->SetFront(Front(player->GetPos(), block));
-    player->SetBack( Back(player->GetPos(),  block));
-    player->SetRight(Right(player->GetPos(), block));
-    player->SetLeft(Left(player->GetPos(),   block));
+    player->SetFront(Front(player->GetPos(), GBManager));
+    player->SetBack( Back(player->GetPos(),  GBManager));
+    player->SetRight(Right(player->GetPos(), GBManager));
+    player->SetLeft(Left(player->GetPos(),   GBManager));
 
     player->Move();
-    block->Update();
+    GBManager->Update();
 
-    for (int i = 0; i < block->GetMea(); i++)
+    for (int i = 0; i < GBManager->GetMea(); i++)
     {
-        if (hover(player->GetPos(), block->GetBlockPos(i)))
+        if (hover(player->GetPos(), GBManager->GetBlockPos(i)))
         {
-            block->SetBlockHover(i, true);
+            GBManager->SetBlockHover(i, true);
         }
-        else block->SetBlockHover(i, false);
+        else GBManager->SetBlockHover(i, false);
     }
 
     camera1->Updata(elapsedTime);
@@ -106,7 +106,7 @@ void SceneSelect::Render(float elapsedTime)
 
     sky.Render(view, projection, lightDirection, false, elapsedTime);
     player->Render(view, projection, lightDirection, false, elapsedTime);
-    block->Render(context, view, projection);
+    GBManager->Render(context, view, projection);
 
     pFramework->sprites[5]->render(pFramework->getDeviceContext(), 20, 170, 360, 72, 0, 0, 600, 120, 0, XMFLOAT4(1, 1, 1, 1));
 }

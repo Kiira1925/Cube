@@ -793,7 +793,7 @@ void Skinned_Mesh::render(ID3D11DeviceContext* context, const DirectX::XMFLOAT4X
             cBuffer.materialColor.x = subset.material.color.x * materialColor.x;
             cBuffer.materialColor.y = subset.material.color.y * materialColor.y;
             cBuffer.materialColor.z = subset.material.color.z * materialColor.z;
-            cBuffer.materialColor.w = subset.material.color.w;
+            cBuffer.materialColor.w = subset.material.color.w * materialColor.w;
             context->UpdateSubresource(constantBuffer.Get(), 0, 0, &cBuffer, 0, 0);
             context->VSSetConstantBuffers(0, 1, constantBuffer.GetAddressOf());
 

@@ -97,6 +97,7 @@ void GroundBlock::DestroyBlock()
 
     if (count <= 0)
     {
+        count = 0;
         pos.y -= 0.5f;
     }
 }
@@ -243,6 +244,7 @@ void GroundBlockManager::Update()
     for (int count = 0 ; count < mea ;count++)
     {
         obj[count]->Update();
+
     }
 }
 
