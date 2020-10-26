@@ -117,7 +117,7 @@ bool framework::initialize()
         sprites[0] = std::make_unique<Sprite>(pFramework->getDevice(), L"./Data/Menu/BB.png");
         sprites[1] = std::make_unique<Sprite>(pFramework->getDevice(), L"./Data/Menu/Pause.png");
         sprites[2] = std::make_unique<Sprite>(pFramework->getDevice(), L"./Data/Menu/Aicon.png");
-        sprites[3] = std::make_unique<Sprite>(pFramework->getDevice(), L"./Data/UI/UiStage.png");
+        sprites[3] = std::make_unique<Sprite>(pFramework->getDevice(), L"./Data/UI/UiStage_noIcon.png");
         sprites[4] = std::make_unique<Sprite>(pFramework->getDevice(), L"./Data/UI/Nunber128X50Max16.png");
         sprites[5] = std::make_unique<Sprite>(pFramework->getDevice(), L"./Data/UI/UiKey.png");
         sprites[6] = std::make_unique<Sprite>(pFramework->getDevice(), L"./Data/UI/S.png");
@@ -127,6 +127,8 @@ bool framework::initialize()
         sprites[10] = std::make_unique<Sprite>(pFramework->getDevice(), L"./Data/UI/R.png");
         sprites[11] = std::make_unique<Sprite>(pFramework->getDevice(), L"./Data/UI/L.png");
         sprites[12] = std::make_unique<Sprite>(pFramework->getDevice(), L"./Data/UI/A.png");
+        sprites[13] = std::make_unique<Sprite>(pFramework->getDevice(), L"./Data/UI/circle1.png");
+        sprites[14] = std::make_unique<Sprite>(pFramework->getDevice(), L"./Data/UI/circle2.png");
 
 
         soundSE[0] = soundManager->CreateSoundSource("Data/Sounds/SE/select.wav");

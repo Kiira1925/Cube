@@ -72,7 +72,7 @@ void SceneGame::Initialize()
     camera->SetEye(DirectX::XMFLOAT3(camera->GetFocus().x + 5.0f, 15.0f, camera->GetFocus().z - 10.0f));
     if (SceneManager::Instance().GetStageNum() >= 18) 
     {
-        camera->SetFocus(DirectX::XMFLOAT3(blocks->GetMapX() / 2, 1, -blocks->GetMapY() / 2.0f -2));
+        camera->SetFocus(DirectX::XMFLOAT3(GBManager->GetMapX() / 2, 1, -GBManager->GetMapY() / 2.0f -2));
         camera->SetEye(DirectX::XMFLOAT3(camera->GetFocus().x + 5.0f, 15.0f, camera->GetFocus().z - 11.0f));
     }
 
@@ -198,8 +198,14 @@ void SceneGame::Render(float elapsedTime)
     //player->Render(view, projection, lightDirection, wireframe);
     //sky.Render(view, projection, lightDirection, wireframe);
 
+    static float UIangle;
+    if (!pPause->getPauseFlg()) UIangle += 45 * elapsedTime;
+    if (UIangle > 360) { UIangle -= 360; }
+
     // UI•\Ž¦
-    pFramework->sprites[3]->render(pFramework->getDeviceContext(), 10, 10, 564, 150, 0, 0, 789, 210, 0, XMFLOAT4(1, 1, 1, 1));
+    pFramework->sprites[14]->render(pFramework->getDeviceContext(), 10, 10, 150, 150, 0, 0, 210, 210, -UIangle, XMFLOAT4(1, 1, 1, 1));
+    pFramework->sprites[13]->render(pFramework->getDeviceContext(), 10, 10, 150, 150, 0, 0, 210, 210, UIangle, XMFLOAT4(1, 1, 1, 1));
+    pFramework->sprites[3]->render(pFramework->getDeviceContext(), 10, 10, 564, 150, 0, 0, 789, 210, 360, XMFLOAT4(1, 1, 1, 1));
     pFramework->sprites[4]->render(pFramework->getDeviceContext(), 450, 60, 128, 50, 0 + (SceneManager::Instance().GetStageNum()-10)*128, 0, 128, 50, 0, XMFLOAT4(1, 1, 1, 1));
 
     pFramework->sprites[5]->render(pFramework->getDeviceContext(), 20, 170, 360, 72, 0, 0, 600, 120, 0, XMFLOAT4(1, 1, 1, 1));
@@ -235,7 +241,7 @@ void SceneGame::Reload(int stage_num)
     camera->SetEye(DirectX::XMFLOAT3(camera->GetFocus().x + 5.0f, 15.0f, camera->GetFocus().z - 10.0f));
     if (SceneManager::Instance().GetStageNum() >= 18)
     {
-        camera->SetFocus(DirectX::XMFLOAT3(blocks->GetMapX() / 2, 1, -blocks->GetMapY() / 2.0f - 2));
+        camera->SetFocus(DirectX::XMFLOAT3(GBManager->GetMapX() / 2, 1, -GBManager->GetMapY() / 2.0f - 2));
         camera->SetEye(DirectX::XMFLOAT3(camera->GetFocus().x + 5.0f, 15.0f, camera->GetFocus().z - 11.0f));
     }
 
