@@ -45,8 +45,8 @@ FLOAT3 SaveDataManager::SaveLoad(FLOAT3 playerPos)
 	
 	if (pastPos < 0)pastPos *= -1;
 
-	// 今いる位置のブロックのカウントを +1 しておく ( しないとカウントが減る )
-	GroundBlockManager::getInstance()->GetBlockObj(nowPos)->count += 1;
+	// 今いる位置のブロックのフラグ関連をリセットする( バグが治りました )
+	GroundBlockManager::getInstance()->GetBlockObj(nowPos)->ReSetHover();
 	// ひとつ前の場所のカウントを戻して置く
 	GroundBlockManager::getInstance()->GetBlockObj(pastPos)->count = iter->thatCount;
 	// フラグ関連を浮いているブロックと同じに戻す
