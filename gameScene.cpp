@@ -124,7 +124,7 @@ void SceneGame::Update(float elapsedTime)
         {
             static bool flg, o_flg;
             flg = false;
-            if (GetAsyncKeyState('I'))
+            if (GetAsyncKeyState('I')& 0x8000)
             {
                 flg = true;
                 if (flg != o_flg)
